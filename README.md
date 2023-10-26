@@ -22,3 +22,7 @@ Then install django globally on your machine by running this command in your ter
 Time to create a django project. Run the following command - `django-admin startproject project`. Now you should see a folder called "project" in your current directory. Inside of that folder there is another folder called "project". Delete one "project" folder, make sure only one "project" folder, manage.py and README.md remains.
 
 Push to github.
+
+## Create .gitignore file
+
+Add content to it from your most recent Django project.
