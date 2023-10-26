@@ -1,24 +1,25 @@
-- [CDP - Core Django Project](#org2084ae5)
-- [How this file is created](#org599af0d)
-- [Resources used](#org3b24be6)
-- [Steps taken to create this Django Core Project](#orgfdbb663)
-  - [Create a Github repository](#orgeccad2a)
-  - [Create a Django project](#orgec989bc)
-  - [Create .gitignore file](#org8c95dc3)
-  - [Create a python virtual environment](#org3edd9dc)
-  - [Poetry setup](#orgd628bd9)
-  - [Creating a Makefile](#org2215d6b)
+- [CDP - Core Django Project](#orgf5cdfa7)
+- [How this file is created](#orgef1db6b)
+- [Resources used](#org696235f)
+- [Steps taken to create this Django Core Project](#org5b97824)
+  - [Create a Github repository](#org01e2adb)
+  - [Create a Django project](#org7fb2f3e)
+  - [Create .gitignore file](#org066e2f3)
+  - [Create a python virtual environment](#orgbaf8b64)
+  - [Poetry setup](#orgc82ce1f)
+  - [Creating a Makefile](#org666ed7b)
+  - [Restructuring the codebase](#org44a9f17)
 
 
 
-<a id="org2084ae5"></a>
+<a id="orgf5cdfa7"></a>
 
 # CDP - Core Django Project
 
 With each new project that I build I keep finding better ways to start a new project. Here I will keep a CORE things that each of my future Django app will have to have.
 
 
-<a id="org599af0d"></a>
+<a id="orgef1db6b"></a>
 
 # How this file is created
 
@@ -27,28 +28,28 @@ With each new project that I build I keep finding better ways to start a new pro
 I use .org file since I am used to Emacs keybindings and it's much quicker for me to do the formatting and text transformations and etc. It also generates a table of content for me, which is nice in such large document.
 
 
-<a id="org3b24be6"></a>
+<a id="org696235f"></a>
 
 # Resources used
 
 -   Pro Django tutorials by thenewboston
 
 
-<a id="orgfdbb663"></a>
+<a id="org5b97824"></a>
 
 # Steps taken to create this Django Core Project
 
 Steps taken to create this repo are described here.
 
 
-<a id="orgeccad2a"></a>
+<a id="org01e2adb"></a>
 
 ## Create a Github repository
 
 Create a Github repo with the name of your project. Clone it to your machine. Open a text editor inside of it.
 
 
-<a id="orgec989bc"></a>
+<a id="org7fb2f3e"></a>
 
 ## Create a Django project
 
@@ -59,14 +60,14 @@ Time to create a django project. Run the following command - `django-admin start
 Push to github.
 
 
-<a id="org8c95dc3"></a>
+<a id="org066e2f3"></a>
 
 ## Create .gitignore file
 
 Add content to it from your most recent Django project.
 
 
-<a id="org3edd9dc"></a>
+<a id="orgbaf8b64"></a>
 
 ## Create a python virtual environment
 
@@ -100,7 +101,7 @@ pip list
 ```
 
 
-<a id="orgd628bd9"></a>
+<a id="orgc82ce1f"></a>
 
 ## Poetry setup
 
@@ -160,7 +161,7 @@ poetry run python manage.py runserver
 ```
 
 
-<a id="org2215d6b"></a>
+<a id="org666ed7b"></a>
 
 ## Creating a Makefile
 
@@ -194,3 +195,111 @@ run-server:
 .PHONY first of all improves performance according to the documentation. It says "don't look for a FILE called run-server in all of the directories of the project, but instead look for it in makefile".
 
 Other times our commands might be like "make install" or "make clean" or something similar and files might already exist with those names in our directories, so make will try to run those first if there is no .PHONY described.
+
+
+<a id="org44a9f17"></a>
+
+## Restructuring the codebase
+
+We will be leaving the top level directory "<your project name>" for various config files and etc, don't want to have Django files (like manage.py) and project folder and all business logic in the same location as config files.
+
+That is why we will create a folder called "core".
+
+Currently my directories looks like this:
+
+```bash
+$ tree CDP -L 1
+CDP
+├── Makefile
+├── README.md
+├── README.org
+├── db.sqlite3
+├── manage.py
+├── poetry.lock
+├── project
+├── pyproject.toml
+└── venv
+
+2 directories, 7 files
+```
+
+Create a core folder and move Django files to it.
+
+```bash
+pwd
+# make sure you are in CDP directory
+mkdir core
+touch core/__init__.py
+mv project/ core/
+mv manage.py core/
+```
+
+Project directory structure now looks like this:
+
+```bash
+$ tree CDP -L 2
+CDP
+├── Makefile
+├── README.md
+├── README.org
+├── core
+│   ├── __init__.py
+│   ├── manage.py
+│   └── project
+├── db.sqlite3
+├── poetry.lock
+├── pyproject.toml
+└── venv
+```
+
+If we try to run project now - we will get an error saying that project settings and django files can not be found. Let's fix that.
+
+in manage.py do this change:
+
+```python
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "project.settings")
+# change to
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.project.settings")
+```
+
+in settings.py do this change:
+
+```python
+BASE_DIR = Path(__file__).resolve().parent.parent
+# change to (since we moved one folder deeper)
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+
+ROOT_URLCONF = "project.urls"
+# change to
+ROOT_URLCONF = "core.project.urls"
+
+WSGI_APPLICATION = "project.wsgi.application"
+# change to
+WSGI_APPLICATION = "core.project.wsgi.application"
+```
+
+If we try to run a server again, we will still get an error:
+
+```bash
+poetry run python manage.py runserver
+/home/arvy/src/CDP/venv/bin/python: can't open file '/home/arvy/src/CDP/manage.py': [Errno 2] No such file or directory
+make: *** [Makefile:7: run-server] Error 2
+```
+
+We need to modify our Makefile so it runs the MODULE (since we added \_\_init\_\_.py file in core) which is `core.manage`.
+
+```bash
+# so instead of this:
+
+.PHONY: run-server
+run-server:
+     poetry run python manage.py runserver
+
+# is now this:
+
+.PHONY: run-server
+run-server:
+     poetry run python -m core.manage runserver
+```
+
+Now command `make run-server` works just fine.

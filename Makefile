@@ -4,23 +4,23 @@ install:
 
 .PHONY: run-server
 run-server:
-	poetry run python manage.py runserver	
+	poetry run python -m core.manage runserver
 
 .PHONY: migrate
 migrate:
-	poetry run python manage.py migrate
+	poetry run python -m core.manage migrate
 
 .PHONY: migrations
 migrations:
-	poetry run python manage.py makemigrations
+	poetry run python -m core.manage makemigrations
 
 .PHONY: superuser
 superuser:
-	poetry run python manage.py createsuperuser
+	poetry run python -m core.manage createsuperuser
 
 .PHONY: shell
 shell:
-	poetry run python manage.py shell
+	poetry run python -m core.manage shell
 
 .PHONY: update
 update: install migrate ;

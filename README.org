@@ -1,5 +1,6 @@
 #+OPTIONS: toc:t # display table of content (t/nil)
 #+OPTIONS: toc:2 # table of content displays 2 levels deep
+#+OPTIONS: ^:nil # disabling subscript. Otherwise __ exports not how as I want
 
 * CDP - Core Django Project
 
@@ -209,3 +210,112 @@ Other times our commands might be like "make install" or "make clean"
 or something similar and files might already exist with those names in
 our directories, so make will try to run those first if there is no
 .PHONY described.
+
+** Restructuring the codebase
+
+We will be leaving the top level directory "<your project name>" for
+various config files and etc, don't want to have Django files (like
+manage.py) and project folder and all business logic in the same
+location as config files.
+
+That is why we will create a folder called "core".
+
+Currently my directories looks like this:
+
+#+begin_src bash
+  $ tree CDP -L 1
+  CDP
+  ├── Makefile
+  ├── README.md
+  ├── README.org
+  ├── db.sqlite3
+  ├── manage.py
+  ├── poetry.lock
+  ├── project
+  ├── pyproject.toml
+  └── venv
+
+  2 directories, 7 files
+#+end_src
+
+Create a core folder and move Django files to it.
+
+#+begin_src bash
+  pwd
+  # make sure you are in CDP directory
+  mkdir core
+  touch core/__init__.py
+  mv project/ core/
+  mv manage.py core/
+#+end_src
+
+Project directory structure now looks like this:
+
+#+begin_src bash
+  $ tree CDP -L 2
+  CDP
+  ├── Makefile
+  ├── README.md
+  ├── README.org
+  ├── core
+  │   ├── __init__.py
+  │   ├── manage.py
+  │   └── project
+  ├── db.sqlite3
+  ├── poetry.lock
+  ├── pyproject.toml
+  └── venv
+#+end_src
+
+If we try to run project now - we will get an error saying that
+project settings and django files can not be found. Let's fix that.
+
+in manage.py do this change:
+#+begin_src python
+  os.environ.setdefault("DJANGO_SETTINGS_MODULE", "project.settings")
+  # change to
+  os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.project.settings")
+#+end_src
+
+in settings.py do this change:
+
+#+begin_src python
+  BASE_DIR = Path(__file__).resolve().parent.parent
+  # change to (since we moved one folder deeper)
+  BASE_DIR = Path(__file__).resolve().parent.parent.parent
+
+  ROOT_URLCONF = "project.urls"
+  # change to
+  ROOT_URLCONF = "core.project.urls"
+
+  WSGI_APPLICATION = "project.wsgi.application"
+  # change to
+  WSGI_APPLICATION = "core.project.wsgi.application"
+#+end_src
+
+If we try to run a server again, we will still get an error:
+
+#+begin_src bash
+  poetry run python manage.py runserver
+  /home/arvy/src/CDP/venv/bin/python: can't open file '/home/arvy/src/CDP/manage.py': [Errno 2] No such file or directory
+  make: *** [Makefile:7: run-server] Error 2
+#+end_src
+
+We need to modify our Makefile so it runs the MODULE (since we added
+__init__.py file in core) which is ~core.manage~.
+
+#+begin_src bash
+  # so instead of this:
+
+  .PHONY: run-server
+  run-server:
+       poetry run python manage.py runserver
+
+  # is now this:
+
+  .PHONY: run-server
+  run-server:
+       poetry run python -m core.manage runserver
+#+end_src
+
+Now command ~make run-server~ works just fine.
