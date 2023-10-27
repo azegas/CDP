@@ -26,3 +26,31 @@ Push to github.
 ## Create .gitignore file
 
 Add content to it from your most recent Django project.
+## Create a python virtual environment
+https://docs.python.org/3/library/venv.html
+
+Navigate to the same folder where README.md and manage.py files are. Open a terminal and type:
+
+```bash
+python3 -m venv venv
+
+# activate that virtual environment
+source venv/bin/activate
+
+# list packages inside the virtual environment
+pip list
+
+Package    Version
+---------- -------
+pip        22.0.2
+setuptools 59.6.0
+
+# deactivate virtual environment
+deactivate
+
+# check if you have excited the virtual environemnt by:
+pip list
+
+# you now should see way more packages than there were in the virtual environment(these are your python packages installed globally on your machine).
+```
+
