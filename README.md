@@ -108,3 +108,35 @@ Anytime we want to run something through poetry, we run it through `poetry run` 
 poetry run python manage.py runserver
 ```
 
+## Creating a Makefile
+
+Instead of writing all the needed commands in here or in a google doc or something, we can create a `Makefile` and describe all the commands in it, so you yourself in other projects or other developers can use the same commands as you do. This will become my new standard I hope.
+
+Make is used when compiling software, it's a linux tool that comes with every linux installation.
+
+```bash
+touch Makefile
+```
+
+If we now add such line to this makefile:
+
+```bash
+run-server:
+    poetry run python manage.py runserver
+```
+
+The server runs.
+
+It runs through poetry and through make command. Poetry - so there are no surprises with dependencies, make - so we don't have to type long commands each time.
+
+We can also add more make commands into the Makefile, but this time we will also add .PHONY above each command(https://ftp.gnu.org/old-gnu/Manuals/make-3.79.1/html_node/make_34.html#SEC33).
+
+```bash
+.PHONY: run-server
+run-server:
+    poetry run python manage.py runserver
+```
+
+.PHONY first of all improves performance according to the documentation. It says "don't look for a FILE called run-server in all of the directories of the project, but instead look for it in makefile".
+
+Other times our commands might be like "make install" or "make clean" or something similar and files might already exist with those names in our directories, so make will try to run those first if there is no .PHONY described.
