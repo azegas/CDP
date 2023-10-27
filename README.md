@@ -1,25 +1,26 @@
-- [CDP - Core Django Project](#orgf5cdfa7)
-- [How this file is created](#orgef1db6b)
-- [Resources used](#org696235f)
-- [Steps taken to create this Django Core Project](#org5b97824)
-  - [Create a Github repository](#org01e2adb)
-  - [Create a Django project](#org7fb2f3e)
-  - [Create .gitignore file](#org066e2f3)
-  - [Create a python virtual environment](#orgbaf8b64)
-  - [Poetry setup](#orgc82ce1f)
-  - [Creating a Makefile](#org666ed7b)
-  - [Restructuring the codebase](#org44a9f17)
+- [CDP - Core Django Project](#org0f46dbb)
+- [How this file is created](#org78bc109)
+- [Resources used](#org1e1fb35)
+- [Steps taken to create this Django Core Project](#org9654e81)
+  - [Create a Github repository](#org551c4c5)
+  - [Create a Django project](#org03c2906)
+  - [Create .gitignore file](#org2a1bba1)
+  - [Create a python virtual environment](#org744d8f5)
+  - [Poetry setup](#org16e4da8)
+  - [Creating a Makefile](#org9ab95bb)
+  - [Restructuring the codebase](#org4a58e07)
+  - [Settings management](#orgfac95b9)
 
 
 
-<a id="orgf5cdfa7"></a>
+<a id="org0f46dbb"></a>
 
 # CDP - Core Django Project
 
 With each new project that I build I keep finding better ways to start a new project. Here I will keep a CORE things that each of my future Django app will have to have.
 
 
-<a id="orgef1db6b"></a>
+<a id="org78bc109"></a>
 
 # How this file is created
 
@@ -28,28 +29,28 @@ With each new project that I build I keep finding better ways to start a new pro
 I use .org file since I am used to Emacs keybindings and it's much quicker for me to do the formatting and text transformations and etc. It also generates a table of content for me, which is nice in such large document.
 
 
-<a id="org696235f"></a>
+<a id="org1e1fb35"></a>
 
 # Resources used
 
 -   Pro Django tutorials by thenewboston
 
 
-<a id="org5b97824"></a>
+<a id="org9654e81"></a>
 
 # Steps taken to create this Django Core Project
 
 Steps taken to create this repo are described here.
 
 
-<a id="org01e2adb"></a>
+<a id="org551c4c5"></a>
 
 ## Create a Github repository
 
 Create a Github repo with the name of your project. Clone it to your machine. Open a text editor inside of it.
 
 
-<a id="org7fb2f3e"></a>
+<a id="org03c2906"></a>
 
 ## Create a Django project
 
@@ -60,14 +61,14 @@ Time to create a django project. Run the following command - `django-admin start
 Push to github.
 
 
-<a id="org066e2f3"></a>
+<a id="org2a1bba1"></a>
 
 ## Create .gitignore file
 
 Add content to it from your most recent Django project.
 
 
-<a id="orgbaf8b64"></a>
+<a id="org744d8f5"></a>
 
 ## Create a python virtual environment
 
@@ -101,7 +102,7 @@ pip list
 ```
 
 
-<a id="orgc82ce1f"></a>
+<a id="org16e4da8"></a>
 
 ## Poetry setup
 
@@ -161,7 +162,7 @@ poetry run python manage.py runserver
 ```
 
 
-<a id="org666ed7b"></a>
+<a id="org9ab95bb"></a>
 
 ## Creating a Makefile
 
@@ -197,7 +198,7 @@ run-server:
 Other times our commands might be like "make install" or "make clean" or something similar and files might already exist with those names in our directories, so make will try to run those first if there is no .PHONY described.
 
 
-<a id="org44a9f17"></a>
+<a id="org4a58e07"></a>
 
 ## Restructuring the codebase
 
@@ -303,3 +304,53 @@ run-server:
 ```
 
 Now command `make run-server` works just fine.
+
+
+<a id="orgfac95b9"></a>
+
+## Settings management
+
+As our projects scales, we need to make sure our projects is organized. Settings.py file can get pretty beefy when adding testing, docker and other settings to it.
+
+Let's install django-split-settings(<https://pypi.org/project/django-split-settings/>) package that will help us with that:
+
+```bash
+poetry add django-split-settings
+```
+
+Move the settings.py file to a separate settings folder:
+
+```bash
+pwd
+/home/arvy/src/CDP/core/project
+
+mkdir settings
+touch settings/__init__.py
+
+mv settings.py base.py
+mv base.py settings/
+```
+
+in base.py modify one line, since we put the settings file one level deeper:
+
+```python
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+# change to:
+BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
+```
+
+in <span class="underline"><span class="underline">init</span></span>.py file - (/home/arvy/src/CDP/core/project/settings/\_\_init\_\_.py)
+
+```python
+from split_settings.tools import include
+
+include(
+    'base.py',                  # main settings that are needed for each project
+)
+```
+
+Try to run the server now, it should work.
+
+```bash
+make run-server
+```

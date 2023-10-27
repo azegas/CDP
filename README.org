@@ -319,3 +319,53 @@ __init__.py file in core) which is ~core.manage~.
 #+end_src
 
 Now command ~make run-server~ works just fine.
+** Settings management
+
+As our projects scales, we need to make sure our projects is
+organized. Settings.py file can get pretty beefy when adding testing,
+docker and other settings to it.
+
+Let's install
+django-split-settings(https://pypi.org/project/django-split-settings/)
+package that will help us with that:
+
+#+begin_src bash
+  poetry add django-split-settings
+#+end_src
+
+Move the settings.py file to a separate settings folder:
+
+#+begin_src bash
+  pwd
+  /home/arvy/src/CDP/core/project
+
+  mkdir settings
+  touch settings/__init__.py
+
+  mv settings.py base.py
+  mv base.py settings/
+#+end_src
+
+in base.py modify one line, since we put the settings file one level deeper:
+
+#+begin_src python
+  BASE_DIR = Path(__file__).resolve().parent.parent.parent
+  # change to:
+  BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
+#+end_src
+
+in __init__.py file - (/home/arvy/src/CDP/core/project/settings/__init__.py)
+
+#+begin_src python
+  from split_settings.tools import include
+
+  include(
+      'base.py',                  # main settings that are needed for each project
+  )
+#+end_src
+
+Try to run the server now, it should work.
+
+#+begin_src bash
+  make run-server
+#+end_src
