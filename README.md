@@ -1,26 +1,27 @@
-- [CDP - Core Django Project](#org0f46dbb)
-- [How this file is created](#org78bc109)
-- [Resources used](#org1e1fb35)
-- [Steps taken to create this Django Core Project](#org9654e81)
-  - [Create a Github repository](#org551c4c5)
-  - [Create a Django project](#org03c2906)
-  - [Create .gitignore file](#org2a1bba1)
-  - [Create a python virtual environment](#org744d8f5)
-  - [Poetry setup](#org16e4da8)
-  - [Creating a Makefile](#org9ab95bb)
-  - [Restructuring the codebase](#org4a58e07)
-  - [Settings management](#orgfac95b9)
+- [CDP - Core Django Project](#org48ca4fd)
+- [How this file is created](#org55a0f62)
+- [Resources used](#orgf13f33d)
+- [Steps taken to create this Django Core Project](#orgc900dba)
+  - [Create a Github repository](#org0702d28)
+  - [Create a Django project](#orga71e6c2)
+  - [Create .gitignore file](#orgf843494)
+  - [Create a python virtual environment](#orge6b83bf)
+  - [Poetry setup](#org1642971)
+  - [Creating a Makefile](#orga880ea6)
+  - [Restructuring the codebase](#orgbdc504d)
+  - [Settings management](#org36e4339)
+  - [Settings management for developers](#org8a0fe5a)
 
 
 
-<a id="org0f46dbb"></a>
+<a id="org48ca4fd"></a>
 
 # CDP - Core Django Project
 
 With each new project that I build I keep finding better ways to start a new project. Here I will keep a CORE things that each of my future Django app will have to have.
 
 
-<a id="org78bc109"></a>
+<a id="org55a0f62"></a>
 
 # How this file is created
 
@@ -29,28 +30,28 @@ With each new project that I build I keep finding better ways to start a new pro
 I use .org file since I am used to Emacs keybindings and it's much quicker for me to do the formatting and text transformations and etc. It also generates a table of content for me, which is nice in such large document.
 
 
-<a id="org1e1fb35"></a>
+<a id="orgf13f33d"></a>
 
 # Resources used
 
 -   Pro Django tutorials by thenewboston
 
 
-<a id="org9654e81"></a>
+<a id="orgc900dba"></a>
 
 # Steps taken to create this Django Core Project
 
 Steps taken to create this repo are described here.
 
 
-<a id="org551c4c5"></a>
+<a id="org0702d28"></a>
 
 ## Create a Github repository
 
 Create a Github repo with the name of your project. Clone it to your machine. Open a text editor inside of it.
 
 
-<a id="org03c2906"></a>
+<a id="orga71e6c2"></a>
 
 ## Create a Django project
 
@@ -61,14 +62,14 @@ Time to create a django project. Run the following command - `django-admin start
 Push to github.
 
 
-<a id="org2a1bba1"></a>
+<a id="orgf843494"></a>
 
 ## Create .gitignore file
 
 Add content to it from your most recent Django project.
 
 
-<a id="org744d8f5"></a>
+<a id="orge6b83bf"></a>
 
 ## Create a python virtual environment
 
@@ -102,7 +103,7 @@ pip list
 ```
 
 
-<a id="org16e4da8"></a>
+<a id="org1642971"></a>
 
 ## Poetry setup
 
@@ -162,7 +163,7 @@ poetry run python manage.py runserver
 ```
 
 
-<a id="org9ab95bb"></a>
+<a id="orga880ea6"></a>
 
 ## Creating a Makefile
 
@@ -198,7 +199,7 @@ run-server:
 Other times our commands might be like "make install" or "make clean" or something similar and files might already exist with those names in our directories, so make will try to run those first if there is no .PHONY described.
 
 
-<a id="org4a58e07"></a>
+<a id="orgbdc504d"></a>
 
 ## Restructuring the codebase
 
@@ -306,7 +307,7 @@ run-server:
 Now command `make run-server` works just fine.
 
 
-<a id="orgfac95b9"></a>
+<a id="org36e4339"></a>
 
 ## Settings management
 
@@ -354,3 +355,71 @@ Try to run the server now, it should work.
 ```bash
 make run-server
 ```
+
+
+<a id="org8a0fe5a"></a>
+
+## Settings management for developers
+
+Will create a separate location where developers can describe their settings and they will be plugged in to the project.
+
+Create:
+
+```bash
+mkdir local
+touch local/settings.dev.py
+```
+
+In `base.py` change these values:
+
+```python
+SECRET_KEY = "django-insecure-wn(!#y#4s*07ux!9qkp$!)=oqgmgieak3xg@u"
+# change to
+SECRET_KEY = NotImplemented
+
+DEBUG = True
+# change to
+DEBUG = False
+
+# remove these two lines
+from pathlib import Path
+BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
+```
+
+The whole content of settings.dev.py should look like this:
+
+```python
+import os.path
+from pathlib import Path
+from split_settings.tools import include, optional
+
+# our base directory, in our case its CDP folder
+BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
+# /home/arvy/src/CDP
+
+# whenever we want a system variable to be pulled in here
+# (whether from docker or system you are currently developing on),
+# we will have to prefix it with this string below:
+ENVVAR_SETTINGS_PREFIX = 'CORESETTINGS_'
+
+LOCAL_SETTINGS_PATH = os.getenv(f"{ENVVAR_SETTINGS_PREFIX}LOCAL_SETTINGS_PATH")
+
+if not LOCAL_SETTINGS_PATH:
+    LOCAL_SETTINGS_PATH = 'local/settings.dev.py'
+
+# if relative path is found, converting it to absolute path
+if not os.path.isabs(LOCAL_SETTINGS_PATH):
+    LOCAL_SETTINGS_PATH = str(BASE_DIR / LOCAL_SETTINGS_PATH)
+    # /home/arvy/src/CDP/local/settings.dev.py
+
+include(
+    'base.py',                  # base settings that we will use for every environment
+    optional(LOCAL_SETTINGS_PATH) # Include if exist. They will override the  base.py
+)
+```
+
+Try to `make run-server` now - the server should work properly.
+
+If you remove `settings.dev.py` - it won't work, you will have ALLOWED\_HOSTS error because DEBUG = False in base.py. It just confirms that the new dev settings file works as intended.
+
+After you confirm that it works, make sure to add /local folder to .gitignore.

@@ -369,3 +369,72 @@ Try to run the server now, it should work.
 #+begin_src bash
   make run-server
 #+end_src
+
+** Settings management for developers
+
+Will create a separate location where developers can describe their
+settings and they will be plugged in to the project.
+
+Create:
+
+#+begin_src bash
+  mkdir local
+  touch local/settings.dev.py
+#+end_src
+
+In ~base.py~ change these values:
+
+#+begin_src python
+  SECRET_KEY = "django-insecure-wn(!#y#4s*07ux!9qkp$!)=oqgmgieak3xg@u"
+  # change to
+  SECRET_KEY = NotImplemented
+
+  DEBUG = True
+  # change to
+  DEBUG = False
+
+  # remove these two lines
+  from pathlib import Path
+  BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
+#+end_src
+
+The whole content of settings.dev.py should look like this:
+
+#+begin_src python
+  import os.path
+  from pathlib import Path
+  from split_settings.tools import include, optional
+
+  # our base directory, in our case its CDP folder
+  BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
+  # /home/arvy/src/CDP
+
+  # whenever we want a system variable to be pulled in here
+  # (whether from docker or system you are currently developing on),
+  # we will have to prefix it with this string below:
+  ENVVAR_SETTINGS_PREFIX = 'CORESETTINGS_'
+
+  LOCAL_SETTINGS_PATH = os.getenv(f"{ENVVAR_SETTINGS_PREFIX}LOCAL_SETTINGS_PATH")
+
+  if not LOCAL_SETTINGS_PATH:
+      LOCAL_SETTINGS_PATH = 'local/settings.dev.py'
+
+  # if relative path is found, converting it to absolute path
+  if not os.path.isabs(LOCAL_SETTINGS_PATH):
+      LOCAL_SETTINGS_PATH = str(BASE_DIR / LOCAL_SETTINGS_PATH)
+      # /home/arvy/src/CDP/local/settings.dev.py
+
+  include(
+      'base.py',                  # base settings that we will use for every environment
+      optional(LOCAL_SETTINGS_PATH) # Include if exist. They will override the  base.py
+  )
+#+end_src
+
+Try to ~make run-server~ now - the server should work properly.
+
+If you remove ~settings.dev.py~ - it won't work, you will have
+ALLOWED_HOSTS error because DEBUG = False in base.py. It just confirms
+that the new dev settings file works as intended.
+
+After you confirm that it works, make sure to add /local folder to
+.gitignore.
