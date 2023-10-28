@@ -1,27 +1,29 @@
-- [CDP - Core Django Project](#org48ca4fd)
-- [How this file is created](#org55a0f62)
-- [Resources used](#orgf13f33d)
-- [Steps taken to create this Django Core Project](#orgc900dba)
-  - [Create a Github repository](#org0702d28)
-  - [Create a Django project](#orga71e6c2)
-  - [Create .gitignore file](#orgf843494)
-  - [Create a python virtual environment](#orge6b83bf)
-  - [Poetry setup](#org1642971)
-  - [Creating a Makefile](#orga880ea6)
-  - [Restructuring the codebase](#orgbdc504d)
-  - [Settings management](#org36e4339)
-  - [Settings management for developers](#org8a0fe5a)
+- [CDP - Core Django Project](#orgc30e023)
+- [How this file is created](#orgf28d39d)
+- [Resources used](#orgc5064c1)
+- [Steps taken to create this Django Core Project](#orgad26916)
+  - [Create a Github repository](#orgbb6873b)
+  - [Create a Django project](#org5a301c1)
+  - [Create .gitignore file](#org58e222e)
+  - [Create a python virtual environment](#org8d563c7)
+  - [Poetry setup](#orgf610675)
+  - [Creating a Makefile](#org33b90bc)
+  - [Restructuring the codebase](#org3e0d07a)
+  - [Settings management](#orgd09757c)
+  - [Settings management for developers](#orgb18fb81)
+  - [Settings management for our application](#org7d8d528)
+  - [Configure settings of code editor in one place](#org47a8e74)
 
 
 
-<a id="org48ca4fd"></a>
+<a id="orgc30e023"></a>
 
 # CDP - Core Django Project
 
 With each new project that I build I keep finding better ways to start a new project. Here I will keep a CORE things that each of my future Django app will have to have.
 
 
-<a id="org55a0f62"></a>
+<a id="orgf28d39d"></a>
 
 # How this file is created
 
@@ -30,28 +32,28 @@ With each new project that I build I keep finding better ways to start a new pro
 I use .org file since I am used to Emacs keybindings and it's much quicker for me to do the formatting and text transformations and etc. It also generates a table of content for me, which is nice in such large document.
 
 
-<a id="orgf13f33d"></a>
+<a id="orgc5064c1"></a>
 
 # Resources used
 
 -   Pro Django tutorials by thenewboston
 
 
-<a id="orgc900dba"></a>
+<a id="orgad26916"></a>
 
 # Steps taken to create this Django Core Project
 
 Steps taken to create this repo are described here.
 
 
-<a id="org0702d28"></a>
+<a id="orgbb6873b"></a>
 
 ## Create a Github repository
 
 Create a Github repo with the name of your project. Clone it to your machine. Open a text editor inside of it.
 
 
-<a id="orga71e6c2"></a>
+<a id="org5a301c1"></a>
 
 ## Create a Django project
 
@@ -62,14 +64,14 @@ Time to create a django project. Run the following command - `django-admin start
 Push to github.
 
 
-<a id="orgf843494"></a>
+<a id="org58e222e"></a>
 
 ## Create .gitignore file
 
 Add content to it from your most recent Django project.
 
 
-<a id="orge6b83bf"></a>
+<a id="org8d563c7"></a>
 
 ## Create a python virtual environment
 
@@ -103,7 +105,7 @@ pip list
 ```
 
 
-<a id="org1642971"></a>
+<a id="orgf610675"></a>
 
 ## Poetry setup
 
@@ -163,7 +165,7 @@ poetry run python manage.py runserver
 ```
 
 
-<a id="orga880ea6"></a>
+<a id="org33b90bc"></a>
 
 ## Creating a Makefile
 
@@ -199,7 +201,7 @@ run-server:
 Other times our commands might be like "make install" or "make clean" or something similar and files might already exist with those names in our directories, so make will try to run those first if there is no .PHONY described.
 
 
-<a id="orgbdc504d"></a>
+<a id="org3e0d07a"></a>
 
 ## Restructuring the codebase
 
@@ -307,7 +309,7 @@ run-server:
 Now command `make run-server` works just fine.
 
 
-<a id="org36e4339"></a>
+<a id="orgd09757c"></a>
 
 ## Settings management
 
@@ -357,7 +359,7 @@ make run-server
 ```
 
 
-<a id="org8a0fe5a"></a>
+<a id="orgb18fb81"></a>
 
 ## Settings management for developers
 
@@ -423,3 +425,48 @@ Try to `make run-server` now - the server should work properly.
 If you remove `settings.dev.py` - it won't work, you will have ALLOWED\_HOSTS error because DEBUG = False in base.py. It just confirms that the new dev settings file works as intended.
 
 After you confirm that it works, make sure to add /local folder to .gitignore.
+
+
+<a id="org7d8d528"></a>
+
+## Settings management for our application
+
+In here we will place unique settings that are related to our application only. Not Django settings should go in here.
+
+Create:
+
+```bash
+touch core/project/settings/custom.py
+```
+
+In `custom.py` add this content:
+
+```python
+-
+```
+
+add 'custom.py' to <span class="underline"><span class="underline">init</span></span>.py
+
+
+<a id="org47a8e74"></a>
+
+## Configure settings of code editor in one place
+
+Whenever there is more than one person working on the project, it's good to have a standard according to which the code is going to be written. <https://editorconfig.org/> comes to help with this.
+
+Next to .gitignore or README.md files, in the same directory, create a file called .editorconfig. Add content to it:
+
+```bash
+root = true
+
+[*.{html,py}]
+charset = utf-8
+indent_size = 4
+indent_style = space
+max_line_length = 119
+trim_trailing_whitespace = true
+```
+
+This configuration tells the text editor and IDE's how to automatically clean up our code.
+
+VScode needs an extension installed to be able to read these instructions. Pycharm does it automatically. Emacs needs an extension as well.

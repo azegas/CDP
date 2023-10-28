@@ -457,3 +457,30 @@ In ~custom.py~ add this content:
 #+end_src
 
 add 'custom.py' to __init__.py
+
+** Configure settings of code editor in one place
+
+Whenever there is more than one person working on the project, it's
+good to have a standard according to which the code is going to be
+written. https://editorconfig.org/ comes to help with this.
+
+Next to .gitignore or README.md files, in the same directory, create a
+file called .editorconfig. Add content to it:
+
+#+begin_src bash
+  root = true
+
+  [*.{html,py}]
+  charset = utf-8
+  indent_size = 4
+  indent_style = space
+  max_line_length = 119
+  trim_trailing_whitespace = true
+#+end_src
+
+This configuration tells the text editor and IDE's how to
+automatically clean up our code.
+
+VScode needs an extension installed to be able to read these
+instructions. Pycharm does it automatically. Emacs needs an extension
+as well.
