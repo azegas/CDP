@@ -430,6 +430,20 @@ The whole content of settings.dev.py should look like this:
   )
 #+end_src
 
+Then also since we took BASE_DIR description from base.py file, we
+need to modify the database location.
+
+Chante the "NAME" to the absolute location of db.sqlite3 file like so:
+
+#+begin_src python
+  DATABASES = {
+      "default": {
+          "ENGINE": "django.db.backends.sqlite3",
+          "NAME": "/home/arvy/src/CDP/db.sqlite3",
+      }
+  }
+#+end_src
+
 Try to ~make run-server~ now - the server should work properly.
 
 If you remove ~settings.dev.py~ - it won't work, you will have
@@ -438,7 +452,6 @@ that the new dev settings file works as intended.
 
 After you confirm that it works, make sure to add /local folder to
 .gitignore.
-
 
 Also we can make a template file for other developers to look into,
 to know what values they can change:
@@ -515,3 +528,62 @@ automatically clean up our code.
 VScode needs an extension installed to be able to read these
 instructions. Pycharm does it automatically. Emacs needs an extension
 as well.
+
+** Flake8
+
+Keep your code consistent and clean.
+https://flake8.pycqa.org/en/latest/user/configuration.html
+
+Install flake9 as a DEV (-D) dependency, since we don't need it in our
+final build to push up to production, its more for developers, to make
+sure their code is consistent.
+
+#+begin_src bash
+  poetry add -D flake8
+#+end_src
+
+Check pyproject.toml and poetry.lock files to confirm that it was
+installed and added as dev dependency.
+
+Also check in this way:
+
+#+begin_src bash
+  poetry add -D flake8 --help
+#+end_src
+
+Let's test flake9. Go to core/manage.py and add 5 or so blank lines,
+save the file.
+
+Then in terminal run this command:
+
+#+begin_src bash
+  poetry run flake8 core/manage.py -v
+#+end_src
+
+This will scan that file with flake8 and tell us what's wrong with it.
+Should say ~E303 too many blank lines(5)~. That's great!
+
+Remove those 5 blank lines and run the same command again. Error
+should not appear anymore.
+
+If you ever want to run this check for every single file in your
+directory/subdirectory, then you can run the same command without
+specifying the file path:
+
+#+begin_src bash
+  poetry run flake8
+#+end_src
+
+But since we have venv folder with lots of crap in it, we will not do
+this. Let's create a config file for flake8 so we can specify what to
+ignore along with other settings.
+
+If there is a particular error you are getting but would like for
+flake8 to ignore, you can add ~# noqa: F821~ for example. Replace the
+error code with the error you want to ignore on the line you want to
+ignore it onto.
+
+If you want we can put the ~poetry run flake8~ command to Makefile.
+
+But we will not do that just yet, since we will use pre-commit tool
+and run flake8 over it!

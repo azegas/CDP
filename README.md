@@ -1,29 +1,30 @@
-- [CDP - Core Django Project](#org6fb1642)
-- [How this file is created](#orga2a6f0c)
-- [Resources used](#orgd4bf0ea)
-- [Steps taken to create this Django Core Project](#org91cac78)
-  - [Create a Github repository](#org25b4d01)
-  - [Create a Django project](#orgff64b33)
-  - [Create .gitignore file](#org67d65e1)
-  - [Create a python virtual environment](#org29dd22d)
-  - [Poetry setup](#orgb3e2aaa)
-  - [Creating a Makefile](#org86cdb8a)
-  - [Restructuring the codebase](#org20a582f)
-  - [Settings management](#orgd1c9a76)
-  - [Settings management for developers](#org019af7c)
-  - [Settings management for our application](#org9771364)
-  - [Configure settings of code editor in one place](#org06e0e4e)
+- [CDP - Core Django Project](#org6a04490)
+- [How this file is created](#orgb953c95)
+- [Resources used](#orgdca6151)
+- [Steps taken to create this Django Core Project](#orgd1a063d)
+  - [Create a Github repository](#org88061dc)
+  - [Create a Django project](#orgb0f69da)
+  - [Create .gitignore file](#org5cead28)
+  - [Create a python virtual environment](#org46994a5)
+  - [Poetry setup](#orgeebcfff)
+  - [Creating a Makefile](#org0ba328d)
+  - [Restructuring the codebase](#orgcb72046)
+  - [Settings management](#org233cf00)
+  - [Settings management for developers](#orgf75a835)
+  - [Settings management for our application](#orgb2d4cef)
+  - [Configure settings of code editor in one place](#orga680ec6)
+  - [Flake8](#org7ace785)
 
 
 
-<a id="org6fb1642"></a>
+<a id="org6a04490"></a>
 
 # CDP - Core Django Project
 
 With each new project that I build I keep finding better ways to start a new project. Here I will keep a CORE things that each of my future Django app will have to have.
 
 
-<a id="orga2a6f0c"></a>
+<a id="orgb953c95"></a>
 
 # How this file is created
 
@@ -32,28 +33,28 @@ With each new project that I build I keep finding better ways to start a new pro
 I use .org file since I am used to Emacs keybindings and it's much quicker for me to do the formatting and text transformations and etc. It also generates a table of content for me, which is nice in such large document.
 
 
-<a id="orgd4bf0ea"></a>
+<a id="orgdca6151"></a>
 
 # Resources used
 
 -   Pro Django tutorials by thenewboston
 
 
-<a id="org91cac78"></a>
+<a id="orgd1a063d"></a>
 
 # Steps taken to create this Django Core Project
 
 Steps taken to create this repo are described here.
 
 
-<a id="org25b4d01"></a>
+<a id="org88061dc"></a>
 
 ## Create a Github repository
 
 Create a Github repo with the name of your project. Clone it to your machine. Open a text editor inside of it.
 
 
-<a id="orgff64b33"></a>
+<a id="orgb0f69da"></a>
 
 ## Create a Django project
 
@@ -64,14 +65,14 @@ Time to create a django project. Run the following command - `django-admin start
 Push to github.
 
 
-<a id="org67d65e1"></a>
+<a id="org5cead28"></a>
 
 ## Create .gitignore file
 
 Add content to it from your most recent Django project.
 
 
-<a id="org29dd22d"></a>
+<a id="org46994a5"></a>
 
 ## Create a python virtual environment
 
@@ -105,7 +106,7 @@ pip list
 ```
 
 
-<a id="orgb3e2aaa"></a>
+<a id="orgeebcfff"></a>
 
 ## Poetry setup
 
@@ -165,7 +166,7 @@ poetry run python manage.py runserver
 ```
 
 
-<a id="org86cdb8a"></a>
+<a id="org0ba328d"></a>
 
 ## Creating a Makefile
 
@@ -201,7 +202,7 @@ run-server:
 Other times our commands might be like "make install" or "make clean" or something similar and files might already exist with those names in our directories, so make will try to run those first if there is no .PHONY described.
 
 
-<a id="org20a582f"></a>
+<a id="orgcb72046"></a>
 
 ## Restructuring the codebase
 
@@ -309,7 +310,7 @@ run-server:
 Now command `make run-server` works just fine.
 
 
-<a id="orgd1c9a76"></a>
+<a id="org233cf00"></a>
 
 ## Settings management
 
@@ -359,7 +360,7 @@ make run-server
 ```
 
 
-<a id="org019af7c"></a>
+<a id="orgf75a835"></a>
 
 ## Settings management for developers
 
@@ -420,6 +421,19 @@ include(
 )
 ```
 
+Then also since we took BASE\_DIR description from base.py file, we need to modify the database location.
+
+Chante the "NAME" to the absolute location of db.sqlite3 file like so:
+
+```python
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": "/home/arvy/src/CDP/db.sqlite3",
+    }
+}
+```
+
 Try to `make run-server` now - the server should work properly.
 
 If you remove `settings.dev.py` - it won't work, you will have ALLOWED\_HOSTS error because DEBUG = False in base.py. It just confirms that the new dev settings file works as intended.
@@ -455,7 +469,7 @@ DEBUG = True
 So now when new developer comes, he knows that he must create local folder and copy this settings.dev.py file to that local folder.
 
 
-<a id="org9771364"></a>
+<a id="orgb2d4cef"></a>
 
 ## Settings management for our application
 
@@ -476,7 +490,7 @@ In `custom.py` add this content:
 add 'custom.py' to <span class="underline"><span class="underline">init</span></span>.py
 
 
-<a id="org06e0e4e"></a>
+<a id="orga680ec6"></a>
 
 ## Configure settings of code editor in one place
 
@@ -498,3 +512,50 @@ trim_trailing_whitespace = true
 This configuration tells the text editor and IDE's how to automatically clean up our code.
 
 VScode needs an extension installed to be able to read these instructions. Pycharm does it automatically. Emacs needs an extension as well.
+
+
+<a id="org7ace785"></a>
+
+## Flake8
+
+Keep your code consistent and clean. <https://flake8.pycqa.org/en/latest/user/configuration.html>
+
+Install flake9 as a DEV (-D) dependency, since we don't need it in our final build to push up to production, its more for developers, to make sure their code is consistent.
+
+```bash
+poetry add -D flake8
+```
+
+Check pyproject.toml and poetry.lock files to confirm that it was installed and added as dev dependency.
+
+Also check in this way:
+
+```bash
+poetry add -D flake8 --help
+```
+
+Let's test flake9. Go to core/manage.py and add 5 or so blank lines, save the file.
+
+Then in terminal run this command:
+
+```bash
+poetry run flake8 core/manage.py -v
+```
+
+This will scan that file with flake8 and tell us what's wrong with it. Should say `E303 too many blank lines(5)`. That's great!
+
+Remove those 5 blank lines and run the same command again. Error should not appear anymore.
+
+If you ever want to run this check for every single file in your directory/subdirectory, then you can run the same command without specifying the file path:
+
+```bash
+poetry run flake8
+```
+
+But since we have venv folder with lots of crap in it, we will not do this. Let's create a config file for flake8 so we can specify what to ignore along with other settings.
+
+If there is a particular error you are getting but would like for flake8 to ignore, you can add `# noqa: F821` for example. Replace the error code with the error you want to ignore on the line you want to ignore it onto.
+
+If you want we can put the `poetry run flake8` command to Makefile.
+
+But we will not do that just yet, since we will use pre-commit tool and run flake8 over it!
