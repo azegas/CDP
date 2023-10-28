@@ -23,5 +23,6 @@ if not os.path.isabs(LOCAL_SETTINGS_PATH):
 
 include(
     'base.py',                  # base settings that we will use for every environment
+    'custom.py',
     optional(LOCAL_SETTINGS_PATH) # Include if exist. They will override the  base.py
 )

@@ -438,3 +438,22 @@ that the new dev settings file works as intended.
 
 After you confirm that it works, make sure to add /local folder to
 .gitignore.
+
+** Settings management for our application
+
+In here we will place unique settings that are related to our
+application only. Not Django settings should go in here.
+
+Create:
+
+#+begin_src bash
+  touch core/project/settings/custom.py
+#+end_src
+
+In ~custom.py~ add this content:
+
+#+begin_src python
+-
+#+end_src
+
+add 'custom.py' to __init__.py
