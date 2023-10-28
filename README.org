@@ -439,6 +439,37 @@ that the new dev settings file works as intended.
 After you confirm that it works, make sure to add /local folder to
 .gitignore.
 
+
+Also we can make a template file for other developers to look into,
+to know what values they can change:
+
+in ~/home/arvy/src/CDP/core/project/settings~
+
+#+begin_src bash
+  mkdir templates
+  touch settings.dev.py
+#+end_src
+
+add reference content to it:
+
+#+begin_src python
+  """
+
+  Sample settings template file that other developers can use to
+  override base.py settings file with their own settings. Should be
+  placed in "local/settings.dev.py file.
+
+  /home/arvy/src/CDP/local/settings.dev.py
+
+  """
+
+  SECRET_KEY = "secretkey"
+  DEBUG = True
+#+end_src
+
+So now when new developer comes, he knows that he must create local
+folder and copy this settings.dev.py file to that local folder.
+
 ** Settings management for our application
 
 In here we will place unique settings that are related to our

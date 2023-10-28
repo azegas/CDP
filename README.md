@@ -1,29 +1,29 @@
-- [CDP - Core Django Project](#orgc30e023)
-- [How this file is created](#orgf28d39d)
-- [Resources used](#orgc5064c1)
-- [Steps taken to create this Django Core Project](#orgad26916)
-  - [Create a Github repository](#orgbb6873b)
-  - [Create a Django project](#org5a301c1)
-  - [Create .gitignore file](#org58e222e)
-  - [Create a python virtual environment](#org8d563c7)
-  - [Poetry setup](#orgf610675)
-  - [Creating a Makefile](#org33b90bc)
-  - [Restructuring the codebase](#org3e0d07a)
-  - [Settings management](#orgd09757c)
-  - [Settings management for developers](#orgb18fb81)
-  - [Settings management for our application](#org7d8d528)
-  - [Configure settings of code editor in one place](#org47a8e74)
+- [CDP - Core Django Project](#org6fb1642)
+- [How this file is created](#orga2a6f0c)
+- [Resources used](#orgd4bf0ea)
+- [Steps taken to create this Django Core Project](#org91cac78)
+  - [Create a Github repository](#org25b4d01)
+  - [Create a Django project](#orgff64b33)
+  - [Create .gitignore file](#org67d65e1)
+  - [Create a python virtual environment](#org29dd22d)
+  - [Poetry setup](#orgb3e2aaa)
+  - [Creating a Makefile](#org86cdb8a)
+  - [Restructuring the codebase](#org20a582f)
+  - [Settings management](#orgd1c9a76)
+  - [Settings management for developers](#org019af7c)
+  - [Settings management for our application](#org9771364)
+  - [Configure settings of code editor in one place](#org06e0e4e)
 
 
 
-<a id="orgc30e023"></a>
+<a id="org6fb1642"></a>
 
 # CDP - Core Django Project
 
 With each new project that I build I keep finding better ways to start a new project. Here I will keep a CORE things that each of my future Django app will have to have.
 
 
-<a id="orgf28d39d"></a>
+<a id="orga2a6f0c"></a>
 
 # How this file is created
 
@@ -32,28 +32,28 @@ With each new project that I build I keep finding better ways to start a new pro
 I use .org file since I am used to Emacs keybindings and it's much quicker for me to do the formatting and text transformations and etc. It also generates a table of content for me, which is nice in such large document.
 
 
-<a id="orgc5064c1"></a>
+<a id="orgd4bf0ea"></a>
 
 # Resources used
 
 -   Pro Django tutorials by thenewboston
 
 
-<a id="orgad26916"></a>
+<a id="org91cac78"></a>
 
 # Steps taken to create this Django Core Project
 
 Steps taken to create this repo are described here.
 
 
-<a id="orgbb6873b"></a>
+<a id="org25b4d01"></a>
 
 ## Create a Github repository
 
 Create a Github repo with the name of your project. Clone it to your machine. Open a text editor inside of it.
 
 
-<a id="org5a301c1"></a>
+<a id="orgff64b33"></a>
 
 ## Create a Django project
 
@@ -64,14 +64,14 @@ Time to create a django project. Run the following command - `django-admin start
 Push to github.
 
 
-<a id="org58e222e"></a>
+<a id="org67d65e1"></a>
 
 ## Create .gitignore file
 
 Add content to it from your most recent Django project.
 
 
-<a id="org8d563c7"></a>
+<a id="org29dd22d"></a>
 
 ## Create a python virtual environment
 
@@ -105,7 +105,7 @@ pip list
 ```
 
 
-<a id="orgf610675"></a>
+<a id="orgb3e2aaa"></a>
 
 ## Poetry setup
 
@@ -165,7 +165,7 @@ poetry run python manage.py runserver
 ```
 
 
-<a id="org33b90bc"></a>
+<a id="org86cdb8a"></a>
 
 ## Creating a Makefile
 
@@ -201,7 +201,7 @@ run-server:
 Other times our commands might be like "make install" or "make clean" or something similar and files might already exist with those names in our directories, so make will try to run those first if there is no .PHONY described.
 
 
-<a id="org3e0d07a"></a>
+<a id="org20a582f"></a>
 
 ## Restructuring the codebase
 
@@ -309,7 +309,7 @@ run-server:
 Now command `make run-server` works just fine.
 
 
-<a id="orgd09757c"></a>
+<a id="orgd1c9a76"></a>
 
 ## Settings management
 
@@ -359,7 +359,7 @@ make run-server
 ```
 
 
-<a id="orgb18fb81"></a>
+<a id="org019af7c"></a>
 
 ## Settings management for developers
 
@@ -426,8 +426,36 @@ If you remove `settings.dev.py` - it won't work, you will have ALLOWED\_HOSTS er
 
 After you confirm that it works, make sure to add /local folder to .gitignore.
 
+Also we can make a template file for other developers to look into, to know what values they can change:
 
-<a id="org7d8d528"></a>
+in `/home/arvy/src/CDP/core/project/settings`
+
+```bash
+mkdir templates
+touch settings.dev.py
+```
+
+add reference content to it:
+
+```python
+"""
+
+Sample settings template file that other developers can use to
+override base.py settings file with their own settings. Should be
+placed in "local/settings.dev.py file.
+
+/home/arvy/src/CDP/local/settings.dev.py
+
+"""
+
+SECRET_KEY = "secretkey"
+DEBUG = True
+```
+
+So now when new developer comes, he knows that he must create local folder and copy this settings.dev.py file to that local folder.
+
+
+<a id="org9771364"></a>
 
 ## Settings management for our application
 
@@ -448,7 +476,7 @@ In `custom.py` add this content:
 add 'custom.py' to <span class="underline"><span class="underline">init</span></span>.py
 
 
-<a id="org47a8e74"></a>
+<a id="org06e0e4e"></a>
 
 ## Configure settings of code editor in one place
 
