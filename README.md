@@ -1,31 +1,32 @@
-- [CDP - Core Django Project](#orgf79764a)
-- [How this file is created](#org4f2ff1f)
-- [Resources used](#orgce2f42f)
-- [Steps taken to create this Django Core Project](#orgd65cfbf)
-  - [Create a Github repository](#org7ba0df8)
-  - [Create a Django project](#org63cad42)
-  - [Create .gitignore file](#org3816b30)
-  - [Create a python virtual environment](#org5f15f7f)
-  - [Poetry setup](#org138bcf4)
-  - [Creating a Makefile](#org5981b35)
-  - [Restructuring the codebase](#org065ec25)
-  - [Settings management](#orgf958a3c)
-  - [Settings management for developers](#orgd700f44)
-  - [Settings management for our application](#orgb949c3a)
-  - [Configure settings of code editor in one place](#orga5f1ef6)
-  - [Flake8](#org7670c20)
-  - [pre-commit](#orgaa23555)
+- [CDP - Core Django Project](#orgfcd9afa)
+- [How this file is created](#orge771191)
+- [Resources used](#orgce1b28b)
+- [Steps taken to create this Django Core Project](#orgbe7f3e9)
+  - [Create a Github repository](#org0191ba1)
+  - [Create a Django project](#org6e12895)
+  - [Create .gitignore file](#orge5f4403)
+  - [Create a python virtual environment](#org9b9ac2b)
+  - [Poetry setup](#org51956e3)
+  - [Creating a Makefile](#orgcdf4767)
+  - [Restructuring the codebase](#org3819c47)
+  - [Settings management](#orga9ad694)
+  - [Settings management for developers](#orge1977e3)
+  - [Settings management for our application](#org4ff9aa4)
+  - [Configure settings of code editor in one place](#org3da7373)
+  - [Flake8](#org2d2508c)
+  - [pre-commit](#org259d17a)
+  - [logging](#org0525f5c)
 
 
 
-<a id="orgf79764a"></a>
+<a id="orgfcd9afa"></a>
 
 # CDP - Core Django Project
 
 With each new project that I build I keep finding better ways to start a new project. Here I will keep a CORE things that each of my future Django app will have to have.
 
 
-<a id="org4f2ff1f"></a>
+<a id="orge771191"></a>
 
 # How this file is created
 
@@ -34,28 +35,28 @@ With each new project that I build I keep finding better ways to start a new pro
 I use .org file since I am used to Emacs keybindings and it's much quicker for me to do the formatting and text transformations and etc. It also generates a table of content for me, which is nice in such large document.
 
 
-<a id="orgce2f42f"></a>
+<a id="orgce1b28b"></a>
 
 # Resources used
 
 -   Pro Django tutorials by thenewboston
 
 
-<a id="orgd65cfbf"></a>
+<a id="orgbe7f3e9"></a>
 
 # Steps taken to create this Django Core Project
 
 Steps taken to create this repo are described here.
 
 
-<a id="org7ba0df8"></a>
+<a id="org0191ba1"></a>
 
 ## Create a Github repository
 
 Create a Github repo with the name of your project. Clone it to your machine. Open a text editor inside of it.
 
 
-<a id="org63cad42"></a>
+<a id="org6e12895"></a>
 
 ## Create a Django project
 
@@ -66,14 +67,14 @@ Time to create a django project. Run the following command - `django-admin start
 Push to github.
 
 
-<a id="org3816b30"></a>
+<a id="orge5f4403"></a>
 
 ## Create .gitignore file
 
 Add content to it from your most recent Django project.
 
 
-<a id="org5f15f7f"></a>
+<a id="org9b9ac2b"></a>
 
 ## Create a python virtual environment
 
@@ -107,7 +108,7 @@ pip list
 ```
 
 
-<a id="org138bcf4"></a>
+<a id="org51956e3"></a>
 
 ## Poetry setup
 
@@ -167,7 +168,7 @@ poetry run python manage.py runserver
 ```
 
 
-<a id="org5981b35"></a>
+<a id="orgcdf4767"></a>
 
 ## Creating a Makefile
 
@@ -203,7 +204,7 @@ run-server:
 Other times our commands might be like "make install" or "make clean" or something similar and files might already exist with those names in our directories, so make will try to run those first if there is no .PHONY described.
 
 
-<a id="org065ec25"></a>
+<a id="org3819c47"></a>
 
 ## Restructuring the codebase
 
@@ -311,7 +312,7 @@ run-server:
 Now command `make run-server` works just fine.
 
 
-<a id="orgf958a3c"></a>
+<a id="orga9ad694"></a>
 
 ## Settings management
 
@@ -361,7 +362,7 @@ make run-server
 ```
 
 
-<a id="orgd700f44"></a>
+<a id="orge1977e3"></a>
 
 ## Settings management for developers
 
@@ -470,7 +471,7 @@ DEBUG = True
 So now when new developer comes, he knows that he must create local folder and copy this settings.dev.py file to that local folder.
 
 
-<a id="orgb949c3a"></a>
+<a id="org4ff9aa4"></a>
 
 ## Settings management for our application
 
@@ -491,7 +492,7 @@ In `custom.py` add this content:
 add 'custom.py' to <span class="underline"><span class="underline">init</span></span>.py
 
 
-<a id="orga5f1ef6"></a>
+<a id="org3da7373"></a>
 
 ## Configure settings of code editor in one place
 
@@ -515,7 +516,7 @@ This configuration tells the text editor and IDE's how to automatically clean up
 VScode needs an extension installed to be able to read these instructions. Pycharm does it automatically. Emacs needs an extension as well.
 
 
-<a id="org7670c20"></a>
+<a id="org2d2508c"></a>
 
 ## Flake8
 
@@ -562,7 +563,7 @@ If you want we can put the `poetry run flake8` command to Makefile.
 But we will not do that just yet, since we will use pre-commit tool and run flake8 over it!
 
 
-<a id="orgaa23555"></a>
+<a id="org259d17a"></a>
 
 ## pre-commit
 
@@ -731,3 +732,143 @@ update "update" by adding install-pre-commit:
 .PHONY: update
 update: install migrate install-pre-commit ;
 ```
+
+
+<a id="org0525f5c"></a>
+
+## logging
+
+Logging can provide us with more(than print statements) - and better structured - information about the state and health of your application.
+
+Besides
+
+Inspiration and explanation - <https://www.youtube.com/watch?v=sGbzjzO1LHI&list=PL6gx4Cwl9DGDYbs0jJdGefNN8eZRSwWqy&index=3&ab_channel=thenewboston>
+
+Official docs - <https://docs.djangoproject.com/en/4.2/topics/logging/>
+
+In settings folder, next to base.py and custom.py, create `logging.py` file.
+
+Now for every logging task you will need 3 things(formatter, handler, logger):
+
+-   formatter
+
+Describe HOW you want to format your messages
+
+```python
+'formatters': {
+    'main_formatter': {
+        'format': '%(asctime)s %(levelname)s %(module)s %(name)s %(message)s'
+    },
+},
+```
+
+-   handler
+
+**Where** to put those logs. StreamHandler - output logs to the console. FileHandler - write logs to the external file.
+
+```python
+'handlers': {
+    'console': {
+        'level': 'INFO',
+        'class': 'logging.StreamHandler',
+        'formatter': 'main_formatter',
+        'filters': [],
+    },
+},
+```
+
+-   logger
+
+```python
+'loggers': {
+    logger_name: {
+        'level': 'INFO',
+        'propagate': True,
+    } for logger_name in ('django', 'django.request', 'django.db.backends', 'django.template', 'core')
+},
+```
+
+The whole `logging.py` file can look like so at the end in our case:
+
+```python
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'main_formatter': {
+            'format': '%(asctime)s %(levelname)s %(module)s %(name)s %(message)s'
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'main_formatter',
+            'filters': [],
+        },
+    },
+    'loggers': {
+        logger_name: {
+            'level': 'INFO',
+            'propagate': True,
+        } for logger_name in ('django', 'django.request', 'django.db.backends', 'django.template', 'core')
+    },
+    'root': {
+        'level': 'DEBUG',
+        'handlers': ['console'],
+    }
+}
+```
+
+If we specify INFO **logging level** - then INFO **and** everything ABOVE info will be logged. If I chose to have WARNING only, then only WARNING and everything above warning will be logged, I will not see info or debug logs.
+
+In production it's better not to set to see DEBUG messages, since some of them potentially might be dangerous if exposed.
+
+So basically if you want to change the depth level of your logs - modify 'loggers', if you want to change the formatting - change the formatter, if you want to log to different places (terminal, file..), modify 'handlers'.
+
+Also don't forget to add `logging.py` file to `__init__.py` so out config file gets read by Django app.
+
+```python
+include(
+    'base.py',  # base settings that we will use for every environment
+    'custom.py',
+    'logging.py',                 # ADD THIS
+    optional(LOCAL_SETTINGS_PATH)  # Include if exist. Overrides base.py
+)
+```
+
+Then to make the log messages colorful, not sure about the exact syntax and what it does, but can add this code in your local folder, settings.dev.py file:
+
+```python
+LOGGING['formatters']['colored'] = {  # type: ignore
+    '()': 'colorlog.ColoredFormatter',
+    'format': '%(log_color)s%(asctime)s %(levelname)s %(name)s %(bold_white)s%(message)s',
+}
+LOGGING['loggers']['core']['level'] = 'DEBUG'  # type: ignore
+LOGGING['handlers']['console']['level'] = 'DEBUG'  # type: ignore
+LOGGING['handlers']['console']['formatter'] = 'colored'  # type: ignore
+```
+
+But before adding those, first you have to install a package:
+
+```bash
+poetry add -D colorlog
+```
+
+Then to check the logs, in urls.py file for example you can add this:
+
+```python
+import logging
+
+logger = logging.getLogger(__name__)
+
+logger.debug('This is the debug message')
+logger.info('This is an info message')
+logger.warning('This is the warning message')
+logger.error('This is an error message')
+logger.critical('This is a critical message')
+```
+
+Now with each page refresh you should see some messages exactly how we styled. They should be colorful also.
+
+The goal with logging now is to figure out how to use it effectively in my Django project.

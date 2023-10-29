@@ -13,6 +13,7 @@ django-split-settings = "^1.2.0"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.5.0"
+colorlog = "^6.7.0"
 
 [tool.isort]
 multi_line_output = 5

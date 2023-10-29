@@ -774,3 +774,156 @@ update "update" by adding install-pre-commit:
   .PHONY: update
   update: install migrate install-pre-commit ;
 #+end_src
+** logging
+
+Logging can provide us with more(than print statements) - and better
+structured - information about the state and health of your
+application.
+
+Besides
+
+Inspiration and explanation -
+https://www.youtube.com/watch?v=sGbzjzO1LHI&list=PL6gx4Cwl9DGDYbs0jJdGefNN8eZRSwWqy&index=3&ab_channel=thenewboston
+
+Official docs - https://docs.djangoproject.com/en/4.2/topics/logging/
+
+In settings folder, next to base.py and custom.py, create ~logging.py~
+file.
+
+Now for every logging task you will need 3 things(formatter, handler, logger):
+
+- formatter
+
+Describe HOW you want to format your messages
+
+#+begin_src python
+    'formatters': {
+        'main_formatter': {
+            'format': '%(asctime)s %(levelname)s %(module)s %(name)s %(message)s'
+        },
+    },
+#+end_src
+
+- handler
+
+*Where* to put those logs. StreamHandler - output logs to the console.
+FileHandler - write logs to the external file.
+
+#+begin_src python
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'class': 'logging.StreamHandler',
+            'formatter': 'main_formatter',
+            'filters': [],
+        },
+    },
+#+end_src
+
+- logger
+
+#+begin_src python
+    'loggers': {
+        logger_name: {
+            'level': 'INFO',
+            'propagate': True,
+        } for logger_name in ('django', 'django.request', 'django.db.backends', 'django.template', 'core')
+    },
+#+end_src
+
+The whole ~logging.py~ file can look like so at the end in our case:
+
+#+begin_src python
+  LOGGING = {
+      'version': 1,
+      'disable_existing_loggers': False,
+      'formatters': {
+          'main_formatter': {
+              'format': '%(asctime)s %(levelname)s %(module)s %(name)s %(message)s'
+          },
+      },
+      'handlers': {
+          'console': {
+              'level': 'INFO',
+              'class': 'logging.StreamHandler',
+              'formatter': 'main_formatter',
+              'filters': [],
+          },
+      },
+      'loggers': {
+          logger_name: {
+              'level': 'INFO',
+              'propagate': True,
+          } for logger_name in ('django', 'django.request', 'django.db.backends', 'django.template', 'core')
+      },
+      'root': {
+          'level': 'DEBUG',
+          'handlers': ['console'],
+      }
+  }
+#+end_src
+
+If we specify INFO *logging level* - then INFO *and* everything ABOVE info
+will be logged. If I chose to have WARNING only, then only WARNING and
+everything above warning will be logged, I will not see info or debug
+logs.
+
+In production it's better not to set to see DEBUG messages, since some
+of them potentially might be dangerous if exposed.
+
+So basically if you want to change the depth level of your logs -
+modify 'loggers', if you want to change the formatting - change the
+formatter, if you want to log to different places (terminal, file..),
+modify 'handlers'.
+
+Also don't forget to add ~logging.py~ file to ~__init__.py~ so out config
+file gets read by Django app.
+
+#+begin_src python
+  include(
+      'base.py',  # base settings that we will use for every environment
+      'custom.py',
+      'logging.py',                 # ADD THIS
+      optional(LOCAL_SETTINGS_PATH)  # Include if exist. Overrides base.py
+  )
+#+end_src
+
+Then to make the log messages colorful, not sure about the exact
+syntax and what it does, but can add this code in your local folder,
+settings.dev.py file:
+
+#+begin_src python
+  LOGGING['formatters']['colored'] = {  # type: ignore
+      '()': 'colorlog.ColoredFormatter',
+      'format': '%(log_color)s%(asctime)s %(levelname)s %(name)s %(bold_white)s%(message)s',
+  }
+  LOGGING['loggers']['core']['level'] = 'DEBUG'  # type: ignore
+  LOGGING['handlers']['console']['level'] = 'DEBUG'  # type: ignore
+  LOGGING['handlers']['console']['formatter'] = 'colored'  # type: ignore
+#+end_src
+
+But before adding those, first you have to install a package:
+
+#+begin_src bash
+  poetry add -D colorlog
+#+end_src
+
+Then to check the logs, in urls.py file for example you can add this:
+
+#+begin_src python
+  import logging
+
+  logger = logging.getLogger(__name__)
+
+  logger.debug('This is the debug message')
+  logger.info('This is an info message')
+  logger.warning('This is the warning message')
+  logger.error('This is an error message')
+  logger.critical('This is a critical message')
+#+end_src
+
+Now with each page refresh you should see some messages exactly how we
+styled. They should be colorful also.
+
+The goal with logging now is to figure out how to use it effectively
+in my Django project.
