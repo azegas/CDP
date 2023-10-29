@@ -1,32 +1,32 @@
-- [CDP - Core Django Project](#orgfcd9afa)
-- [How this file is created](#orge771191)
-- [Resources used](#orgce1b28b)
-- [Steps taken to create this Django Core Project](#orgbe7f3e9)
-  - [Create a Github repository](#org0191ba1)
-  - [Create a Django project](#org6e12895)
-  - [Create .gitignore file](#orge5f4403)
-  - [Create a python virtual environment](#org9b9ac2b)
-  - [Poetry setup](#org51956e3)
-  - [Creating a Makefile](#orgcdf4767)
-  - [Restructuring the codebase](#org3819c47)
-  - [Settings management](#orga9ad694)
-  - [Settings management for developers](#orge1977e3)
-  - [Settings management for our application](#org4ff9aa4)
-  - [Configure settings of code editor in one place](#org3da7373)
-  - [Flake8](#org2d2508c)
-  - [pre-commit](#org259d17a)
-  - [logging](#org0525f5c)
+- [CDP - Core Django Project](#org60bc02e)
+- [How this file is created](#orga8d0a7f)
+- [Resources used](#org724b3f6)
+- [Steps taken to create this Django Core Project](#org8bbba0f)
+  - [Create a Github repository](#org672f747)
+  - [Create a Django project](#orgf792260)
+  - [Create .gitignore file](#orgf27ad38)
+  - [Create a python virtual environment](#orgd9d4a46)
+  - [Poetry setup](#org9610350)
+  - [Creating a Makefile](#org0ade3a1)
+  - [Restructuring the codebase](#org66cdb5e)
+  - [Settings management](#org77e1f0e)
+  - [Settings management for developers](#orgd823329)
+  - [Settings management for our application](#org637c8c1)
+  - [Configure settings of code editor in one place](#orgee32aa7)
+  - [Flake8](#org6be6789)
+  - [pre-commit](#orge3d56e9)
+  - [logging](#orga786362)
 
 
 
-<a id="orgfcd9afa"></a>
+<a id="org60bc02e"></a>
 
 # CDP - Core Django Project
 
 With each new project that I build I keep finding better ways to start a new project. Here I will keep a CORE things that each of my future Django app will have to have.
 
 
-<a id="orge771191"></a>
+<a id="orga8d0a7f"></a>
 
 # How this file is created
 
@@ -35,28 +35,28 @@ With each new project that I build I keep finding better ways to start a new pro
 I use .org file since I am used to Emacs keybindings and it's much quicker for me to do the formatting and text transformations and etc. It also generates a table of content for me, which is nice in such large document.
 
 
-<a id="orgce1b28b"></a>
+<a id="org724b3f6"></a>
 
 # Resources used
 
 -   Pro Django tutorials by thenewboston
 
 
-<a id="orgbe7f3e9"></a>
+<a id="org8bbba0f"></a>
 
 # Steps taken to create this Django Core Project
 
 Steps taken to create this repo are described here.
 
 
-<a id="org0191ba1"></a>
+<a id="org672f747"></a>
 
 ## Create a Github repository
 
 Create a Github repo with the name of your project. Clone it to your machine. Open a text editor inside of it.
 
 
-<a id="org6e12895"></a>
+<a id="orgf792260"></a>
 
 ## Create a Django project
 
@@ -67,14 +67,14 @@ Time to create a django project. Run the following command - `django-admin start
 Push to github.
 
 
-<a id="orge5f4403"></a>
+<a id="orgf27ad38"></a>
 
 ## Create .gitignore file
 
 Add content to it from your most recent Django project.
 
 
-<a id="org9b9ac2b"></a>
+<a id="orgd9d4a46"></a>
 
 ## Create a python virtual environment
 
@@ -108,7 +108,7 @@ pip list
 ```
 
 
-<a id="org51956e3"></a>
+<a id="org9610350"></a>
 
 ## Poetry setup
 
@@ -168,7 +168,7 @@ poetry run python manage.py runserver
 ```
 
 
-<a id="orgcdf4767"></a>
+<a id="org0ade3a1"></a>
 
 ## Creating a Makefile
 
@@ -204,7 +204,7 @@ run-server:
 Other times our commands might be like "make install" or "make clean" or something similar and files might already exist with those names in our directories, so make will try to run those first if there is no .PHONY described.
 
 
-<a id="org3819c47"></a>
+<a id="org66cdb5e"></a>
 
 ## Restructuring the codebase
 
@@ -312,7 +312,7 @@ run-server:
 Now command `make run-server` works just fine.
 
 
-<a id="orga9ad694"></a>
+<a id="org77e1f0e"></a>
 
 ## Settings management
 
@@ -362,7 +362,7 @@ make run-server
 ```
 
 
-<a id="orge1977e3"></a>
+<a id="orgd823329"></a>
 
 ## Settings management for developers
 
@@ -471,7 +471,7 @@ DEBUG = True
 So now when new developer comes, he knows that he must create local folder and copy this settings.dev.py file to that local folder.
 
 
-<a id="org4ff9aa4"></a>
+<a id="org637c8c1"></a>
 
 ## Settings management for our application
 
@@ -492,7 +492,7 @@ In `custom.py` add this content:
 add 'custom.py' to <span class="underline"><span class="underline">init</span></span>.py
 
 
-<a id="org3da7373"></a>
+<a id="orgee32aa7"></a>
 
 ## Configure settings of code editor in one place
 
@@ -516,7 +516,7 @@ This configuration tells the text editor and IDE's how to automatically clean up
 VScode needs an extension installed to be able to read these instructions. Pycharm does it automatically. Emacs needs an extension as well.
 
 
-<a id="org2d2508c"></a>
+<a id="org6be6789"></a>
 
 ## Flake8
 
@@ -563,7 +563,7 @@ If you want we can put the `poetry run flake8` command to Makefile.
 But we will not do that just yet, since we will use pre-commit tool and run flake8 over it!
 
 
-<a id="org259d17a"></a>
+<a id="orge3d56e9"></a>
 
 ## pre-commit
 
@@ -734,7 +734,7 @@ update: install migrate install-pre-commit ;
 ```
 
 
-<a id="org0525f5c"></a>
+<a id="orga786362"></a>
 
 ## logging
 
@@ -830,23 +830,23 @@ Also don't forget to add `logging.py` file to `__init__.py` so out config file g
 
 ```python
 include(
-    'base.py',  # base settings that we will use for every environment
+    'base.py',
     'custom.py',
     'logging.py',                 # ADD THIS
-    optional(LOCAL_SETTINGS_PATH)  # Include if exist. Overrides base.py
+    optional(LOCAL_SETTINGS_PATH)
 )
 ```
 
 Then to make the log messages colorful, not sure about the exact syntax and what it does, but can add this code in your local folder, settings.dev.py file:
 
 ```python
-LOGGING['formatters']['colored'] = {  # type: ignore
+LOGGING['formatters']['colored'] = {
     '()': 'colorlog.ColoredFormatter',
     'format': '%(log_color)s%(asctime)s %(levelname)s %(name)s %(bold_white)s%(message)s',
 }
-LOGGING['loggers']['core']['level'] = 'DEBUG'  # type: ignore
-LOGGING['handlers']['console']['level'] = 'DEBUG'  # type: ignore
-LOGGING['handlers']['console']['formatter'] = 'colored'  # type: ignore
+LOGGING['loggers']['core']['level'] = 'DEBUG'
+LOGGING['handlers']['console']['level'] = 'DEBUG'
+LOGGING['handlers']['console']['formatter'] = 'colored'
 ```
 
 But before adding those, first you have to install a package:
