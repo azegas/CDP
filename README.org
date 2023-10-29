@@ -881,10 +881,10 @@ file gets read by Django app.
 
 #+begin_src python
   include(
-      'base.py',  # base settings that we will use for every environment
+      'base.py',
       'custom.py',
       'logging.py',                 # ADD THIS
-      optional(LOCAL_SETTINGS_PATH)  # Include if exist. Overrides base.py
+      optional(LOCAL_SETTINGS_PATH)
   )
 #+end_src
 
@@ -893,13 +893,13 @@ syntax and what it does, but can add this code in your local folder,
 settings.dev.py file:
 
 #+begin_src python
-  LOGGING['formatters']['colored'] = {  # type: ignore
+  LOGGING['formatters']['colored'] = {
       '()': 'colorlog.ColoredFormatter',
       'format': '%(log_color)s%(asctime)s %(levelname)s %(name)s %(bold_white)s%(message)s',
   }
-  LOGGING['loggers']['core']['level'] = 'DEBUG'  # type: ignore
-  LOGGING['handlers']['console']['level'] = 'DEBUG'  # type: ignore
-  LOGGING['handlers']['console']['formatter'] = 'colored'  # type: ignore
+  LOGGING['loggers']['core']['level'] = 'DEBUG'
+  LOGGING['handlers']['console']['level'] = 'DEBUG'
+  LOGGING['handlers']['console']['formatter'] = 'colored'
 #+end_src
 
 But before adding those, first you have to install a package:

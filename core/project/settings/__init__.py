@@ -24,7 +24,7 @@ if not os.path.isabs(LOCAL_SETTINGS_PATH):
 
 include(
     'base.py',  # base settings that we will use for every environment
-    'custom.py',
-    'logging.py',
+    'custom.py',  # cusom config not related to Django
+    'logging.py',  # logging config
     optional(LOCAL_SETTINGS_PATH)  # Include if exist. Overrides base.py
 )
