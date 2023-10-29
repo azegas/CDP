@@ -1,5 +1,6 @@
 import os.path
 from pathlib import Path
+
 from split_settings.tools import include, optional
 
 # our base directory, in our case its CDP folder
@@ -11,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent.parent
 # we will have to prefix it with this string below:
 ENVVAR_SETTINGS_PREFIX = 'CORESETTINGS_'
 
-LOCAL_SETTINGS_PATH = os.getenv(f"{ENVVAR_SETTINGS_PREFIX}LOCAL_SETTINGS_PATH")
+LOCAL_SETTINGS_PATH = os.getenv(f'{ENVVAR_SETTINGS_PREFIX}LOCAL_SETTINGS_PATH')
 
 if not LOCAL_SETTINGS_PATH:
     LOCAL_SETTINGS_PATH = 'local/settings.dev.py'
@@ -22,7 +23,7 @@ if not os.path.isabs(LOCAL_SETTINGS_PATH):
     # /home/arvy/src/CDP/local/settings.dev.py
 
 include(
-    'base.py',                  # base settings that we will use for every environment
+    'base.py',  # base settings that we will use for every environment
     'custom.py',
-    optional(LOCAL_SETTINGS_PATH)  # Include if exist. They will override the  base.py
+    optional(LOCAL_SETTINGS_PATH)  # Include if exist. Overrides base.py
 )

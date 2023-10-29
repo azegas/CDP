@@ -8,5 +8,5 @@ placed in "local/settings.dev.py file.
 
 """
 
-SECRET_KEY = "secretkey"
+SECRET_KEY = 'secretkey'
 DEBUG = True

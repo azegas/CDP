@@ -1,30 +1,31 @@
-- [CDP - Core Django Project](#org6a04490)
-- [How this file is created](#orgb953c95)
-- [Resources used](#orgdca6151)
-- [Steps taken to create this Django Core Project](#orgd1a063d)
-  - [Create a Github repository](#org88061dc)
-  - [Create a Django project](#orgb0f69da)
-  - [Create .gitignore file](#org5cead28)
-  - [Create a python virtual environment](#org46994a5)
-  - [Poetry setup](#orgeebcfff)
-  - [Creating a Makefile](#org0ba328d)
-  - [Restructuring the codebase](#orgcb72046)
-  - [Settings management](#org233cf00)
-  - [Settings management for developers](#orgf75a835)
-  - [Settings management for our application](#orgb2d4cef)
-  - [Configure settings of code editor in one place](#orga680ec6)
-  - [Flake8](#org7ace785)
+- [CDP - Core Django Project](#orgf79764a)
+- [How this file is created](#org4f2ff1f)
+- [Resources used](#orgce2f42f)
+- [Steps taken to create this Django Core Project](#orgd65cfbf)
+  - [Create a Github repository](#org7ba0df8)
+  - [Create a Django project](#org63cad42)
+  - [Create .gitignore file](#org3816b30)
+  - [Create a python virtual environment](#org5f15f7f)
+  - [Poetry setup](#org138bcf4)
+  - [Creating a Makefile](#org5981b35)
+  - [Restructuring the codebase](#org065ec25)
+  - [Settings management](#orgf958a3c)
+  - [Settings management for developers](#orgd700f44)
+  - [Settings management for our application](#orgb949c3a)
+  - [Configure settings of code editor in one place](#orga5f1ef6)
+  - [Flake8](#org7670c20)
+  - [pre-commit](#orgaa23555)
 
 
 
-<a id="org6a04490"></a>
+<a id="orgf79764a"></a>
 
 # CDP - Core Django Project
 
 With each new project that I build I keep finding better ways to start a new project. Here I will keep a CORE things that each of my future Django app will have to have.
 
 
-<a id="orgb953c95"></a>
+<a id="org4f2ff1f"></a>
 
 # How this file is created
 
@@ -33,28 +34,28 @@ With each new project that I build I keep finding better ways to start a new pro
 I use .org file since I am used to Emacs keybindings and it's much quicker for me to do the formatting and text transformations and etc. It also generates a table of content for me, which is nice in such large document.
 
 
-<a id="orgdca6151"></a>
+<a id="orgce2f42f"></a>
 
 # Resources used
 
 -   Pro Django tutorials by thenewboston
 
 
-<a id="orgd1a063d"></a>
+<a id="orgd65cfbf"></a>
 
 # Steps taken to create this Django Core Project
 
 Steps taken to create this repo are described here.
 
 
-<a id="org88061dc"></a>
+<a id="org7ba0df8"></a>
 
 ## Create a Github repository
 
 Create a Github repo with the name of your project. Clone it to your machine. Open a text editor inside of it.
 
 
-<a id="orgb0f69da"></a>
+<a id="org63cad42"></a>
 
 ## Create a Django project
 
@@ -65,14 +66,14 @@ Time to create a django project. Run the following command - `django-admin start
 Push to github.
 
 
-<a id="org5cead28"></a>
+<a id="org3816b30"></a>
 
 ## Create .gitignore file
 
 Add content to it from your most recent Django project.
 
 
-<a id="org46994a5"></a>
+<a id="org5f15f7f"></a>
 
 ## Create a python virtual environment
 
@@ -106,7 +107,7 @@ pip list
 ```
 
 
-<a id="orgeebcfff"></a>
+<a id="org138bcf4"></a>
 
 ## Poetry setup
 
@@ -166,7 +167,7 @@ poetry run python manage.py runserver
 ```
 
 
-<a id="org0ba328d"></a>
+<a id="org5981b35"></a>
 
 ## Creating a Makefile
 
@@ -202,7 +203,7 @@ run-server:
 Other times our commands might be like "make install" or "make clean" or something similar and files might already exist with those names in our directories, so make will try to run those first if there is no .PHONY described.
 
 
-<a id="orgcb72046"></a>
+<a id="org065ec25"></a>
 
 ## Restructuring the codebase
 
@@ -310,7 +311,7 @@ run-server:
 Now command `make run-server` works just fine.
 
 
-<a id="org233cf00"></a>
+<a id="orgf958a3c"></a>
 
 ## Settings management
 
@@ -360,7 +361,7 @@ make run-server
 ```
 
 
-<a id="orgf75a835"></a>
+<a id="orgd700f44"></a>
 
 ## Settings management for developers
 
@@ -469,7 +470,7 @@ DEBUG = True
 So now when new developer comes, he knows that he must create local folder and copy this settings.dev.py file to that local folder.
 
 
-<a id="orgb2d4cef"></a>
+<a id="orgb949c3a"></a>
 
 ## Settings management for our application
 
@@ -490,7 +491,7 @@ In `custom.py` add this content:
 add 'custom.py' to <span class="underline"><span class="underline">init</span></span>.py
 
 
-<a id="orga680ec6"></a>
+<a id="orga5f1ef6"></a>
 
 ## Configure settings of code editor in one place
 
@@ -514,7 +515,7 @@ This configuration tells the text editor and IDE's how to automatically clean up
 VScode needs an extension installed to be able to read these instructions. Pycharm does it automatically. Emacs needs an extension as well.
 
 
-<a id="org7ace785"></a>
+<a id="org7670c20"></a>
 
 ## Flake8
 
@@ -559,3 +560,174 @@ If there is a particular error you are getting but would like for flake8 to igno
 If you want we can put the `poetry run flake8` command to Makefile.
 
 But we will not do that just yet, since we will use pre-commit tool and run flake8 over it!
+
+
+<a id="orgaa23555"></a>
+
+## pre-commit
+
+pre-commit allows us to manage **hooks**. Hook is basically just a little script that can check your code for various issues(style, linting&#x2026;). You can create those hooks yourself or you can use the hooks that other people have created. Fox example - a hook that checks if your imports are properly sorted, if you don't have any extra whitespace.
+
+-   See <https://pre-commit.com> for docs
+-   See <https://pre-commit.com/hooks.html> for more hooks
+
+Install it as a DEV(-d) dependency.
+
+```bash
+poetry add -D pre-commit
+```
+
+check poetry.lock and pyproject.toml if pre-commit was added.
+
+Let's generate a sample config for us to use:
+
+```bash
+poetry run pre-commit sample-config
+```
+
+Then create a .pre-commit-config.yaml file next to all other config files and paste the sample code in it.
+
+Let's install those hooks that we described by doing:
+
+```bash
+poetry run pre-commit install
+```
+
+Now if we would make a commit, those hooks would run, but sometimes we might want to run those hooks manually. We can do that by running this command:
+
+```bash
+poetry run pre-commit run --all-files
+
+(venv) arvy@DESKTOP-AUDMJ7D:~/src/CDP$ poetry run pre-commit run --all-files
+[INFO] Initializing environment for https://github.com/pre-commit/pre-commit-hooks.
+[INFO] Installing environment for https://github.com/pre-commit/pre-commit-hooks.
+[INFO] Once installed this environment will be reused.
+[INFO] This may take a few minutes...
+Trim Trailing Whitespace.................................................Passed
+Fix End of Files.........................................................Failed
+- hook id: end-of-file-fixer
+- exit code: 1
+- files were modified by this hook
+
+Fixing .editorconfig
+Fixing .flake8
+Fixing .gitignore
+
+Check Yaml...........................................(no files to check)Skipped
+Check for added large files..............................................Passed
+
+
+(venv) arvy@DESKTOP-AUDMJ7D:~/src/CDP$ poetry run pre-commit run --all-files
+Trim Trailing Whitespace.................................................Passed
+Fix End of Files.........................................................Passed
+Check Yaml...........................................(no files to check)Skipped
+Check for added large files..............................................Passed
+```
+
+The result might be similar for you as well. First there was an environment initialization, took a bit, then it found some errors and fixed them!
+
+When I ran the same command the second time - you can see that there was no initialization anymore and it was not screaming about the errors - since they were fixed by the first run! Great!
+
+An example of a proper config:
+
+```yaml
+# File introduces automated checks triggered on git events
+# to enable run `pip install pre-commit && pre-commit install`
+
+repos:
+
+  # general checks (see here: https://pre-commit.com/hooks.html)
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      -   id: trailing-whitespace
+      -   id: check-docstring-first
+      -   id: check-added-large-files
+      -   id: debug-statements
+      -   id: check-yaml
+      -   id: check-merge-conflict
+      -   id: end-of-file-fixer
+      -   id: detect-private-key
+
+  # yapf - the most OCD developer, following the most strict style guide
+  - repo: https://github.com/google/yapf
+    rev: v0.40.2
+    hooks:
+      - id: yapf
+
+  # isort - sorting python imports
+  - repo: https://github.com/pycqa/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+        name: isort (python)
+
+  # flake8 - linting
+  - repo: https://github.com/PyCQA/flake8
+    rev: 4.0.1
+    hooks:
+      - id: flake8
+        additional_dependencies:
+          - flake8-bugbear
+          - flake8-builtins
+          - flake8-coding
+          - flake8-import-order
+          - flake8-polyfill
+          - flake8-quotes
+
+  # helps you catch type-related errors in your code early, during
+  # development, rather than at runtime
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: 'v0.910'
+    hooks:
+      - id: mypy
+        additional_dependencies: [ types-requests, types-PyYAML, types-toml ]
+```
+
+pre-commit-config.yaml says what hooks do we want to install and in pyproject.toml we configure them there.
+
+For example, we can add such configuration for isort:
+
+```toml
+[tool.isort]
+multi_line_output = 5
+line_length = 119
+```
+
+After you are done making changes, uninstall the hooks and install them all again:
+
+```bash
+poetry run pre-commit uninstall
+poetry run pre-commit install
+poetry run pre-commit run --all-files
+```
+
+There might be a lot of warnings about single/double quotes. That is because we have specified "inline-quotes = single" in .flake8 and flake8 has been ran with pre-commit task. When we created django files - we had double quotes everywhere. I went over and changed those from double to single quotes.
+
+Since we are running flake8 over pre-commit now, we can remove flake8 package from dev dependencies:
+
+```bash
+poetry remove -D flake8
+poetry run pre-commit run --all-files
+```
+
+You can see that flake8 still runs and we still get it's logic even after we have uninstalled flake8 package. Great. Less dependencies, more clean.
+
+Now we also should update our Makefile by adding these:
+
+```bash
+.PHONY: install-pre-commit
+install-pre-commit:
+        poetry run pre-commit uninstall; poetry run pre-commit install
+
+.PHONY: lint
+lint:
+        poetry run pre-commit run --all-files
+```
+
+update "update" by adding install-pre-commit:
+
+```bash
+.PHONY: update
+update: install migrate install-pre-commit ;
+```

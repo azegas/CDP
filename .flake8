@@ -1,6 +1,9 @@
 [flake8]
+ignore = C101
 exclude =
-    .git
+    **/migrations/*,
+    .git,
+    .mypy_cache,
     __pycache__,
     venv
 filename = *.py

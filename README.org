@@ -587,3 +587,190 @@ If you want we can put the ~poetry run flake8~ command to Makefile.
 
 But we will not do that just yet, since we will use pre-commit tool
 and run flake8 over it!
+
+** pre-commit
+
+pre-commit allows us to manage *hooks*. Hook is basically just a little
+script that can check your code for various issues(style, linting...).
+You can create those hooks yourself or you can use the hooks that
+other people have created. Fox example - a hook that checks if your
+imports are properly sorted, if you don't have any extra whitespace.
+
+- See https://pre-commit.com for docs
+- See https://pre-commit.com/hooks.html for more hooks
+
+Install it as a DEV(-d) dependency.
+
+#+begin_src bash
+  poetry add -D pre-commit
+#+end_src
+
+check poetry.lock and pyproject.toml if pre-commit was added.
+
+Let's generate a sample config for us to use:
+
+#+begin_src bash
+  poetry run pre-commit sample-config
+#+end_src
+
+Then create a .pre-commit-config.yaml file next to all other config
+files and paste the sample code in it.
+
+Let's install those hooks that we described by doing:
+
+#+begin_src bash
+  poetry run pre-commit install
+#+end_src
+
+Now if we would make a commit, those hooks would run, but sometimes we
+might want to run those hooks manually. We can do that by running this command:
+
+#+begin_src bash
+  poetry run pre-commit run --all-files
+
+  (venv) arvy@DESKTOP-AUDMJ7D:~/src/CDP$ poetry run pre-commit run --all-files
+  [INFO] Initializing environment for https://github.com/pre-commit/pre-commit-hooks.
+  [INFO] Installing environment for https://github.com/pre-commit/pre-commit-hooks.
+  [INFO] Once installed this environment will be reused.
+  [INFO] This may take a few minutes...
+  Trim Trailing Whitespace.................................................Passed
+  Fix End of Files.........................................................Failed
+  - hook id: end-of-file-fixer
+  - exit code: 1
+  - files were modified by this hook
+
+  Fixing .editorconfig
+  Fixing .flake8
+  Fixing .gitignore
+
+  Check Yaml...........................................(no files to check)Skipped
+  Check for added large files..............................................Passed
+
+
+  (venv) arvy@DESKTOP-AUDMJ7D:~/src/CDP$ poetry run pre-commit run --all-files
+  Trim Trailing Whitespace.................................................Passed
+  Fix End of Files.........................................................Passed
+  Check Yaml...........................................(no files to check)Skipped
+  Check for added large files..............................................Passed
+#+end_src
+
+The result might be similar for you as well. First there was an
+environment initialization, took a bit, then it found some errors and
+fixed them!
+
+When I ran the same command the second time - you can see that there
+was no initialization anymore and it was not screaming about the
+errors - since they were fixed by the first run! Great!
+
+An example of a proper config:
+
+#+begin_src yaml
+  # File introduces automated checks triggered on git events
+  # to enable run `pip install pre-commit && pre-commit install`
+
+  repos:
+
+    # general checks (see here: https://pre-commit.com/hooks.html)
+    - repo: https://github.com/pre-commit/pre-commit-hooks
+      rev: v4.4.0
+      hooks:
+        -   id: trailing-whitespace
+        -   id: check-docstring-first
+        -   id: check-added-large-files
+        -   id: debug-statements
+        -   id: check-yaml
+        -   id: check-merge-conflict
+        -   id: end-of-file-fixer
+        -   id: detect-private-key
+
+    # yapf - the most OCD developer, following the most strict style guide
+    - repo: https://github.com/google/yapf
+      rev: v0.40.2
+      hooks:
+        - id: yapf
+
+    # isort - sorting python imports
+    - repo: https://github.com/pycqa/isort
+      rev: 5.12.0
+      hooks:
+        - id: isort
+          name: isort (python)
+
+    # flake8 - linting
+    - repo: https://github.com/PyCQA/flake8
+      rev: 4.0.1
+      hooks:
+        - id: flake8
+          additional_dependencies:
+            - flake8-bugbear
+            - flake8-builtins
+            - flake8-coding
+            - flake8-import-order
+            - flake8-polyfill
+            - flake8-quotes
+
+    # helps you catch type-related errors in your code early, during
+    # development, rather than at runtime
+    - repo: https://github.com/pre-commit/mirrors-mypy
+      rev: 'v0.910'
+      hooks:
+        - id: mypy
+          additional_dependencies: [ types-requests, types-PyYAML, types-toml ]
+#+end_src
+
+pre-commit-config.yaml says what hooks do we want to install and in
+pyproject.toml we configure them there.
+
+For example, we can add such configuration for isort:
+
+#+begin_src toml
+  [tool.isort]
+  multi_line_output = 5
+  line_length = 119
+#+end_src
+
+After you are done making changes, uninstall the hooks and install
+them all again:
+
+#+begin_src bash
+  poetry run pre-commit uninstall
+  poetry run pre-commit install
+  poetry run pre-commit run --all-files
+#+end_src
+
+There might be a lot of warnings about single/double quotes. That is
+because we have specified "inline-quotes = single" in .flake8 and
+flake8 has been ran with pre-commit task. When we created django
+files - we had double quotes everywhere. I went over and changed those
+from double to single quotes.
+
+Since we are running flake8 over pre-commit now, we can remove flake8
+package from dev dependencies:
+
+#+begin_src bash
+  poetry remove -D flake8
+  poetry run pre-commit run --all-files
+#+end_src
+
+You can see that flake8 still runs and we still get it's logic even
+after we have uninstalled flake8 package. Great. Less dependencies,
+more clean.
+
+Now we also should update our Makefile by adding these:
+
+#+begin_src bash
+  .PHONY: install-pre-commit
+  install-pre-commit:
+          poetry run pre-commit uninstall; poetry run pre-commit install
+
+  .PHONY: lint
+  lint:
+          poetry run pre-commit run --all-files
+#+end_src
+
+update "update" by adding install-pre-commit:
+
+#+begin_src bash
+  .PHONY: update
+  update: install migrate install-pre-commit ;
+#+end_src
