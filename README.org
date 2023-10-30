@@ -742,7 +742,8 @@ There might be a lot of warnings about single/double quotes. That is
 because we have specified "inline-quotes = single" in .flake8 and
 flake8 has been ran with pre-commit task. When we created django
 files - we had double quotes everywhere. I went over and changed those
-from double to single quotes.
+from double to single quotes. ([2023-10-30 Mon] changed back to double
+quotes since double quotes seem to be default everywhere.)
 
 Since we are running flake8 over pre-commit now, we can remove flake8
 package from dev dependencies:
@@ -927,3 +928,103 @@ styled. They should be colorful also.
 
 The goal with logging now is to figure out how to use it effectively
 in my Django project.
+** Create a welcome app
+
+Creating an app just to show the process of it, also it's better to
+have something tangible at the beginning to continue to build some
+other features. Will have authentication, debug toolbar, base
+templates, error pages, etc... none of that could be done without a
+simple welcome starter app.
+
+#+begin_src bash
+  poetry run python -m core.manage startapp welcome
+#+end_src
+
+Then create "apps" folder inside of the "core" folder. Then simply
+drag and drop the "welcome" app folder to "apps" folder.
+
+Inside of the apps/welcome/apps.py file change "name" to be:
+
+#+begin_src python
+  name = "core.apps.welcome"
+#+end_src
+
+Then inside our base.py file, add this newly created app to installed
+apps:
+
+#+begin_src python
+       'django.contrib.sessions',
+       'django.contrib.messages',
+       'django.contrib.staticfiles',
+  +    'core.apps.welcome',
+#+end_src
+
+Inside of the project's url file add the app's urls:
+
+#+begin_src python
+  from django.contrib import admin
+  from django.urls import path, include  # dont forget to add "include"
+
+  urlpatterns = [
+      path('admin/', admin.site.urls),
+      path("", include("core.apps.welcome.urls")),
+  ]
+#+end_src
+
+Then create some views in "core/apps/welcome/views.py":
+
+#+begin_src python
+  from django.shortcuts import render
+
+  def HomePageView(request):
+      return render(request, 'welcome/home.html')
+
+  def AboutPageView(request):
+      return render(request, 'welcome/about.html')
+#+end_src
+
+Create urls.py in the same folder as the views and add this content:
+
+#+begin_src python
+  from django.urls import path
+  from . import views
+
+  urlpatterns = [
+      path("", views.HomePageView, name="home"),
+      path("about", views.AboutPageView, name="about"),
+  ]
+#+end_src
+
+Then lets fix the templates. We could specify the templates in each
+app, but this time I decided to try to have a centralized place for
+all the templates. For that we need to:
+
+Create templates folder inside the core folder, then inside the
+templates folder we will be creating a separate folder for each app.
+
+https://docs.djangoproject.com/en/4.2/topics/templates/
+
+So in core/templates/welcome we now create two html files:
+
+home.html:
+
+#+begin_src html
+  <h1>Home</h1>
+#+end_src
+
+about.html:
+
+#+begin_src html
+  <h1>About</h1>
+#+end_src
+
+Then let's go back to base.py settings file and specify our templates
+location:
+
+#+begin_src python
+-        'DIRS': [],
++        'DIRS': ['core/templates/'],
+#+end_src
+
+Try to run server, you should be able to see the home page as well as
+about page.

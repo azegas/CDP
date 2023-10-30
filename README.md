@@ -1,32 +1,33 @@
-- [CDP - Core Django Project](#org60bc02e)
-- [How this file is created](#orga8d0a7f)
-- [Resources used](#org724b3f6)
-- [Steps taken to create this Django Core Project](#org8bbba0f)
-  - [Create a Github repository](#org672f747)
-  - [Create a Django project](#orgf792260)
-  - [Create .gitignore file](#orgf27ad38)
-  - [Create a python virtual environment](#orgd9d4a46)
-  - [Poetry setup](#org9610350)
-  - [Creating a Makefile](#org0ade3a1)
-  - [Restructuring the codebase](#org66cdb5e)
-  - [Settings management](#org77e1f0e)
-  - [Settings management for developers](#orgd823329)
-  - [Settings management for our application](#org637c8c1)
-  - [Configure settings of code editor in one place](#orgee32aa7)
-  - [Flake8](#org6be6789)
-  - [pre-commit](#orge3d56e9)
-  - [logging](#orga786362)
+- [CDP - Core Django Project](#org985fd9f)
+- [How this file is created](#orgdcb5c1f)
+- [Resources used](#org155541a)
+- [Steps taken to create this Django Core Project](#orgf417746)
+  - [Create a Github repository](#orgc2a4bea)
+  - [Create a Django project](#orge2107d1)
+  - [Create .gitignore file](#org891db5f)
+  - [Create a python virtual environment](#org12a2b6e)
+  - [Poetry setup](#org53bf333)
+  - [Creating a Makefile](#org493c1c3)
+  - [Restructuring the codebase](#org2b38ea8)
+  - [Settings management](#org9716aa6)
+  - [Settings management for developers](#org1501270)
+  - [Settings management for our application](#org80c57c0)
+  - [Configure settings of code editor in one place](#orge3a68df)
+  - [Flake8](#org45636f7)
+  - [pre-commit](#orgac0fd01)
+  - [logging](#orge70a29b)
+  - [Create a welcome app](#org0052b55)
 
 
 
-<a id="org60bc02e"></a>
+<a id="org985fd9f"></a>
 
 # CDP - Core Django Project
 
 With each new project that I build I keep finding better ways to start a new project. Here I will keep a CORE things that each of my future Django app will have to have.
 
 
-<a id="orga8d0a7f"></a>
+<a id="orgdcb5c1f"></a>
 
 # How this file is created
 
@@ -35,28 +36,28 @@ With each new project that I build I keep finding better ways to start a new pro
 I use .org file since I am used to Emacs keybindings and it's much quicker for me to do the formatting and text transformations and etc. It also generates a table of content for me, which is nice in such large document.
 
 
-<a id="org724b3f6"></a>
+<a id="org155541a"></a>
 
 # Resources used
 
 -   Pro Django tutorials by thenewboston
 
 
-<a id="org8bbba0f"></a>
+<a id="orgf417746"></a>
 
 # Steps taken to create this Django Core Project
 
 Steps taken to create this repo are described here.
 
 
-<a id="org672f747"></a>
+<a id="orgc2a4bea"></a>
 
 ## Create a Github repository
 
 Create a Github repo with the name of your project. Clone it to your machine. Open a text editor inside of it.
 
 
-<a id="orgf792260"></a>
+<a id="orge2107d1"></a>
 
 ## Create a Django project
 
@@ -67,14 +68,14 @@ Time to create a django project. Run the following command - `django-admin start
 Push to github.
 
 
-<a id="orgf27ad38"></a>
+<a id="org891db5f"></a>
 
 ## Create .gitignore file
 
 Add content to it from your most recent Django project.
 
 
-<a id="orgd9d4a46"></a>
+<a id="org12a2b6e"></a>
 
 ## Create a python virtual environment
 
@@ -108,7 +109,7 @@ pip list
 ```
 
 
-<a id="org9610350"></a>
+<a id="org53bf333"></a>
 
 ## Poetry setup
 
@@ -168,7 +169,7 @@ poetry run python manage.py runserver
 ```
 
 
-<a id="org0ade3a1"></a>
+<a id="org493c1c3"></a>
 
 ## Creating a Makefile
 
@@ -204,7 +205,7 @@ run-server:
 Other times our commands might be like "make install" or "make clean" or something similar and files might already exist with those names in our directories, so make will try to run those first if there is no .PHONY described.
 
 
-<a id="org66cdb5e"></a>
+<a id="org2b38ea8"></a>
 
 ## Restructuring the codebase
 
@@ -312,7 +313,7 @@ run-server:
 Now command `make run-server` works just fine.
 
 
-<a id="org77e1f0e"></a>
+<a id="org9716aa6"></a>
 
 ## Settings management
 
@@ -362,7 +363,7 @@ make run-server
 ```
 
 
-<a id="orgd823329"></a>
+<a id="org1501270"></a>
 
 ## Settings management for developers
 
@@ -471,7 +472,7 @@ DEBUG = True
 So now when new developer comes, he knows that he must create local folder and copy this settings.dev.py file to that local folder.
 
 
-<a id="org637c8c1"></a>
+<a id="org80c57c0"></a>
 
 ## Settings management for our application
 
@@ -492,7 +493,7 @@ In `custom.py` add this content:
 add 'custom.py' to <span class="underline"><span class="underline">init</span></span>.py
 
 
-<a id="orgee32aa7"></a>
+<a id="orge3a68df"></a>
 
 ## Configure settings of code editor in one place
 
@@ -516,7 +517,7 @@ This configuration tells the text editor and IDE's how to automatically clean up
 VScode needs an extension installed to be able to read these instructions. Pycharm does it automatically. Emacs needs an extension as well.
 
 
-<a id="org6be6789"></a>
+<a id="org45636f7"></a>
 
 ## Flake8
 
@@ -563,7 +564,7 @@ If you want we can put the `poetry run flake8` command to Makefile.
 But we will not do that just yet, since we will use pre-commit tool and run flake8 over it!
 
 
-<a id="orge3d56e9"></a>
+<a id="orgac0fd01"></a>
 
 ## pre-commit
 
@@ -734,7 +735,7 @@ update: install migrate install-pre-commit ;
 ```
 
 
-<a id="orga786362"></a>
+<a id="orge70a29b"></a>
 
 ## logging
 
@@ -872,3 +873,96 @@ logger.critical('This is a critical message')
 Now with each page refresh you should see some messages exactly how we styled. They should be colorful also.
 
 The goal with logging now is to figure out how to use it effectively in my Django project.
+
+
+<a id="org0052b55"></a>
+
+## Create a welcome app
+
+Creating an app just to show the process of it, also it's better to have something tangible at the beginning to continue to build some other features. Will have authentication, debug toolbar, base templates, error pages, etc&#x2026; none of that could be done without a simple welcome starter app.
+
+```bash
+poetry run python -m core.manage startapp welcome
+```
+
+Then create "apps" folder inside of the "core" folder. Then simply drag and drop the "welcome" app folder to "apps" folder.
+
+Inside of the apps/welcome/apps.py file change "name" to be:
+
+```python
+name = "core.apps.welcome"
+```
+
+Then inside our base.py file, add this newly created app to installed apps:
+
+```python
+     'django.contrib.sessions',
+     'django.contrib.messages',
+     'django.contrib.staticfiles',
++    'core.apps.welcome',
+```
+
+Inside of the project's url file add the app's urls:
+
+```python
+from django.contrib import admin
+from django.urls import path, include  # dont forget to add "include"
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path("", include("core.apps.welcome.urls")),
+]
+```
+
+Then create some views in "core/apps/welcome/views.py":
+
+```python
+from django.shortcuts import render
+
+def HomePageView(request):
+    return render(request, 'welcome/home.html')
+
+def AboutPageView(request):
+    return render(request, 'welcome/about.html')
+```
+
+Create urls.py in the same folder as the views and add this content:
+
+```python
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path("", views.HomePageView, name="home"),
+    path("about", views.AboutPageView, name="about"),
+]
+```
+
+Then lets fix the templates. We could specify the templates in each app, but this time I decided to try to have a centralized place for all the templates. For that we need to:
+
+Create templates folder inside the core folder, then inside the templates folder we will be creating a separate folder for each app.
+
+<https://docs.djangoproject.com/en/4.2/topics/templates/>
+
+So in core/templates/welcome we now create two html files:
+
+home.html:
+
+```html
+<h1>Home</h1>
+```
+
+about.html:
+
+```html
+<h1>About</h1>
+```
+
+Then let's go back to base.py settings file and specify our templates location:
+
+```python
+-        'DIRS': [],
++        'DIRS': ['core/templates/'],
+```
+
+Try to run server, you should be able to see the home page as well as about page.
