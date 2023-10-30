@@ -1,33 +1,34 @@
-- [CDP - Core Django Project](#org985fd9f)
-- [How this file is created](#orgdcb5c1f)
-- [Resources used](#org155541a)
-- [Steps taken to create this Django Core Project](#orgf417746)
-  - [Create a Github repository](#orgc2a4bea)
-  - [Create a Django project](#orge2107d1)
-  - [Create .gitignore file](#org891db5f)
-  - [Create a python virtual environment](#org12a2b6e)
-  - [Poetry setup](#org53bf333)
-  - [Creating a Makefile](#org493c1c3)
-  - [Restructuring the codebase](#org2b38ea8)
-  - [Settings management](#org9716aa6)
-  - [Settings management for developers](#org1501270)
-  - [Settings management for our application](#org80c57c0)
-  - [Configure settings of code editor in one place](#orge3a68df)
-  - [Flake8](#org45636f7)
-  - [pre-commit](#orgac0fd01)
-  - [logging](#orge70a29b)
-  - [Create a welcome app](#org0052b55)
+- [CDP - Core Django Project](#org0535c22)
+- [How this file is created](#orgbc6b071)
+- [Resources used](#orge9d2e87)
+- [Steps taken to create this Django Core Project](#org506ee86)
+  - [Create a Github repository](#orgfa673f4)
+  - [Create a Django project](#orga555d75)
+  - [Create .gitignore file](#org52cbfc1)
+  - [Create a python virtual environment](#org1239778)
+  - [Poetry setup](#orgbb78bdb)
+  - [Creating a Makefile](#org2c476ac)
+  - [Restructuring the codebase](#orgf289774)
+  - [Settings management](#org80bf7d1)
+  - [Settings management for developers](#org8590179)
+  - [Settings management for our application](#orgdbd17eb)
+  - [Configure settings of code editor in one place](#org9e6c7c1)
+  - [Flake8](#org0a00c7a)
+  - [pre-commit](#org43f193d)
+  - [logging](#org907bf14)
+  - [Create a welcome app](#org0944d3e)
+  - [Static files](#org0d117c5)
 
 
 
-<a id="org985fd9f"></a>
+<a id="org0535c22"></a>
 
 # CDP - Core Django Project
 
 With each new project that I build I keep finding better ways to start a new project. Here I will keep a CORE things that each of my future Django app will have to have.
 
 
-<a id="orgdcb5c1f"></a>
+<a id="orgbc6b071"></a>
 
 # How this file is created
 
@@ -36,28 +37,28 @@ With each new project that I build I keep finding better ways to start a new pro
 I use .org file since I am used to Emacs keybindings and it's much quicker for me to do the formatting and text transformations and etc. It also generates a table of content for me, which is nice in such large document.
 
 
-<a id="org155541a"></a>
+<a id="orge9d2e87"></a>
 
 # Resources used
 
 -   Pro Django tutorials by thenewboston
 
 
-<a id="orgf417746"></a>
+<a id="org506ee86"></a>
 
 # Steps taken to create this Django Core Project
 
 Steps taken to create this repo are described here.
 
 
-<a id="orgc2a4bea"></a>
+<a id="orgfa673f4"></a>
 
 ## Create a Github repository
 
 Create a Github repo with the name of your project. Clone it to your machine. Open a text editor inside of it.
 
 
-<a id="orge2107d1"></a>
+<a id="orga555d75"></a>
 
 ## Create a Django project
 
@@ -68,14 +69,14 @@ Time to create a django project. Run the following command - `django-admin start
 Push to github.
 
 
-<a id="org891db5f"></a>
+<a id="org52cbfc1"></a>
 
 ## Create .gitignore file
 
 Add content to it from your most recent Django project.
 
 
-<a id="org12a2b6e"></a>
+<a id="org1239778"></a>
 
 ## Create a python virtual environment
 
@@ -109,7 +110,7 @@ pip list
 ```
 
 
-<a id="org53bf333"></a>
+<a id="orgbb78bdb"></a>
 
 ## Poetry setup
 
@@ -169,7 +170,7 @@ poetry run python manage.py runserver
 ```
 
 
-<a id="org493c1c3"></a>
+<a id="org2c476ac"></a>
 
 ## Creating a Makefile
 
@@ -205,7 +206,7 @@ run-server:
 Other times our commands might be like "make install" or "make clean" or something similar and files might already exist with those names in our directories, so make will try to run those first if there is no .PHONY described.
 
 
-<a id="org2b38ea8"></a>
+<a id="orgf289774"></a>
 
 ## Restructuring the codebase
 
@@ -313,7 +314,7 @@ run-server:
 Now command `make run-server` works just fine.
 
 
-<a id="org9716aa6"></a>
+<a id="org80bf7d1"></a>
 
 ## Settings management
 
@@ -363,7 +364,7 @@ make run-server
 ```
 
 
-<a id="org1501270"></a>
+<a id="org8590179"></a>
 
 ## Settings management for developers
 
@@ -472,7 +473,7 @@ DEBUG = True
 So now when new developer comes, he knows that he must create local folder and copy this settings.dev.py file to that local folder.
 
 
-<a id="org80c57c0"></a>
+<a id="orgdbd17eb"></a>
 
 ## Settings management for our application
 
@@ -493,7 +494,7 @@ In `custom.py` add this content:
 add 'custom.py' to <span class="underline"><span class="underline">init</span></span>.py
 
 
-<a id="orge3a68df"></a>
+<a id="org9e6c7c1"></a>
 
 ## Configure settings of code editor in one place
 
@@ -517,7 +518,7 @@ This configuration tells the text editor and IDE's how to automatically clean up
 VScode needs an extension installed to be able to read these instructions. Pycharm does it automatically. Emacs needs an extension as well.
 
 
-<a id="org45636f7"></a>
+<a id="org0a00c7a"></a>
 
 ## Flake8
 
@@ -564,7 +565,7 @@ If you want we can put the `poetry run flake8` command to Makefile.
 But we will not do that just yet, since we will use pre-commit tool and run flake8 over it!
 
 
-<a id="orgac0fd01"></a>
+<a id="org43f193d"></a>
 
 ## pre-commit
 
@@ -704,7 +705,7 @@ poetry run pre-commit install
 poetry run pre-commit run --all-files
 ```
 
-There might be a lot of warnings about single/double quotes. That is because we have specified "inline-quotes = single" in .flake8 and flake8 has been ran with pre-commit task. When we created django files - we had double quotes everywhere. I went over and changed those from double to single quotes.
+There might be a lot of warnings about single/double quotes. That is because we have specified "inline-quotes = single" in .flake8 and flake8 has been ran with pre-commit task. When we created django files - we had double quotes everywhere. I went over and changed those from double to single quotes. (<span class="timestamp-wrapper"><span class="timestamp">[2023-10-30 Mon] </span></span> changed back to double quotes since double quotes seem to be default everywhere.)
 
 Since we are running flake8 over pre-commit now, we can remove flake8 package from dev dependencies:
 
@@ -735,7 +736,7 @@ update: install migrate install-pre-commit ;
 ```
 
 
-<a id="orge70a29b"></a>
+<a id="org907bf14"></a>
 
 ## logging
 
@@ -875,7 +876,7 @@ Now with each page refresh you should see some messages exactly how we styled. T
 The goal with logging now is to figure out how to use it effectively in my Django project.
 
 
-<a id="org0052b55"></a>
+<a id="org0944d3e"></a>
 
 ## Create a welcome app
 
@@ -966,3 +967,177 @@ Then let's go back to base.py settings file and specify our templates location:
 ```
 
 Try to run server, you should be able to see the home page as well as about page.
+
+
+<a id="org0d117c5"></a>
+
+## Static files
+
+Let's make it possible to add custom js, css files. Also let's make it possible to describe navbar and footer in one file (\_base.html) and then reuse it on all other templates.
+
+First of all let's modify base.py settings:
+
+Add STATICFILES\_DIRS - this will be the location where Django will look for static files(css, js, images).
+
+```python
+# https://docs.djangoproject.com/en/4.2/ref/settings/#std-setting-STATICFILES_DIRS
+STATICFILES_DIRS = [
+    "core/static/",
+]
+```
+
+Then create 4 folders.
+
+```bash
+mkdir core/static
+mkdir core/static/css
+mkdir core/static/js
+mkdir core/static/images
+```
+
+and create files within them:
+
+```bash
+touch core/static/css/base.css
+touch core/static/js/base.js
+```
+
+Can also add an image or favicon icon to images folder.
+
+Content of base.css can be any, but in my case it's:
+
+```css
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+body {
+  margin-bottom: 60px; /* Margin bottom by footer height */
+ }
+
+.container {
+  max-width: 960px;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px; /* Set the fixed height of the footer here */
+  line-height: 60px; /* Vertically center the text there */
+  background-color: #f5f5f5;
+}
+```
+
+Let's also create \_base.html file in core/templates folder:
+
+```html
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+        <title>{% block title %}CDP{% endblock title %}</title>
+        <meta name="description" content="A framework for launching new Django projects quickly.">
+        <meta name="author" content="">
+        <link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+
+        {% block css %}
+            <!-- Bootstrap CSS -->
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+                  integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+
+            <link rel="stylesheet" href="{% static 'css/base.css' %}">
+        {% endblock %}
+    </head>
+
+    <body>
+        <header class="p-3 mb-3 border-bottom">
+            <div class="container">
+                <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                    <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+                        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+                            <use xlink:href="#bootstrap" />
+                        </svg>
+                    </a>
+
+                    <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                        <li><a href="{% url 'home' %}" class="nav-link px-2 link-secondary">Home</a></li>
+                        <li><a href="{% url 'about' %}" class="nav-link px-2 link-dark">About</a></li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+
+        <div class="container">
+            {% block content %}
+                <p>Default content...</p>
+            {% endblock content %}
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <span class="text-muted">Footer...</span>
+            </div>
+        </footer>
+
+        {% block javascript %}
+            <!-- Bootstrap JavaScript -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+                    integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+                    crossorigin="anonymous"></script>
+
+            <!-- Project JS -->
+            <script src="{% static 'js/base.js' %}"></script>
+
+        {% endblock javascript %}
+
+    </body>
+
+</html>
+```
+
+Then we can update our home and about pages:
+
+Home:
+
+```html
+{% extends '_base.html' %}
+{% load static %}
+
+{% block title %}Home page{% endblock title %}
+
+{% block content %}
+<div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+  <img src="{% static 'images/wink.png' %}" class="img-fluid" alt="logo"/>
+  <p class="lead">A Django starter project.</p>
+</div>
+{% endblock content %}
+```
+
+About:
+
+```html
+{% extends '_base.html' %}
+
+{% block title %}About page{% endblock %}
+
+{% block content %}
+    <h1>About page</h1>
+    <p>CDP - Core Django Project.</p>
+{% endblock content %}
+```
+
+That's it, we should have a functional and more beautiful home and about pages.
