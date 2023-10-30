@@ -1250,3 +1250,13 @@ https://www.w3schools.com/django/django_404.php
       <p>Looks like something went wrong!</p>
   {% endblock content %}
 #+end_src
+** TODO Staticfiles
+
+Need more info here, will fill in during production stage.
+
+Add this to base.py settings file.
+
+#+begin_src python
+  # files that get generated after we run collecstatic when debug is False will be here
+  STATIC_ROOT = "core/static/staticfiles-cdn"
+#+end_src

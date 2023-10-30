@@ -1,35 +1,36 @@
-- [CDP - Core Django Project](#org2428555)
-- [How this file is created](#orgafc96c1)
-- [Resources used](#org63f92ed)
-- [Steps taken to create this Django Core Project](#org3559e26)
-  - [Create a Github repository](#org5f4f425)
-  - [Create a Django project](#org3e1e151)
-  - [Create .gitignore file](#orgcc512db)
-  - [Create a python virtual environment](#orga57de8d)
-  - [Poetry setup](#orgecc6240)
-  - [Creating a Makefile](#org7ef2589)
-  - [Restructuring the codebase](#orgc2af806)
-  - [Settings management](#orge020b26)
-  - [Settings management for developers](#orgeb523d7)
-  - [Settings management for our application](#orgd49cce7)
-  - [Configure settings of code editor in one place](#org1c87007)
-  - [Flake8](#orga7ab896)
-  - [pre-commit](#orgd859eab)
-  - [logging](#org55688ab)
-  - [Create a welcome app](#org094ed1e)
-  - [Static files](#org2c498e7)
-  - [HTML templates for error messages](#org172ff9a)
+- [CDP - Core Django Project](#org565b462)
+- [How this file is created](#org2f856e1)
+- [Resources used](#org0e3a754)
+- [Steps taken to create this Django Core Project](#org3f1710f)
+  - [Create a Github repository](#org336681a)
+  - [Create a Django project](#org339a276)
+  - [Create .gitignore file](#org9a65ce9)
+  - [Create a python virtual environment](#orgf057273)
+  - [Poetry setup](#org265f35f)
+  - [Creating a Makefile](#orgd3de06e)
+  - [Restructuring the codebase](#orgd50a7b4)
+  - [Settings management](#org05b26fa)
+  - [Settings management for developers](#org4b6e030)
+  - [Settings management for our application](#org4c763fe)
+  - [Configure settings of code editor in one place](#org458d21e)
+  - [Flake8](#org31aa8e1)
+  - [pre-commit](#orgdb3e6e5)
+  - [logging](#orgf89844a)
+  - [Create a welcome app](#orgcab78b3)
+  - [Static files](#org5a0cb85)
+  - [HTML templates for error messages](#org50c5fad)
+  - [Staticfiles](#org51a9e99)
 
 
 
-<a id="org2428555"></a>
+<a id="org565b462"></a>
 
 # CDP - Core Django Project
 
 With each new project that I build I keep finding better ways to start a new project. Here I will keep a CORE things that each of my future Django app will have to have.
 
 
-<a id="orgafc96c1"></a>
+<a id="org2f856e1"></a>
 
 # How this file is created
 
@@ -38,28 +39,28 @@ With each new project that I build I keep finding better ways to start a new pro
 I use .org file since I am used to Emacs keybindings and it's much quicker for me to do the formatting and text transformations and etc. It also generates a table of content for me, which is nice in such large document.
 
 
-<a id="org63f92ed"></a>
+<a id="org0e3a754"></a>
 
 # Resources used
 
 -   Pro Django tutorials by thenewboston
 
 
-<a id="org3559e26"></a>
+<a id="org3f1710f"></a>
 
 # Steps taken to create this Django Core Project
 
 Steps taken to create this repo are described here.
 
 
-<a id="org5f4f425"></a>
+<a id="org336681a"></a>
 
 ## Create a Github repository
 
 Create a Github repo with the name of your project. Clone it to your machine. Open a text editor inside of it.
 
 
-<a id="org3e1e151"></a>
+<a id="org339a276"></a>
 
 ## Create a Django project
 
@@ -70,14 +71,14 @@ Time to create a django project. Run the following command - `django-admin start
 Push to github.
 
 
-<a id="orgcc512db"></a>
+<a id="org9a65ce9"></a>
 
 ## Create .gitignore file
 
 Add content to it from your most recent Django project.
 
 
-<a id="orga57de8d"></a>
+<a id="orgf057273"></a>
 
 ## Create a python virtual environment
 
@@ -111,7 +112,7 @@ pip list
 ```
 
 
-<a id="orgecc6240"></a>
+<a id="org265f35f"></a>
 
 ## Poetry setup
 
@@ -171,7 +172,7 @@ poetry run python manage.py runserver
 ```
 
 
-<a id="org7ef2589"></a>
+<a id="orgd3de06e"></a>
 
 ## Creating a Makefile
 
@@ -207,7 +208,7 @@ run-server:
 Other times our commands might be like "make install" or "make clean" or something similar and files might already exist with those names in our directories, so make will try to run those first if there is no .PHONY described.
 
 
-<a id="orgc2af806"></a>
+<a id="orgd50a7b4"></a>
 
 ## Restructuring the codebase
 
@@ -315,7 +316,7 @@ run-server:
 Now command `make run-server` works just fine.
 
 
-<a id="orge020b26"></a>
+<a id="org05b26fa"></a>
 
 ## Settings management
 
@@ -365,7 +366,7 @@ make run-server
 ```
 
 
-<a id="orgeb523d7"></a>
+<a id="org4b6e030"></a>
 
 ## Settings management for developers
 
@@ -474,7 +475,7 @@ DEBUG = True
 So now when new developer comes, he knows that he must create local folder and copy this settings.dev.py file to that local folder.
 
 
-<a id="orgd49cce7"></a>
+<a id="org4c763fe"></a>
 
 ## Settings management for our application
 
@@ -495,7 +496,7 @@ In `custom.py` add this content:
 add 'custom.py' to <span class="underline"><span class="underline">init</span></span>.py
 
 
-<a id="org1c87007"></a>
+<a id="org458d21e"></a>
 
 ## Configure settings of code editor in one place
 
@@ -519,7 +520,7 @@ This configuration tells the text editor and IDE's how to automatically clean up
 VScode needs an extension installed to be able to read these instructions. Pycharm does it automatically. Emacs needs an extension as well.
 
 
-<a id="orga7ab896"></a>
+<a id="org31aa8e1"></a>
 
 ## Flake8
 
@@ -566,7 +567,7 @@ If you want we can put the `poetry run flake8` command to Makefile.
 But we will not do that just yet, since we will use pre-commit tool and run flake8 over it!
 
 
-<a id="orgd859eab"></a>
+<a id="orgdb3e6e5"></a>
 
 ## pre-commit
 
@@ -737,7 +738,7 @@ update: install migrate install-pre-commit ;
 ```
 
 
-<a id="org55688ab"></a>
+<a id="orgf89844a"></a>
 
 ## logging
 
@@ -877,7 +878,7 @@ Now with each page refresh you should see some messages exactly how we styled. T
 The goal with logging now is to figure out how to use it effectively in my Django project.
 
 
-<a id="org094ed1e"></a>
+<a id="orgcab78b3"></a>
 
 ## Create a welcome app
 
@@ -970,7 +971,7 @@ Then let's go back to base.py settings file and specify our templates location:
 Try to run server, you should be able to see the home page as well as about page.
 
 
-<a id="org2c498e7"></a>
+<a id="org5a0cb85"></a>
 
 ## Static files
 
@@ -1144,7 +1145,7 @@ About:
 That's it, we should have a functional and more beautiful home and about pages.
 
 
-<a id="org172ff9a"></a>
+<a id="org50c5fad"></a>
 
 ## HTML templates for error messages
 
@@ -1190,4 +1191,18 @@ Instead of that, we will create our own.
     <h1>500 Server Error</h1>
     <p>Looks like something went wrong!</p>
 {% endblock content %}
+```
+
+
+<a id="org51a9e99"></a>
+
+## TODO Staticfiles
+
+Need more info here, will fill in during production stage.
+
+Add this to base.py settings file.
+
+```python
+# files that get generated after we run collecstatic when debug is False will be here
+STATIC_ROOT = "core/static/staticfiles-cdn"
 ```

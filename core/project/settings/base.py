@@ -101,6 +101,9 @@ STATICFILES_DIRS = [
     "core/static/",
 ]
 
+# files that get generated after we run collecstatic when debug is False will be here
+STATIC_ROOT = "core/static/staticfiles-cdn"
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
