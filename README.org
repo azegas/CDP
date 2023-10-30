@@ -1202,3 +1202,51 @@ About:
 
 That's it, we should have a functional and more beautiful home and
 about pages.
+** HTML templates for error messages
+
+Whenever the debug is True we will see the debug information and why
+certain page could not be opened. But whenever the debug is False, we
+have nothing so show as of now besides the standard web browser
+message.
+
+Instead of that, we will create our own.
+
+https://www.w3schools.com/django/django_404.php
+
+403_csrf.html
+
+#+begin_src html
+  {% extends '_base.html' %}
+
+  {% block title %}Forbidden (403){% endblock title %}
+
+  {% block content %}
+      <h1>Forbidden (403)</h1>
+      <p>CSRF verification failed. Request aborted.</p>
+  {% endblock content %}
+#+end_src
+
+404.html
+
+#+begin_src html
+  {% extends '_base.html' %}
+
+  {% block title %}404 Page not found{% endblock %}
+
+  {% block content %}
+      <h1>Page not found</h1>
+  {% endblock content %}
+#+end_src
+
+500.html
+
+#+begin_src html
+  {% extends '_base.html' %}
+
+  {% block title %}500 Server Error{% endblock %}
+
+  {% block content %}
+      <h1>500 Server Error</h1>
+      <p>Looks like something went wrong!</p>
+  {% endblock content %}
+#+end_src

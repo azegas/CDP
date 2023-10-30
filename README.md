@@ -1,34 +1,35 @@
-- [CDP - Core Django Project](#org0535c22)
-- [How this file is created](#orgbc6b071)
-- [Resources used](#orge9d2e87)
-- [Steps taken to create this Django Core Project](#org506ee86)
-  - [Create a Github repository](#orgfa673f4)
-  - [Create a Django project](#orga555d75)
-  - [Create .gitignore file](#org52cbfc1)
-  - [Create a python virtual environment](#org1239778)
-  - [Poetry setup](#orgbb78bdb)
-  - [Creating a Makefile](#org2c476ac)
-  - [Restructuring the codebase](#orgf289774)
-  - [Settings management](#org80bf7d1)
-  - [Settings management for developers](#org8590179)
-  - [Settings management for our application](#orgdbd17eb)
-  - [Configure settings of code editor in one place](#org9e6c7c1)
-  - [Flake8](#org0a00c7a)
-  - [pre-commit](#org43f193d)
-  - [logging](#org907bf14)
-  - [Create a welcome app](#org0944d3e)
-  - [Static files](#org0d117c5)
+- [CDP - Core Django Project](#org2428555)
+- [How this file is created](#orgafc96c1)
+- [Resources used](#org63f92ed)
+- [Steps taken to create this Django Core Project](#org3559e26)
+  - [Create a Github repository](#org5f4f425)
+  - [Create a Django project](#org3e1e151)
+  - [Create .gitignore file](#orgcc512db)
+  - [Create a python virtual environment](#orga57de8d)
+  - [Poetry setup](#orgecc6240)
+  - [Creating a Makefile](#org7ef2589)
+  - [Restructuring the codebase](#orgc2af806)
+  - [Settings management](#orge020b26)
+  - [Settings management for developers](#orgeb523d7)
+  - [Settings management for our application](#orgd49cce7)
+  - [Configure settings of code editor in one place](#org1c87007)
+  - [Flake8](#orga7ab896)
+  - [pre-commit](#orgd859eab)
+  - [logging](#org55688ab)
+  - [Create a welcome app](#org094ed1e)
+  - [Static files](#org2c498e7)
+  - [HTML templates for error messages](#org172ff9a)
 
 
 
-<a id="org0535c22"></a>
+<a id="org2428555"></a>
 
 # CDP - Core Django Project
 
 With each new project that I build I keep finding better ways to start a new project. Here I will keep a CORE things that each of my future Django app will have to have.
 
 
-<a id="orgbc6b071"></a>
+<a id="orgafc96c1"></a>
 
 # How this file is created
 
@@ -37,28 +38,28 @@ With each new project that I build I keep finding better ways to start a new pro
 I use .org file since I am used to Emacs keybindings and it's much quicker for me to do the formatting and text transformations and etc. It also generates a table of content for me, which is nice in such large document.
 
 
-<a id="orge9d2e87"></a>
+<a id="org63f92ed"></a>
 
 # Resources used
 
 -   Pro Django tutorials by thenewboston
 
 
-<a id="org506ee86"></a>
+<a id="org3559e26"></a>
 
 # Steps taken to create this Django Core Project
 
 Steps taken to create this repo are described here.
 
 
-<a id="orgfa673f4"></a>
+<a id="org5f4f425"></a>
 
 ## Create a Github repository
 
 Create a Github repo with the name of your project. Clone it to your machine. Open a text editor inside of it.
 
 
-<a id="orga555d75"></a>
+<a id="org3e1e151"></a>
 
 ## Create a Django project
 
@@ -69,14 +70,14 @@ Time to create a django project. Run the following command - `django-admin start
 Push to github.
 
 
-<a id="org52cbfc1"></a>
+<a id="orgcc512db"></a>
 
 ## Create .gitignore file
 
 Add content to it from your most recent Django project.
 
 
-<a id="org1239778"></a>
+<a id="orga57de8d"></a>
 
 ## Create a python virtual environment
 
@@ -110,7 +111,7 @@ pip list
 ```
 
 
-<a id="orgbb78bdb"></a>
+<a id="orgecc6240"></a>
 
 ## Poetry setup
 
@@ -170,7 +171,7 @@ poetry run python manage.py runserver
 ```
 
 
-<a id="org2c476ac"></a>
+<a id="org7ef2589"></a>
 
 ## Creating a Makefile
 
@@ -206,7 +207,7 @@ run-server:
 Other times our commands might be like "make install" or "make clean" or something similar and files might already exist with those names in our directories, so make will try to run those first if there is no .PHONY described.
 
 
-<a id="orgf289774"></a>
+<a id="orgc2af806"></a>
 
 ## Restructuring the codebase
 
@@ -314,7 +315,7 @@ run-server:
 Now command `make run-server` works just fine.
 
 
-<a id="org80bf7d1"></a>
+<a id="orge020b26"></a>
 
 ## Settings management
 
@@ -364,7 +365,7 @@ make run-server
 ```
 
 
-<a id="org8590179"></a>
+<a id="orgeb523d7"></a>
 
 ## Settings management for developers
 
@@ -473,7 +474,7 @@ DEBUG = True
 So now when new developer comes, he knows that he must create local folder and copy this settings.dev.py file to that local folder.
 
 
-<a id="orgdbd17eb"></a>
+<a id="orgd49cce7"></a>
 
 ## Settings management for our application
 
@@ -494,7 +495,7 @@ In `custom.py` add this content:
 add 'custom.py' to <span class="underline"><span class="underline">init</span></span>.py
 
 
-<a id="org9e6c7c1"></a>
+<a id="org1c87007"></a>
 
 ## Configure settings of code editor in one place
 
@@ -518,7 +519,7 @@ This configuration tells the text editor and IDE's how to automatically clean up
 VScode needs an extension installed to be able to read these instructions. Pycharm does it automatically. Emacs needs an extension as well.
 
 
-<a id="org0a00c7a"></a>
+<a id="orga7ab896"></a>
 
 ## Flake8
 
@@ -565,7 +566,7 @@ If you want we can put the `poetry run flake8` command to Makefile.
 But we will not do that just yet, since we will use pre-commit tool and run flake8 over it!
 
 
-<a id="org43f193d"></a>
+<a id="orgd859eab"></a>
 
 ## pre-commit
 
@@ -736,7 +737,7 @@ update: install migrate install-pre-commit ;
 ```
 
 
-<a id="org907bf14"></a>
+<a id="org55688ab"></a>
 
 ## logging
 
@@ -876,7 +877,7 @@ Now with each page refresh you should see some messages exactly how we styled. T
 The goal with logging now is to figure out how to use it effectively in my Django project.
 
 
-<a id="org0944d3e"></a>
+<a id="org094ed1e"></a>
 
 ## Create a welcome app
 
@@ -969,7 +970,7 @@ Then let's go back to base.py settings file and specify our templates location:
 Try to run server, you should be able to see the home page as well as about page.
 
 
-<a id="org0d117c5"></a>
+<a id="org2c498e7"></a>
 
 ## Static files
 
@@ -1141,3 +1142,52 @@ About:
 ```
 
 That's it, we should have a functional and more beautiful home and about pages.
+
+
+<a id="org172ff9a"></a>
+
+## HTML templates for error messages
+
+Whenever the debug is True we will see the debug information and why certain page could not be opened. But whenever the debug is False, we have nothing so show as of now besides the standard web browser message.
+
+Instead of that, we will create our own.
+
+<https://www.w3schools.com/django/django_404.php>
+
+403\_csrf.html
+
+```html
+{% extends '_base.html' %}
+
+{% block title %}Forbidden (403){% endblock title %}
+
+{% block content %}
+    <h1>Forbidden (403)</h1>
+    <p>CSRF verification failed. Request aborted.</p>
+{% endblock content %}
+```
+
+404.html
+
+```html
+{% extends '_base.html' %}
+
+{% block title %}404 Page not found{% endblock %}
+
+{% block content %}
+    <h1>Page not found</h1>
+{% endblock content %}
+```
+
+500.html
+
+```html
+{% extends '_base.html' %}
+
+{% block title %}500 Server Error{% endblock %}
+
+{% block content %}
+    <h1>500 Server Error</h1>
+    <p>Looks like something went wrong!</p>
+{% endblock content %}
+```
