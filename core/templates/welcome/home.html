@@ -1,1 +1,11 @@
-<h1>Home</h1>
+{% extends '_base.html' %}
+{% load static %}
+
+{% block title %}Home page{% endblock title %}
+
+{% block content %}
+<div class="px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+  <img src="{% static 'images/wink.png' %}" class="img-fluid" alt="logo"/>
+  <p class="lead">A Django starter project.</p>
+</div>
+{% endblock content %}
