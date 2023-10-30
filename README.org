@@ -1260,3 +1260,54 @@ Add this to base.py settings file.
   # files that get generated after we run collecstatic when debug is False will be here
   STATIC_ROOT = "core/static/staticfiles-cdn"
 #+end_src
+** Django-debug-toolbar
+
+Comes useful sometimes.
+
+https://django-debug-toolbar.readthedocs.io/en/latest/index.html
+
+Install the package:
+
+#+begin_src bash
+  poetry add django-debug-toolbar
+#+end_src
+
+#+begin_src python
+  INSTALLED_APPS = [
+      # third-party
+      "debug_toolbar",
+  ]
+#+end_src
+
+Add middleware after "django.middleware.common.CommonMiddleware":
+
+#+begin_src python
+  MIDDLEWARE = [
+      "debug_toolbar.middleware.DebugToolbarMiddleware",  # Django Debug Toolbar
+  ]
+#+end_src
+
+Add INTERNAL_IPS:
+
+#+begin_src python
+  # django-debug-toolbar
+  # https://django-debug-toolbar.readthedocs.io/en/latest/installation.html
+  # https://docs.djangoproject.com/en/dev/ref/settings/#internal-ips
+  INTERNAL_IPS = ["127.0.0.1"]
+#+end_src
+
+Create a url that is displayed only if the debug is set to True:
+
+#+begin_src python
+  from django.conf import settings
+
+  if settings.DEBUG:
+      import debug_toolbar
+
+      urlpatterns = [
+          path("__debug__/", include(debug_toolbar.urls)),
+      ] + urlpatterns
+#+end_src
+
+Now when you go to any page in welcome app - you should be able to see
+a django-debug-toolbar button.
