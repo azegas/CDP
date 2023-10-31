@@ -2138,7 +2138,21 @@ First let's create a view:
       return render(request, "registration/dashboard.html", context)
 #+end_src
 
-Then an url:
+JUST A NOTE: If you want to know more what fields are available for display, you
+can check the sqlite.db columns or print out EVERYTHING that's
+possible with request.user:
+
+#+begin_src python
+  # Use dir() to see the available attributes and methods
+  user_attributes = dir(user)
+  print(f"user attributes: {user_attributes}")
+
+  # Print the attributes one per line
+  for attribute in user_attributes:
+      print(attribute)
+#+end_src
+
+Then add an url:
 
 #+begin_src python
   # accounts/views.py
