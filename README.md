@@ -1,37 +1,38 @@
-- [CDP - Core Django Project](#org9d3d135)
-- [How this file is created](#org59d35da)
-- [Resources used](#org1fb0f06)
-- [Steps taken to create this Django Core Project](#orgbf51295)
-  - [Create a Github repository](#org4d491ee)
-  - [Create a Django project](#orgcab561a)
-  - [Create .gitignore file](#orgbfa062f)
-  - [Create a python virtual environment](#org1deb902)
-  - [Poetry setup](#orgf1d426a)
-  - [Creating a Makefile](#org98fecae)
-  - [Restructuring the codebase](#org29cf3ab)
-  - [Settings management](#org74535d4)
-  - [Settings management for developers](#org9b74452)
-  - [Settings management for our application](#orge788e1a)
-  - [Configure settings of code editor in one place](#org7a9a4e9)
-  - [Flake8](#orgf518ef6)
-  - [pre-commit](#orgff1ec35)
-  - [logging](#orgb6648cd)
-  - [Create a welcome app](#org1525994)
-  - [Static files](#orgc0a90da)
-  - [HTML templates for error messages](#orge40e734)
-  - [Staticfiles](#org93f9278)
-  - [Django-debug-toolbar](#org0dea22f)
+- [CDP - Core Django Project](#orgb36589b)
+- [How this file is created](#org316091b)
+- [Resources used](#org0975160)
+- [Steps taken to create this Django Core Project](#orgb79f8f5)
+  - [Create a Github repository](#org92851ad)
+  - [Create a Django project](#orgdc5f4b8)
+  - [Create .gitignore file](#org394c50c)
+  - [Create a python virtual environment](#orgf1f46d3)
+  - [Poetry setup](#org8483851)
+  - [Creating a Makefile](#org30769a8)
+  - [Restructuring the codebase](#orga75525d)
+  - [Settings management](#org8271922)
+  - [Settings management for developers](#org98a4bfa)
+  - [Settings management for our application](#orgb29de1b)
+  - [Configure settings of code editor in one place](#org79c04f4)
+  - [Flake8](#org1f549cc)
+  - [pre-commit](#org91a94df)
+  - [logging](#orgba10db0)
+  - [Create a welcome app](#orgc0b573e)
+  - [Static files](#org250d0a7)
+  - [HTML templates for error messages](#org42fa8fb)
+  - [Staticfiles](#orga597a15)
+  - [Django-debug-toolbar](#org92d81bc)
+  - [User authentication](#orga5639eb)
 
 
 
-<a id="org9d3d135"></a>
+<a id="orgb36589b"></a>
 
 # CDP - Core Django Project
 
 With each new project that I build I keep finding better ways to start a new project. Here I will keep a CORE things that each of my future Django app will have to have.
 
 
-<a id="org59d35da"></a>
+<a id="org316091b"></a>
 
 # How this file is created
 
@@ -40,28 +41,28 @@ With each new project that I build I keep finding better ways to start a new pro
 I use .org file since I am used to Emacs keybindings and it's much quicker for me to do the formatting and text transformations and etc. It also generates a table of content for me, which is nice in such large document.
 
 
-<a id="org1fb0f06"></a>
+<a id="org0975160"></a>
 
 # Resources used
 
 -   Pro Django tutorials by thenewboston
 
 
-<a id="orgbf51295"></a>
+<a id="orgb79f8f5"></a>
 
 # Steps taken to create this Django Core Project
 
 Steps taken to create this repo are described here.
 
 
-<a id="org4d491ee"></a>
+<a id="org92851ad"></a>
 
 ## Create a Github repository
 
 Create a Github repo with the name of your project. Clone it to your machine. Open a text editor inside of it.
 
 
-<a id="orgcab561a"></a>
+<a id="orgdc5f4b8"></a>
 
 ## Create a Django project
 
@@ -72,14 +73,14 @@ Time to create a django project. Run the following command - `django-admin start
 Push to github.
 
 
-<a id="orgbfa062f"></a>
+<a id="org394c50c"></a>
 
 ## Create .gitignore file
 
 Add content to it from your most recent Django project.
 
 
-<a id="org1deb902"></a>
+<a id="orgf1f46d3"></a>
 
 ## Create a python virtual environment
 
@@ -113,7 +114,7 @@ pip list
 ```
 
 
-<a id="orgf1d426a"></a>
+<a id="org8483851"></a>
 
 ## Poetry setup
 
@@ -173,7 +174,7 @@ poetry run python manage.py runserver
 ```
 
 
-<a id="org98fecae"></a>
+<a id="org30769a8"></a>
 
 ## Creating a Makefile
 
@@ -209,7 +210,7 @@ run-server:
 Other times our commands might be like "make install" or "make clean" or something similar and files might already exist with those names in our directories, so make will try to run those first if there is no .PHONY described.
 
 
-<a id="org29cf3ab"></a>
+<a id="orga75525d"></a>
 
 ## Restructuring the codebase
 
@@ -317,7 +318,7 @@ run-server:
 Now command `make run-server` works just fine.
 
 
-<a id="org74535d4"></a>
+<a id="org8271922"></a>
 
 ## Settings management
 
@@ -367,7 +368,7 @@ make run-server
 ```
 
 
-<a id="org9b74452"></a>
+<a id="org98a4bfa"></a>
 
 ## Settings management for developers
 
@@ -476,7 +477,7 @@ DEBUG = True
 So now when new developer comes, he knows that he must create local folder and copy this settings.dev.py file to that local folder.
 
 
-<a id="orge788e1a"></a>
+<a id="orgb29de1b"></a>
 
 ## Settings management for our application
 
@@ -497,7 +498,7 @@ In `custom.py` add this content:
 add 'custom.py' to <span class="underline"><span class="underline">init</span></span>.py
 
 
-<a id="org7a9a4e9"></a>
+<a id="org79c04f4"></a>
 
 ## Configure settings of code editor in one place
 
@@ -521,7 +522,7 @@ This configuration tells the text editor and IDE's how to automatically clean up
 VScode needs an extension installed to be able to read these instructions. Pycharm does it automatically. Emacs needs an extension as well.
 
 
-<a id="orgf518ef6"></a>
+<a id="org1f549cc"></a>
 
 ## Flake8
 
@@ -568,7 +569,7 @@ If you want we can put the `poetry run flake8` command to Makefile.
 But we will not do that just yet, since we will use pre-commit tool and run flake8 over it!
 
 
-<a id="orgff1ec35"></a>
+<a id="org91a94df"></a>
 
 ## pre-commit
 
@@ -739,7 +740,7 @@ update: install migrate install-pre-commit ;
 ```
 
 
-<a id="orgb6648cd"></a>
+<a id="orgba10db0"></a>
 
 ## logging
 
@@ -879,7 +880,7 @@ Now with each page refresh you should see some messages exactly how we styled. T
 The goal with logging now is to figure out how to use it effectively in my Django project.
 
 
-<a id="org1525994"></a>
+<a id="orgc0b573e"></a>
 
 ## Create a welcome app
 
@@ -972,7 +973,7 @@ Then let's go back to base.py settings file and specify our templates location:
 Try to run server, you should be able to see the home page as well as about page.
 
 
-<a id="orgc0a90da"></a>
+<a id="org250d0a7"></a>
 
 ## Static files
 
@@ -1146,7 +1147,7 @@ About:
 That's it, we should have a functional and more beautiful home and about pages.
 
 
-<a id="orge40e734"></a>
+<a id="org42fa8fb"></a>
 
 ## HTML templates for error messages
 
@@ -1195,7 +1196,7 @@ Instead of that, we will create our own.
 ```
 
 
-<a id="org93f9278"></a>
+<a id="orga597a15"></a>
 
 ## TODO Staticfiles
 
@@ -1209,7 +1210,7 @@ STATIC_ROOT = "core/static/staticfiles-cdn"
 ```
 
 
-<a id="org0dea22f"></a>
+<a id="org92d81bc"></a>
 
 ## Django-debug-toolbar
 
@@ -1261,3 +1262,137 @@ if settings.DEBUG:
 ```
 
 Now when you go to any page in welcome app - you should be able to see a django-debug-toolbar button.
+
+
+<a id="orga5639eb"></a>
+
+## User authentication
+
+Great official docs here - <https://docs.djangoproject.com/en/4.2/topics/auth/default/#module-django.contrib.auth.views>
+
+Apparently a lot of the authentication is already built in.
+
+
+### Login and logout
+
+Tutorial I have followed - <https://learndjango.com/tutorials/django-login-and-logout-tutorial>
+
+Add one line to project url's this:
+
+```python
+  urlpatterns = [
+      path("accounts/", include("django.contrib.auth.urls")),
+  ]
+
+# This will include the following URL patterns:
+
+# accounts/login/ [name='login']
+# accounts/logout/ [name='logout']
+# accounts/password_change/ [name='password_change']
+# accounts/password_change/done/ [name='password_change_done']
+# accounts/password_reset/ [name='password_reset']
+# accounts/password_reset/done/ [name='password_reset_done']
+# accounts/reset/<uidb64>/<token>/ [name='password_reset_confirm']
+# accounts/reset/done/ [name='password_reset_complete']
+```
+
+`core/project/settings/base.py` add these 2 lines:
+
+```python
+LOGIN_REDIRECT_URL = "home"
+LOGOUT_REDIRECT_URL = "home"
+```
+
+If we don't add those 2 lines, after successful login or logout we will get redirected to a default page which does not exist in our case or to admin panel.. instead of that, we specify where to redirect by default.
+
+Next, modify `_base.html` to include user.is\_authenticated and login/logout stuff links and dropdown.
+
+```html
+<header {% if user.is_authenticated %} class="authenticated" {% endif %}>
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+
+      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <li><a href="{% url 'home' %}" class="nav-link px-2 link-secondary">Home</a></li>
+        <li><a href="{% url 'about' %}" class="nav-link px-2 link-dark">About</a></li>
+      </ul>
+
+      <div class="dropdown text-end">
+        {% if user.is_authenticated %}
+        <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
+           aria-expanded="false">
+          {{ user.email }}
+        </a>
+        <ul class="dropdown-menu text-small">
+          <li><a class="dropdown-item" href="#">Change password</a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" href="{% url 'logout' %}">Log out</a></li>
+        </ul>
+        {% else %}
+        <form class="form-inline ml-auto">
+          <a href="{% url 'login' %}" class="btn btn-outline-secondary">Log in</a>
+          <a href="#" class="btn btn-primary ml-2">Sign up</a>
+        </form>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+</header>
+```
+
+Add some css to indicate if the user is logged in or not:
+
+```css
+header:not(.authenticated) {
+  border-bottom: solid red;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+header.authenticated {
+  border-bottom: solid green;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+```
+
+From official Django docs:
+
+> It’s your responsibility to provide the html for the login template , called registration/login.html by default. This template gets passed four template context variables:
+
+Okay, let's create templates/registration/login.html and add this starter templates:
+
+```html
+{% extends "_base.html" %}
+
+{% block content %}
+
+{% if form.errors %}
+<p>Your username and password didn't match. Please try again.</p>
+{% endif %}
+
+<h2>Log In</h2>
+<form method="post" action="{% url 'login' %}">
+  {% csrf_token %}
+  {{ form }}
+  <button type="submit">Log In</button>
+</form>
+
+{% endblock %}
+```
+
+Create a superuser account to test the functionality:
+
+```bash
+Make superuser
+```
+
+Then try to login and try to logout by going to:
+
+```bash
+http://127.0.0.1:8000/accounts/login/
+http://127.0.0.1:8000/accounts/logout/
+```

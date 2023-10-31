@@ -1311,3 +1311,142 @@ Create a url that is displayed only if the debug is set to True:
 
 Now when you go to any page in welcome app - you should be able to see
 a django-debug-toolbar button.
+** User authentication
+
+Great official docs here -
+https://docs.djangoproject.com/en/4.2/topics/auth/default/#module-django.contrib.auth.views
+
+Apparently a lot of the authentication is already built in.
+
+*** Login and logout
+
+Tutorial I have followed - https://learndjango.com/tutorials/django-login-and-logout-tutorial
+
+Add one line to project url's this:
+
+#+begin_src python
+    urlpatterns = [
+        path("accounts/", include("django.contrib.auth.urls")),
+    ]
+
+  # This will include the following URL patterns:
+
+  # accounts/login/ [name='login']
+  # accounts/logout/ [name='logout']
+  # accounts/password_change/ [name='password_change']
+  # accounts/password_change/done/ [name='password_change_done']
+  # accounts/password_reset/ [name='password_reset']
+  # accounts/password_reset/done/ [name='password_reset_done']
+  # accounts/reset/<uidb64>/<token>/ [name='password_reset_confirm']
+  # accounts/reset/done/ [name='password_reset_complete']
+#+end_src
+
+~core/project/settings/base.py~ add these 2 lines:
+
+#+begin_src python
+  LOGIN_REDIRECT_URL = "home"
+  LOGOUT_REDIRECT_URL = "home"
+#+end_src
+
+If we don't add those 2 lines, after successful login or logout we
+will get redirected to a default page which does not exist in our case
+or to admin panel.. instead of that, we specify where to redirect by
+default.
+
+Next, modify ~_base.html~ to include user.is_authenticated and
+login/logout stuff links and dropdown.
+
+#+begin_src html
+  <header {% if user.is_authenticated %} class="authenticated" {% endif %}>
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li><a href="{% url 'home' %}" class="nav-link px-2 link-secondary">Home</a></li>
+          <li><a href="{% url 'about' %}" class="nav-link px-2 link-dark">About</a></li>
+        </ul>
+
+        <div class="dropdown text-end">
+          {% if user.is_authenticated %}
+          <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
+             aria-expanded="false">
+            {{ user.email }}
+          </a>
+          <ul class="dropdown-menu text-small">
+            <li><a class="dropdown-item" href="#">Change password</a></li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li><a class="dropdown-item" href="{% url 'logout' %}">Log out</a></li>
+          </ul>
+          {% else %}
+          <form class="form-inline ml-auto">
+            <a href="{% url 'login' %}" class="btn btn-outline-secondary">Log in</a>
+            <a href="#" class="btn btn-primary ml-2">Sign up</a>
+          </form>
+          {% endif %}
+        </div>
+
+      </div>
+    </div>
+  </header>
+#+end_src
+
+Add some css to indicate if the user is logged in or not:
+
+#+begin_src css
+  header:not(.authenticated) {
+    border-bottom: solid red;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+
+  header.authenticated {
+    border-bottom: solid green;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+#+end_src
+
+From official Django docs:
+
+#+begin_quote
+It’s your responsibility to provide the html for the login template ,
+called registration/login.html by default. This template gets passed
+four template context variables:
+#+end_quote
+
+Okay, let's create templates/registration/login.html and add this
+starter templates:
+
+#+begin_src html
+  {% extends "_base.html" %}
+
+  {% block content %}
+
+  {% if form.errors %}
+  <p>Your username and password didn't match. Please try again.</p>
+  {% endif %}
+
+  <h2>Log In</h2>
+  <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    {{ form }}
+    <button type="submit">Log In</button>
+  </form>
+
+  {% endblock %}
+#+end_src
+
+Create a superuser account to test the functionality:
+
+#+begin_src bash
+  Make superuser
+#+end_src
+
+Then try to login and try to logout by going to:
+
+#+begin_src bash
+  http://127.0.0.1:8000/accounts/login/
+  http://127.0.0.1:8000/accounts/logout/
+#+end_src
