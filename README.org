@@ -1780,3 +1780,121 @@ logged-in users can see it. We can use the built-in tag ~{% url
 **** gitignore sent_emails folder
 
 Ignore the sent_emails folder by adding ~sent_emails/~ to .gitignore file.
+*** Creating custom user model
+
+We know that Django ships with a built-in User model for
+authentication (login, logout, signup parts above).
+
+However, for a real-world project, the [[https://docs.djangoproject.com/en/4.2/topics/auth/customizing/#using-a-custom-user-model-when-starting-a-project][official Django documentation]]
+~highly recommends~ using a custom user model instead; it provides far
+more flexibility down the line so, ~as a general rule, always use a
+custom user model for all new Django projects~.
+
+Creating our initial custom user model requires four steps:
+
+- update ~django_project/settings.py~
+- create a new ~CustomUser~ model
+- create new ~UserCreation~ and ~UserChangeForm~ forms
+- update the ~admin~
+
+In settings file - base.py, we'll add and use AUTH_USER_MODEL config
+to tell Django to use our new custom user model instead of the
+built-in User model. We'll call our custom user model CustomUser.
+
+#+begin_src python
+  AUTH_USER_MODEL = "accounts.CustomUser"
+#+end_src
+
+Now update ~accounts/models.py~ with a new User model, which we'll call
+~CustomUser~.
+
+#+begin_src python
+  # accounts/models.py
+  from django.contrib.auth.models import AbstractUser
+  from django.db import models
+
+  class CustomUser(AbstractUser):
+      pass
+      # add additional fields in here
+
+      def __str__(self):
+          return self.username
+#+end_src
+
+We need new versions of two form methods that receive heavy use
+working with users. Stop the local server with Control+c and create a
+new file ~accounts/forms.py~. We'll update it with the following code to
+largely subclass the existing forms.
+
+#+begin_src python
+  # accounts/forms.py
+  from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+
+  from .models import CustomUser
+
+  class CustomUserCreationForm(UserCreationForm):
+
+      class Meta:
+          model = CustomUser
+          fields = ("username", "email")
+
+  class CustomUserChangeForm(UserChangeForm):
+
+      class Meta:
+          model = CustomUser
+          fields = ("username", "email")
+#+end_src
+
+Make a little modification to views that we have previously built.
+Instead of generic forms and views - use the ones we have created:
+
+#+begin_src python
+  from django.urls import reverse_lazy
+  from django.views.generic.edit import CreateView
+  from .forms import CustomUserCreationForm
+
+
+  class SignUpView(CreateView):
+      form_class = CustomUserCreationForm
+      success_url = reverse_lazy("login")
+      template_name = "registration/signup.html"
+#+end_src
+
+Finally, we update admin.py since the admin is highly coupled to the
+default User model.
+
+#+begin_src python
+  # accounts/admin.py
+  from django.contrib import admin
+  from django.contrib.auth.admin import UserAdmin
+
+  from .forms import CustomUserCreationForm, CustomUserChangeForm
+  from .models import CustomUser
+
+  class CustomUserAdmin(UserAdmin):
+      add_form = CustomUserCreationForm
+      form = CustomUserChangeForm
+      model = CustomUser
+      list_display = ["email", "username",]
+
+  admin.site.register(CustomUser, CustomUserAdmin)
+#+end_src
+
+And we're done!
+
+Delete the ~sqlite.db~, we will need to remake it.
+
+Run ~make migrations~ and ~make migrate~ to create a new
+database that uses the custom user model.
+
+Create new superuser again:
+
+#+begin_src bash
+  Make superuser
+#+end_src
+
+You now should be able to do all the steps mentioned above in previous
+sections under "user authentication", the only thing that is different
+now is that we use our own user model that can be customizable in the
+future. Check all login/logout/register/change password functions, all
+should work.
