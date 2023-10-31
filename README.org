@@ -1450,6 +1450,7 @@ Then try to login and try to logout by going to:
   http://127.0.0.1:8000/accounts/login/
   http://127.0.0.1:8000/accounts/logout/
 #+end_src
+
 *** Signup
 
 To begin, create a dedicated app called accounts.
@@ -2111,3 +2112,68 @@ type field. We can make it to a datefield simply by adding:
 #+end_src
 
 Now our date_of_birth field will render nicely with a date picker.
+*** Create user profile page
+
+I would like to create a user dashboard page. Where user can see and
+then to modify his own profile information.
+
+First let's create a view:
+
+#+begin_src python
+  # accounts/views.py
+  from django.shortcuts import render
+  from django.contrib.auth.decorators import login_required
+
+  @login_required
+  def DashboardView(request):
+
+      # Get the logged-in user
+      user = request.user
+      context = {
+          "user_name": user.username,
+          "user_email": user.email,
+          "user_date_of_birth": user.date_of_birth,
+      }
+
+      return render(request, "registration/dashboard.html", context)
+#+end_src
+
+Then an url:
+
+#+begin_src python
+  # accounts/views.py
+
+  from . import views
+  urlpatterns = [
+      path("signup/", SignUpView.as_view(), name="signup"),
+      path("dashboard", views.DashboardView, name="dashboard"), # new
+  ]
+#+end_src
+
+Create a html template:
+
+#+begin_src html
+  {% extends "_base.html" %}
+
+  {% block content %}
+
+      <h2>Welcome to your dashboard, {{ user_name }}!</h2>
+
+      <p></p>
+      <p><strong>User name:</strong> {{ user_name }}</p>
+      <p><strong>Email:</strong> {{ user_email }}</p>
+      <p><strong>Date of birth:</strong> {{ user_date_of_birth }}</p>
+
+      <a href="{% url 'password_reset' %}">Change password</a>
+
+  {% endblock %}
+#+end_src
+
+modify the _base.html to include the dashboard link in the dropdown.
+Remove the change password option. It is moved to the dashboard template.
+
+#+begin_src html
+    <ul class="dropdown-menu text-small">
+  -   <li><a class="dropdown-item" href="{% url 'password_reset' %}">Change password</a></li>
+  +   <li><a class="dropdown-item" href="{% url 'dashboard' %}">Dashboard</a></li>
+#+end_src
