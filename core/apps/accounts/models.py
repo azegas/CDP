@@ -3,9 +3,7 @@ from django.db import models  # noqa
 
 
 class CustomUser(AbstractUser):
-    pass
-
-    # add additional fields in here
+    date_of_birth = models.DateField(null=True, blank=True)
 
     def __str__(self):
         return self.username
