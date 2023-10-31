@@ -2191,3 +2191,31 @@ Remove the change password option. It is moved to the dashboard template.
   -   <li><a class="dropdown-item" href="{% url 'password_reset' %}">Change password</a></li>
   +   <li><a class="dropdown-item" href="{% url 'dashboard' %}">Dashboard</a></li>
 #+end_src
+*** ?next=
+
+Not sure exactly what is the magic behind this, but I know that if I
+am not logged in and I try to go to
+http://127.0.0.1:8000/accounts/dashboard/, I get redirected to login
+page and the url changes to
+http://127.0.0.1:8000/accounts/login/?next=/accounts/dashboard/.
+
+It is as if it says then when the user successfully completes the
+login procedure - redirect him/er to the initial page he/she needed,
+which is dashboard in this case. This is amazing.
+
+To implement this all we have to do is:
+
+#+begin_src html
+  <!-- add this above the h2 Log in tag -->
+  {% if next %}
+      {% if user.is_authenticated %}
+      <p>Your account doesn't have access to this page. To proceed,
+      please login with an account that has access.</p>
+      {% else %}
+      <p>Please login to see this page.</p>
+      {% endif %}
+  {% endif %}
+
+  <!-- add this just below the submit button  -->
+  <input type="hidden" name="next" value="{{ next }}">
+#+end_src

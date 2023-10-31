@@ -1,48 +1,49 @@
-- [CDP - Core Django Project](#org175141a)
-- [How this file is created](#orge4bfd5a)
-- [Resources used](#orgc311f63)
-- [Steps taken to create this Django Core Project](#org43192bb)
-  - [Create a Github repository](#orged104c8)
-  - [Create a Django project](#org27d83f7)
-  - [Create .gitignore file](#org27514af)
-  - [Create a python virtual environment](#orgb30622c)
-  - [Poetry setup](#org4ddadbb)
-    - [Install poetry](#org24245d8)
-    - [Try running the server with poetry command](#org1576b4d)
-    - [Run everything through Poetry from now on](#orgbe98cb9)
-  - [Creating a Makefile](#org2fea42c)
-  - [Restructuring the codebase](#orgd49d2af)
-  - [Settings management](#org10b51f3)
-  - [Settings management for developers](#org01ad44d)
-  - [Settings management for our application](#orgef72c81)
-  - [Configure settings of code editor in one place](#org0fe719e)
-  - [Flake8](#orgb87f5db)
-  - [pre-commit](#org2ff3df0)
-  - [logging](#orgb243ef7)
-  - [Create a welcome app](#orgc8f93f0)
-  - [Static files](#org9576d71)
-  - [HTML templates for error messages](#orgae05446)
-  - [Staticfiles](#orgf9db87c)
-  - [Django-debug-toolbar](#org6229e59)
-  - [User authentication](#org9c0fe69)
-    - [Login and logout](#org3bc9477)
-    - [Signup](#orgdb5019d)
-    - [Password reset](#org39495ef)
-    - [Creating a custom user model](#orgc5c1f77)
-    - [Creating custom user model fields](#orgf709670)
-    - [Implement crispy forms](#org15add1a)
-    - [Create user profile page](#orgb4b9ebf)
+- [CDP - Core Django Project](#orgaab95ab)
+- [How this file is created](#orgba19b5d)
+- [Resources used](#org76281d0)
+- [Steps taken to create this Django Core Project](#org80fcfa5)
+  - [Create a Github repository](#org1553f48)
+  - [Create a Django project](#org577f0cf)
+  - [Create .gitignore file](#orge85b805)
+  - [Create a python virtual environment](#org7b413f2)
+  - [Poetry setup](#org8bc95e3)
+    - [Install poetry](#org3eb5c20)
+    - [Try running the server with poetry command](#orgccb1a91)
+    - [Run everything through Poetry from now on](#org66069e8)
+  - [Creating a Makefile](#orgac7991c)
+  - [Restructuring the codebase](#org60f0773)
+  - [Settings management](#org42c54fa)
+  - [Settings management for developers](#org9b35067)
+  - [Settings management for our application](#org0aac147)
+  - [Configure settings of code editor in one place](#orgf03f12b)
+  - [Flake8](#org10a0fa9)
+  - [pre-commit](#org362df9b)
+  - [logging](#orge8b4b96)
+  - [Create a welcome app](#org61d2643)
+  - [Static files](#orgd19dea8)
+  - [HTML templates for error messages](#org1a89edf)
+  - [Staticfiles](#orgf15bb57)
+  - [Django-debug-toolbar](#org0b49256)
+  - [User authentication](#orgf36d751)
+    - [Login and logout](#org7a3689d)
+    - [Signup](#orgb2883ac)
+    - [Password reset](#org075b90f)
+    - [Creating a custom user model](#org2917b4b)
+    - [Creating custom user model fields](#org6b2517d)
+    - [Implement crispy forms](#org7f1687a)
+    - [Create user profile page](#orgdf3efb8)
+    - [?next=](#org42044aa)
 
 
 
-<a id="org175141a"></a>
+<a id="orgaab95ab"></a>
 
 # CDP - Core Django Project
 
 With each new project that I build I keep finding better ways to start a new project. Here I will keep a CORE things that each of my future Django app will have to have.
 
 
-<a id="orge4bfd5a"></a>
+<a id="orgba19b5d"></a>
 
 # How this file is created
 
@@ -51,28 +52,28 @@ With each new project that I build I keep finding better ways to start a new pro
 I use .org file since I am used to Emacs keybindings and it's much quicker for me to do the formatting and text transformations and etc. It also generates a table of content for me, which is nice in such large document.
 
 
-<a id="orgc311f63"></a>
+<a id="org76281d0"></a>
 
 # Resources used
 
 -   Pro Django tutorials by thenewboston
 
 
-<a id="org43192bb"></a>
+<a id="org80fcfa5"></a>
 
 # Steps taken to create this Django Core Project
 
 Steps taken to create this repo are described here.
 
 
-<a id="orged104c8"></a>
+<a id="org1553f48"></a>
 
 ## Create a Github repository
 
 Create a Github repo with the name of your project. Clone it to your machine. Open a text editor inside of it.
 
 
-<a id="org27d83f7"></a>
+<a id="org577f0cf"></a>
 
 ## Create a Django project
 
@@ -83,14 +84,14 @@ Time to create a django project. Run the following command - `django-admin start
 Push to github.
 
 
-<a id="org27514af"></a>
+<a id="orge85b805"></a>
 
 ## Create .gitignore file
 
 Add content to it from your most recent Django project.
 
 
-<a id="orgb30622c"></a>
+<a id="org7b413f2"></a>
 
 ## Create a python virtual environment
 
@@ -124,14 +125,14 @@ pip list
 ```
 
 
-<a id="org4ddadbb"></a>
+<a id="org8bc95e3"></a>
 
 ## Poetry setup
 
 <https://python-poetry.org/> - poetry is a modern tool for package management in Python that simplifies the process of creating, managing, and publishing Python packages. Helps to make sure each developer's environment is exactly the same, without a smallest changes in installed packages.
 
 
-<a id="org24245d8"></a>
+<a id="org3eb5c20"></a>
 
 ### Install poetry
 
@@ -164,7 +165,7 @@ In the future if we want to install new packages we will use `poetry add` comman
 NOTE: by default poetry will try to create it's own virtual environment, but since we have created our's already, nothing additional will be created.
 
 
-<a id="org1576b4d"></a>
+<a id="orgccb1a91"></a>
 
 ### Try running the server with poetry command
 
@@ -177,7 +178,7 @@ python manage.py runserver
 You should be able to access the server on <http://127.0.0.1:8000/>. Ignore the warning about migrations for now.
 
 
-<a id="orgbe98cb9"></a>
+<a id="org66069e8"></a>
 
 ### Run everything through Poetry from now on
 
@@ -190,7 +191,7 @@ poetry run python manage.py runserver
 ```
 
 
-<a id="org2fea42c"></a>
+<a id="orgac7991c"></a>
 
 ## Creating a Makefile
 
@@ -226,7 +227,7 @@ run-server:
 Other times our commands might be like "make install" or "make clean" or something similar and files might already exist with those names in our directories, so make will try to run those first if there is no .PHONY described.
 
 
-<a id="orgd49d2af"></a>
+<a id="org60f0773"></a>
 
 ## Restructuring the codebase
 
@@ -334,7 +335,7 @@ run-server:
 Now command `make run-server` works just fine.
 
 
-<a id="org10b51f3"></a>
+<a id="org42c54fa"></a>
 
 ## Settings management
 
@@ -384,7 +385,7 @@ make run-server
 ```
 
 
-<a id="org01ad44d"></a>
+<a id="org9b35067"></a>
 
 ## Settings management for developers
 
@@ -493,7 +494,7 @@ DEBUG = True
 So now when new developer comes, he knows that he must create local folder and copy this settings.dev.py file to that local folder.
 
 
-<a id="orgef72c81"></a>
+<a id="org0aac147"></a>
 
 ## Settings management for our application
 
@@ -514,7 +515,7 @@ In `custom.py` add this content:
 add 'custom.py' to <span class="underline"><span class="underline">init</span></span>.py
 
 
-<a id="org0fe719e"></a>
+<a id="orgf03f12b"></a>
 
 ## Configure settings of code editor in one place
 
@@ -538,7 +539,7 @@ This configuration tells the text editor and IDE's how to automatically clean up
 VScode needs an extension installed to be able to read these instructions. Pycharm does it automatically. Emacs needs an extension as well.
 
 
-<a id="orgb87f5db"></a>
+<a id="org10a0fa9"></a>
 
 ## Flake8
 
@@ -585,7 +586,7 @@ If you want we can put the `poetry run flake8` command to Makefile.
 But we will not do that just yet, since we will use pre-commit tool and run flake8 over it!
 
 
-<a id="org2ff3df0"></a>
+<a id="org362df9b"></a>
 
 ## pre-commit
 
@@ -756,7 +757,7 @@ update: install migrate install-pre-commit ;
 ```
 
 
-<a id="orgb243ef7"></a>
+<a id="orge8b4b96"></a>
 
 ## logging
 
@@ -896,7 +897,7 @@ Now with each page refresh you should see some messages exactly how we styled. T
 The goal with logging now is to figure out how to use it effectively in my Django project.
 
 
-<a id="orgc8f93f0"></a>
+<a id="org61d2643"></a>
 
 ## Create a welcome app
 
@@ -989,7 +990,7 @@ Then let's go back to base.py settings file and specify our templates location:
 Try to run server, you should be able to see the home page as well as about page.
 
 
-<a id="org9576d71"></a>
+<a id="orgd19dea8"></a>
 
 ## Static files
 
@@ -1163,7 +1164,7 @@ About:
 That's it, we should have a functional and more beautiful home and about pages.
 
 
-<a id="orgae05446"></a>
+<a id="org1a89edf"></a>
 
 ## HTML templates for error messages
 
@@ -1212,7 +1213,7 @@ Instead of that, we will create our own.
 ```
 
 
-<a id="orgf9db87c"></a>
+<a id="orgf15bb57"></a>
 
 ## TODO Staticfiles
 
@@ -1226,7 +1227,7 @@ STATIC_ROOT = "core/static/staticfiles-cdn"
 ```
 
 
-<a id="org6229e59"></a>
+<a id="org0b49256"></a>
 
 ## Django-debug-toolbar
 
@@ -1280,7 +1281,7 @@ if settings.DEBUG:
 Now when you go to any page in welcome app - you should be able to see a django-debug-toolbar button.
 
 
-<a id="org9c0fe69"></a>
+<a id="orgf36d751"></a>
 
 ## User authentication
 
@@ -1289,7 +1290,7 @@ Great official docs here - <https://docs.djangoproject.com/en/4.2/topics/auth/de
 Apparently a lot of the authentication is already built in.
 
 
-<a id="org3bc9477"></a>
+<a id="org7a3689d"></a>
 
 ### Login and logout
 
@@ -1416,7 +1417,7 @@ http://127.0.0.1:8000/accounts/logout/
 ```
 
 
-<a id="orgdb5019d"></a>
+<a id="orgb2883ac"></a>
 
 ### Signup
 
@@ -1514,7 +1515,7 @@ Don't forget to update \_base.html to add the Sign up link:
 ```
 
 
-<a id="org39495ef"></a>
+<a id="org075b90f"></a>
 
 ### Password reset
 
@@ -1693,7 +1694,7 @@ It builds upon previous work in the Login & Logout and Signup steps.
     Ignore the sent\_emails folder by adding `sent_emails/` to .gitignore file.
 
 
-<a id="orgc5c1f77"></a>
+<a id="org2917b4b"></a>
 
 ### Creating a custom user model
 
@@ -1798,7 +1799,7 @@ Make superuser
 You now should be able to do all the steps mentioned above in previous sections under "user authentication", the only thing that is different now is that we use our own user model that can be customizable in the future. Check all login/logout/register/change password functions, all should work. **\***
 
 
-<a id="orgf709670"></a>
+<a id="org6b2517d"></a>
 
 ### Creating custom user model fields
 
@@ -1902,7 +1903,7 @@ To add a date of birth field to our custom user model in Django, we need to foll
     Users now will also be able to enter their date of birth during registration or update their profile.
 
 
-<a id="org15add1a"></a>
+<a id="org7f1687a"></a>
 
 ### Implement crispy forms
 
@@ -1997,7 +1998,7 @@ class CustomUserChangeForm(UserChangeForm):
 Now our date\_of\_birth field will render nicely with a date picker.
 
 
-<a id="orgb4b9ebf"></a>
+<a id="orgdf3efb8"></a>
 
 ### Create user profile page
 
@@ -2073,4 +2074,30 @@ modify the \_base.html to include the dashboard link in the dropdown. Remove the
   <ul class="dropdown-menu text-small">
 -   <li><a class="dropdown-item" href="{% url 'password_reset' %}">Change password</a></li>
 +   <li><a class="dropdown-item" href="{% url 'dashboard' %}">Dashboard</a></li>
+```
+
+
+<a id="org42044aa"></a>
+
+### ?next=
+
+Not sure exactly what is the magic behind this, but I know that if I am not logged in and I try to go to <http://127.0.0.1:8000/accounts/dashboard/>, I get redirected to login page and the url changes to <http://127.0.0.1:8000/accounts/login/?next=/accounts/dashboard/>.
+
+It is as if it says then when the user successfully completes the login procedure - redirect him/er to the initial page he/she needed, which is dashboard in this case. This is amazing.
+
+To implement this all we have to do is:
+
+```html
+<!-- add this above the h2 Log in tag -->
+{% if next %}
+    {% if user.is_authenticated %}
+    <p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+    {% else %}
+    <p>Please login to see this page.</p>
+    {% endif %}
+{% endif %}
+
+<!-- add this just below the submit button  -->
+<input type="hidden" name="next" value="{{ next }}">
 ```
