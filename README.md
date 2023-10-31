@@ -1,43 +1,44 @@
-- [CDP - Core Django Project](#org354b29a)
-- [How this file is created](#org4c6eb97)
-- [Resources used](#org8b78e9f)
-- [Steps taken to create this Django Core Project](#orge8ba8c3)
-  - [Create a Github repository](#orgaba1e85)
-  - [Create a Django project](#org5f21029)
-  - [Create .gitignore file](#orgae8c990)
-  - [Create a python virtual environment](#org8695cab)
-  - [Poetry setup](#org4ad6e32)
-    - [Install poetry](#org158af65)
-    - [Try running the server with poetry command](#org7e04ea7)
-    - [Run everything through Poetry from now on](#orgc420ea2)
-  - [Creating a Makefile](#org7e3f245)
-  - [Restructuring the codebase](#orgd2eb732)
-  - [Settings management](#org235945e)
-  - [Settings management for developers](#org44342ca)
-  - [Settings management for our application](#org7702e43)
-  - [Configure settings of code editor in one place](#org3e333b7)
-  - [Flake8](#org6f9d22a)
-  - [pre-commit](#org4f0c59e)
-  - [logging](#org644bc7c)
-  - [Create a welcome app](#orged09e4b)
-  - [Static files](#orgd0dd496)
-  - [HTML templates for error messages](#orgb54a058)
-  - [Staticfiles](#org11381b9)
-  - [Django-debug-toolbar](#orgee7ea51)
-  - [User authentication](#orge0c29ac)
-    - [Login and logout](#org8b75d9e)
-    - [Signup](#orgaec5bd3)
+- [CDP - Core Django Project](#orgdc92f06)
+- [How this file is created](#org9c31d7e)
+- [Resources used](#org258a41a)
+- [Steps taken to create this Django Core Project](#orge4fd4f7)
+  - [Create a Github repository](#org262daa1)
+  - [Create a Django project](#org19a29ce)
+  - [Create .gitignore file](#org68ab794)
+  - [Create a python virtual environment](#orgff450cc)
+  - [Poetry setup](#orgae77ba7)
+    - [Install poetry](#org10f3411)
+    - [Try running the server with poetry command](#orgae13717)
+    - [Run everything through Poetry from now on](#org4ac3cfd)
+  - [Creating a Makefile](#orgb9d0c20)
+  - [Restructuring the codebase](#org1876ea8)
+  - [Settings management](#orgb60bd59)
+  - [Settings management for developers](#org6d34a9e)
+  - [Settings management for our application](#orge2cd362)
+  - [Configure settings of code editor in one place](#org91b01e1)
+  - [Flake8](#orgdebd80c)
+  - [pre-commit](#orgfa5c527)
+  - [logging](#orgf9d4a76)
+  - [Create a welcome app](#org0bd3387)
+  - [Static files](#org2e18907)
+  - [HTML templates for error messages](#org6c63393)
+  - [Staticfiles](#org7563120)
+  - [Django-debug-toolbar](#orgae976ea)
+  - [User authentication](#org4ab1b1b)
+    - [Login and logout](#org2d3870c)
+    - [Signup](#org1a2897c)
+    - [Password reset](#org4b6d01e)
 
 
 
-<a id="org354b29a"></a>
+<a id="orgdc92f06"></a>
 
 # CDP - Core Django Project
 
 With each new project that I build I keep finding better ways to start a new project. Here I will keep a CORE things that each of my future Django app will have to have.
 
 
-<a id="org4c6eb97"></a>
+<a id="org9c31d7e"></a>
 
 # How this file is created
 
@@ -46,28 +47,28 @@ With each new project that I build I keep finding better ways to start a new pro
 I use .org file since I am used to Emacs keybindings and it's much quicker for me to do the formatting and text transformations and etc. It also generates a table of content for me, which is nice in such large document.
 
 
-<a id="org8b78e9f"></a>
+<a id="org258a41a"></a>
 
 # Resources used
 
 -   Pro Django tutorials by thenewboston
 
 
-<a id="orge8ba8c3"></a>
+<a id="orge4fd4f7"></a>
 
 # Steps taken to create this Django Core Project
 
 Steps taken to create this repo are described here.
 
 
-<a id="orgaba1e85"></a>
+<a id="org262daa1"></a>
 
 ## Create a Github repository
 
 Create a Github repo with the name of your project. Clone it to your machine. Open a text editor inside of it.
 
 
-<a id="org5f21029"></a>
+<a id="org19a29ce"></a>
 
 ## Create a Django project
 
@@ -78,14 +79,14 @@ Time to create a django project. Run the following command - `django-admin start
 Push to github.
 
 
-<a id="orgae8c990"></a>
+<a id="org68ab794"></a>
 
 ## Create .gitignore file
 
 Add content to it from your most recent Django project.
 
 
-<a id="org8695cab"></a>
+<a id="orgff450cc"></a>
 
 ## Create a python virtual environment
 
@@ -119,14 +120,14 @@ pip list
 ```
 
 
-<a id="org4ad6e32"></a>
+<a id="orgae77ba7"></a>
 
 ## Poetry setup
 
 <https://python-poetry.org/> - poetry is a modern tool for package management in Python that simplifies the process of creating, managing, and publishing Python packages. Helps to make sure each developer's environment is exactly the same, without a smallest changes in installed packages.
 
 
-<a id="org158af65"></a>
+<a id="org10f3411"></a>
 
 ### Install poetry
 
@@ -159,7 +160,7 @@ In the future if we want to install new packages we will use `poetry add` comman
 NOTE: by default poetry will try to create it's own virtual environment, but since we have created our's already, nothing additional will be created.
 
 
-<a id="org7e04ea7"></a>
+<a id="orgae13717"></a>
 
 ### Try running the server with poetry command
 
@@ -172,7 +173,7 @@ python manage.py runserver
 You should be able to access the server on <http://127.0.0.1:8000/>. Ignore the warning about migrations for now.
 
 
-<a id="orgc420ea2"></a>
+<a id="org4ac3cfd"></a>
 
 ### Run everything through Poetry from now on
 
@@ -185,7 +186,7 @@ poetry run python manage.py runserver
 ```
 
 
-<a id="org7e3f245"></a>
+<a id="orgb9d0c20"></a>
 
 ## Creating a Makefile
 
@@ -221,7 +222,7 @@ run-server:
 Other times our commands might be like "make install" or "make clean" or something similar and files might already exist with those names in our directories, so make will try to run those first if there is no .PHONY described.
 
 
-<a id="orgd2eb732"></a>
+<a id="org1876ea8"></a>
 
 ## Restructuring the codebase
 
@@ -329,7 +330,7 @@ run-server:
 Now command `make run-server` works just fine.
 
 
-<a id="org235945e"></a>
+<a id="orgb60bd59"></a>
 
 ## Settings management
 
@@ -379,7 +380,7 @@ make run-server
 ```
 
 
-<a id="org44342ca"></a>
+<a id="org6d34a9e"></a>
 
 ## Settings management for developers
 
@@ -488,7 +489,7 @@ DEBUG = True
 So now when new developer comes, he knows that he must create local folder and copy this settings.dev.py file to that local folder.
 
 
-<a id="org7702e43"></a>
+<a id="orge2cd362"></a>
 
 ## Settings management for our application
 
@@ -509,7 +510,7 @@ In `custom.py` add this content:
 add 'custom.py' to <span class="underline"><span class="underline">init</span></span>.py
 
 
-<a id="org3e333b7"></a>
+<a id="org91b01e1"></a>
 
 ## Configure settings of code editor in one place
 
@@ -533,7 +534,7 @@ This configuration tells the text editor and IDE's how to automatically clean up
 VScode needs an extension installed to be able to read these instructions. Pycharm does it automatically. Emacs needs an extension as well.
 
 
-<a id="org6f9d22a"></a>
+<a id="orgdebd80c"></a>
 
 ## Flake8
 
@@ -580,7 +581,7 @@ If you want we can put the `poetry run flake8` command to Makefile.
 But we will not do that just yet, since we will use pre-commit tool and run flake8 over it!
 
 
-<a id="org4f0c59e"></a>
+<a id="orgfa5c527"></a>
 
 ## pre-commit
 
@@ -751,7 +752,7 @@ update: install migrate install-pre-commit ;
 ```
 
 
-<a id="org644bc7c"></a>
+<a id="orgf9d4a76"></a>
 
 ## logging
 
@@ -891,7 +892,7 @@ Now with each page refresh you should see some messages exactly how we styled. T
 The goal with logging now is to figure out how to use it effectively in my Django project.
 
 
-<a id="orged09e4b"></a>
+<a id="org0bd3387"></a>
 
 ## Create a welcome app
 
@@ -984,7 +985,7 @@ Then let's go back to base.py settings file and specify our templates location:
 Try to run server, you should be able to see the home page as well as about page.
 
 
-<a id="orgd0dd496"></a>
+<a id="org2e18907"></a>
 
 ## Static files
 
@@ -1158,7 +1159,7 @@ About:
 That's it, we should have a functional and more beautiful home and about pages.
 
 
-<a id="orgb54a058"></a>
+<a id="org6c63393"></a>
 
 ## HTML templates for error messages
 
@@ -1207,7 +1208,7 @@ Instead of that, we will create our own.
 ```
 
 
-<a id="org11381b9"></a>
+<a id="org7563120"></a>
 
 ## TODO Staticfiles
 
@@ -1221,7 +1222,7 @@ STATIC_ROOT = "core/static/staticfiles-cdn"
 ```
 
 
-<a id="orgee7ea51"></a>
+<a id="orgae976ea"></a>
 
 ## Django-debug-toolbar
 
@@ -1275,7 +1276,7 @@ if settings.DEBUG:
 Now when you go to any page in welcome app - you should be able to see a django-debug-toolbar button.
 
 
-<a id="orge0c29ac"></a>
+<a id="org4ab1b1b"></a>
 
 ## User authentication
 
@@ -1284,7 +1285,7 @@ Great official docs here - <https://docs.djangoproject.com/en/4.2/topics/auth/de
 Apparently a lot of the authentication is already built in.
 
 
-<a id="org8b75d9e"></a>
+<a id="org2d3870c"></a>
 
 ### Login and logout
 
@@ -1411,7 +1412,7 @@ http://127.0.0.1:8000/accounts/logout/
 ```
 
 
-<a id="orgaec5bd3"></a>
+<a id="org1a2897c"></a>
 
 ### Signup
 
@@ -1507,3 +1508,182 @@ Don't forget to update \_base.html to add the Sign up link:
 ```html
 <a href="{% url 'signup' %}" class="btn btn-primary ml-2">Sign up</a>
 ```
+
+
+<a id="org4b6d01e"></a>
+
+### Password reset
+
+<https://learndjango.com/tutorials/django-password-reset-tutorial>
+
+Step by step the instructions above. Will write them down below just in case.
+
+It builds upon previous work in the Login & Logout and Signup steps.
+
+-   Django auth app
+
+    We want a password\_reset page where users can enter their email address and receive a cryptographically secure email with a one-time link to a reset page. Fortunately, Django has us covered.
+
+    If you recall the views and URLs provided by the Django auth app, there are already several for resetting a password.
+
+    ```bash
+    accounts/login/ [name='login']
+    accounts/logout/ [name='logout']
+    accounts/password_change/ [name='password_change']
+    accounts/password_change/done/ [name='password_change_done']
+    accounts/password_reset/ [name='password_reset']
+    accounts/password_reset/done/ [name='password_reset_done']
+    accounts/reset/<uidb64>/<token>/ [name='password_reset_confirm']
+    accounts/reset/done/ [name='password_reset_complete']
+    ```
+
+    The default templates, however, are pretty ugly, and we need to customize them (basically admin panel vibe).
+
+    But first, we must devise a way to deliver our email messages.
+
+-   SMTP Server
+
+    In the real world, you would integrate with an email service like MailGun or SendGrid. Django lets us store emails either in the console or as a file for development purposes. We'll choose the latter and store all sent emails in a folder called sent\_emails in our project directory.
+
+    To configure this, update our django\_project/settings.py file by adding the following two lines at the bottom under our redirect URLs.
+
+    ```python
+    EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+    EMAIL_FILE_PATH = "sent_emails"
+    ```
+
+    Now, let's change the appearance of the password reset pages.
+
+-   Password Reset Form
+
+    The default template for password reset is available at templates/registration/password\_reset\_form.html. We can customize it by creating our own `templates/registration/password_reset_form.html` file:
+
+    Then add the following code:
+
+    ```html
+    {% extends '_base.html' %}
+
+    {% block title %}Forgot Your Password?{% endblock %}
+
+    {% block content %}
+      <h1>Forgot your password?</h1>
+      <p>Enter your email address below, and we'll email instructions for setting a new one.</p>
+
+      <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Send me instructions!">
+      </form>
+    {% endblock %}
+    ```
+
+    If you refresh the page at <http://127.0.0.1:8000/accounts/password_reset/>, you can see the new update.
+
+    Now, go ahead and enter the email address that matches an actual user you've created. Then click on the button to submit it.
+
+    We're redirected to the Password reset done page upon successful submission, which is also ugly. Let's change it. The default template is located at templates/registration/password\_reset\_done.html. So, as before, in your text editor, create a new template file, `templates/registration/password_reset_done.html` and add the following code:
+
+    ```html
+    {% extends "_base.html" %}
+
+    {% block title %}Email Sent{% endblock %}
+
+    {% block content %}
+      <h1>Check your inbox.</h1>
+      <p> We've emailed you instructions for setting your password. You should receive the email shortly!</p>
+    {% endblock %}
+    ```
+
+    We can see our new page if you refresh the password reset done page at <http://127.0.0.1:8000/accounts/password_reset/done/>.
+
+-   Password Reset Confirm
+
+    Remember how we configured our Django project to store emails in a local folder called sent\_emails? If you look at your project now, that folder exists! The format for the txt file will look something like this:
+
+    ```bash
+    Content-Type: text/plain; charset="utf-8"
+    MIME-Version: 1.0
+    Content-Transfer-Encoding: 8bit
+    Subject: Password reset on 127.0.0.1:8000
+    From: webmaster@localhost
+    To: arvydas.gaspa@gmail.com
+    Date: Tue, 31 Oct 2023 08:08:56 -0000
+    Message-ID: <1698XXXXXXXX674.349373.112XXXXX652534941@bla>
+
+
+    You're receiving this email because you requested a password reset for your user account at 127.0.0.1:8000.
+
+    Please go to the following page and choose a new password:
+
+    http://127.0.0.1:8000/accounts/reset/MQ/bwxdaw-98a099d10ebb8f23026baa1/
+
+    Your username, in case you’ve forgotten: arvy
+
+    Thanks for using our site!
+
+    The 127.0.0.1:8000 team
+
+    -------------------------------------------------------------------------------
+
+    ```
+
+    This file contains Django's default language, which we can customize. But the critical section for now is the URL included. In the email above, mine is <http://127.0.0.1:8000/accounts/reset/MQ/aa1v2k-8ab2c9597a4f6cc754e3dc5baaf3c77f/>. Copy and paste yours into your browser, and you'll be automatically routed to the Password reset confirmation page.
+
+    This page is ugly as well, no? Let's create a new template with our familiar steps. In your text editor, create the new template called `templates/registration/password_reset_confirm.html` and enter this new code:
+
+    ```html
+    {% extends "_base.html" %}
+
+    {% block title %}Enter new password{% endblock %}
+
+    {% block content %}
+
+    {% if validlink %}
+
+    <h1>Set a new password!</h1>
+    <form method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input type="submit" value="Change my password">
+    </form>
+
+    {% else %}
+
+    <p>The password reset link was invalid, possibly because it has already been used. Please request a new password reset.</p>
+
+    {% endif %}
+    {% endblock %}
+    ```
+
+    Refresh the page at <http://127.0.0.1:8000/accounts/reset/Mg/set-password/>, and you'll see our new template.
+
+-   Password Reset Done
+
+    Go ahead and create a new password in our form. Upon submission, you'll be redirected to our final default page, which is for Password reset complete:
+
+    To customize this page, we'll create a new file called `password_reset_complete.html` and enter the following code:
+
+    ```html
+    {% extends '_base.html' %}
+
+    {% block title %}Password reset complete{% endblock %}
+
+    {% block content %}
+    <h1>Password reset complete</h1>
+    <p>Your new password has been set. You can log in now on the <a href=" {% url 'login' %}">log in page</a>.</p>
+    {% endblock %}
+    ```
+
+    Now reset the page at <http://127.0.0.1:8000/accounts/reset/done/> and view our work.
+
+-   Add to home page
+
+    Let's now add the password reset link in the login page homepage so logged-in users can see it. We can use the built-in tag `{% url 'password_reset'%}`. Here's the code.
+
+    ```html
+    <p><a href="{% url 'password_reset' %}">Reset Password</a></p>
+    ```
+
+-   gitignore sent\_emails folder
+
+    Ignore the sent\_emails folder by adding `sent_emails/` to .gitignore file.
