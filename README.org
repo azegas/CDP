@@ -1,5 +1,5 @@
 #+OPTIONS: toc:t # display table of content (t/nil)
-#+OPTIONS: toc:2 # table of content displays 2 levels deep
+#+OPTIONS: toc:3 # table of content displays 3 levels deep
 #+OPTIONS: ^:nil # disabling subscript. Otherwise __ exports not how as I want
 
 * CDP - Core Django Project
@@ -97,7 +97,7 @@ managing, and publishing Python packages. Helps to make sure each
 developer's environment is exactly the same, without a smallest
 changes in installed packages.
 
-*** Install poetry:
+*** Install poetry
 
 #+begin_src bash
   curl -sSL https://install.python-poetry.org | python3 -
@@ -1449,4 +1449,120 @@ Then try to login and try to logout by going to:
 #+begin_src bash
   http://127.0.0.1:8000/accounts/login/
   http://127.0.0.1:8000/accounts/logout/
+#+end_src
+*** Signup
+
+To begin, create a dedicated app called accounts.
+
+#+begin_src bash
+  poetry run python -m core.manage startapp accounts
+#+end_src
+
+Then move the newly created accounts folder to core/apps/accounts.
+
+Modify apps.py, "name" field to:
+
+#+begin_src python
+    name = "core.apps.accounts"
+#+end_src
+
+Add new app to installed_apps in base.py:
+
+#+begin_src python
+    "core.apps.accounts",
+#+end_src
+
+#+begin_quote
+Then add a project-level URL for the accounts app *above* our included
+Django auth app. Django will look top to bottom for URL patterns, so
+when it sees a URL route within our accounts app that matches one in
+the built-in auth app, it will choose the new accounts app route
+first.
+#+end_quote
+
+So basically, as we saw before in "Login and logout" part, there are
+already templates and urls already specified in
+"django.contrib.auth.urls". But sign up url does not exist. We will
+create just that one in core/project/urls.py
+
+#+begin_src python
+  urlpatterns = [
+      path("admin/", admin.site.urls),
+      path("", include("core.apps.welcome.urls")),
+      path("accounts/", include("accounts.urls")),  # new
+      path("accounts/", include("django.contrib.auth.urls")),
+  ]
+#+end_src
+
+Create a new file called ~accounts/urls.py~ and add the following code:
+
+#+begin_src python
+  from django.urls import path
+  from .views import SignUpView
+
+  urlpatterns = [
+      path("signup/", SignUpView.as_view(), name="signup"),
+  ]
+#+end_src
+
+Now for the views.py file in core/apps/accounts:
+
+#+begin_src python
+  from django.contrib.auth.forms import UserCreationForm
+  from django.urls import reverse_lazy
+  from django.views import generic
+
+
+  class SignUpView(generic.CreateView):
+      form_class = UserCreationForm
+      success_url = reverse_lazy("login")
+      template_name = "registration/signup.html"
+#+end_src
+
+We're subclassing the generic class-based view [[https://docs.djangoproject.com/en/4.2/ref/class-based-views/generic-editing/#django.views.generic.edit.CreateView][CreateView]] in our
+SignUp class. We specify using the built-in UserCreationForm and the
+not-yet-created template at signup.html. And we use [[https://docs.djangoproject.com/en/4.2/ref/urlresolvers/#django.urls.reverse_lazy][reverse_lazy]] to
+redirect the user to the login page upon successful registration.
+
+Why use reverse_lazy instead of reverse? The reason is that for all
+generic class-based views the URLs are not loaded when the file is
+imported, so we have to use the lazy form of reverse to load them
+later when they're available.
+
+Final step. Create a new template, ~templates/registration/signup.html~,
+and populate it with this code that looks almost exactly like what we
+used for login.html.
+
+#+begin_src html
+  {% extends "_base.html" %}
+
+  {% block title %}Sign Up{% endblock %}
+
+  {% block content %}
+    <h2>Sign up</h2>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Sign Up</button>
+    </form>
+  {% endblock %}
+#+end_src
+
+And we're done! To confirm it all works, navigate to
+http://127.0.0.1:8000/accounts/signup/.
+
+The extra text with tips on usernames and passwords comes from Django.
+We can customize that, too, but will do that later.
+
+Sign up for a new account and hit the "Sign up" button. You will be
+redirected to the login page http://127.0.0.1:8000/accounts/login/,
+where you can log in with your new account.
+
+And then, after a successful login, you'll be redirected to the
+homepage.
+
+Don't forget to update _base.html to add the Sign up link:
+
+#+begin_src html
+  <a href="{% url 'signup' %}" class="btn btn-primary ml-2">Sign up</a>
 #+end_src

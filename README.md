@@ -1,38 +1,43 @@
-- [CDP - Core Django Project](#orgb36589b)
-- [How this file is created](#org316091b)
-- [Resources used](#org0975160)
-- [Steps taken to create this Django Core Project](#orgb79f8f5)
-  - [Create a Github repository](#org92851ad)
-  - [Create a Django project](#orgdc5f4b8)
-  - [Create .gitignore file](#org394c50c)
-  - [Create a python virtual environment](#orgf1f46d3)
-  - [Poetry setup](#org8483851)
-  - [Creating a Makefile](#org30769a8)
-  - [Restructuring the codebase](#orga75525d)
-  - [Settings management](#org8271922)
-  - [Settings management for developers](#org98a4bfa)
-  - [Settings management for our application](#orgb29de1b)
-  - [Configure settings of code editor in one place](#org79c04f4)
-  - [Flake8](#org1f549cc)
-  - [pre-commit](#org91a94df)
-  - [logging](#orgba10db0)
-  - [Create a welcome app](#orgc0b573e)
-  - [Static files](#org250d0a7)
-  - [HTML templates for error messages](#org42fa8fb)
-  - [Staticfiles](#orga597a15)
-  - [Django-debug-toolbar](#org92d81bc)
-  - [User authentication](#orga5639eb)
+- [CDP - Core Django Project](#org354b29a)
+- [How this file is created](#org4c6eb97)
+- [Resources used](#org8b78e9f)
+- [Steps taken to create this Django Core Project](#orge8ba8c3)
+  - [Create a Github repository](#orgaba1e85)
+  - [Create a Django project](#org5f21029)
+  - [Create .gitignore file](#orgae8c990)
+  - [Create a python virtual environment](#org8695cab)
+  - [Poetry setup](#org4ad6e32)
+    - [Install poetry](#org158af65)
+    - [Try running the server with poetry command](#org7e04ea7)
+    - [Run everything through Poetry from now on](#orgc420ea2)
+  - [Creating a Makefile](#org7e3f245)
+  - [Restructuring the codebase](#orgd2eb732)
+  - [Settings management](#org235945e)
+  - [Settings management for developers](#org44342ca)
+  - [Settings management for our application](#org7702e43)
+  - [Configure settings of code editor in one place](#org3e333b7)
+  - [Flake8](#org6f9d22a)
+  - [pre-commit](#org4f0c59e)
+  - [logging](#org644bc7c)
+  - [Create a welcome app](#orged09e4b)
+  - [Static files](#orgd0dd496)
+  - [HTML templates for error messages](#orgb54a058)
+  - [Staticfiles](#org11381b9)
+  - [Django-debug-toolbar](#orgee7ea51)
+  - [User authentication](#orge0c29ac)
+    - [Login and logout](#org8b75d9e)
+    - [Signup](#orgaec5bd3)
 
 
 
-<a id="orgb36589b"></a>
+<a id="org354b29a"></a>
 
 # CDP - Core Django Project
 
 With each new project that I build I keep finding better ways to start a new project. Here I will keep a CORE things that each of my future Django app will have to have.
 
 
-<a id="org316091b"></a>
+<a id="org4c6eb97"></a>
 
 # How this file is created
 
@@ -41,28 +46,28 @@ With each new project that I build I keep finding better ways to start a new pro
 I use .org file since I am used to Emacs keybindings and it's much quicker for me to do the formatting and text transformations and etc. It also generates a table of content for me, which is nice in such large document.
 
 
-<a id="org0975160"></a>
+<a id="org8b78e9f"></a>
 
 # Resources used
 
 -   Pro Django tutorials by thenewboston
 
 
-<a id="orgb79f8f5"></a>
+<a id="orge8ba8c3"></a>
 
 # Steps taken to create this Django Core Project
 
 Steps taken to create this repo are described here.
 
 
-<a id="org92851ad"></a>
+<a id="orgaba1e85"></a>
 
 ## Create a Github repository
 
 Create a Github repo with the name of your project. Clone it to your machine. Open a text editor inside of it.
 
 
-<a id="orgdc5f4b8"></a>
+<a id="org5f21029"></a>
 
 ## Create a Django project
 
@@ -73,14 +78,14 @@ Time to create a django project. Run the following command - `django-admin start
 Push to github.
 
 
-<a id="org394c50c"></a>
+<a id="orgae8c990"></a>
 
 ## Create .gitignore file
 
 Add content to it from your most recent Django project.
 
 
-<a id="orgf1f46d3"></a>
+<a id="org8695cab"></a>
 
 ## Create a python virtual environment
 
@@ -114,14 +119,16 @@ pip list
 ```
 
 
-<a id="org8483851"></a>
+<a id="org4ad6e32"></a>
 
 ## Poetry setup
 
 <https://python-poetry.org/> - poetry is a modern tool for package management in Python that simplifies the process of creating, managing, and publishing Python packages. Helps to make sure each developer's environment is exactly the same, without a smallest changes in installed packages.
 
 
-### Install poetry:
+<a id="org158af65"></a>
+
+### Install poetry
 
 ```bash
 curl -sSL https://install.python-poetry.org | python3 -
@@ -152,6 +159,8 @@ In the future if we want to install new packages we will use `poetry add` comman
 NOTE: by default poetry will try to create it's own virtual environment, but since we have created our's already, nothing additional will be created.
 
 
+<a id="org7e04ea7"></a>
+
 ### Try running the server with poetry command
 
 Inside your folder where manage.py exists, run this command:
@@ -162,6 +171,8 @@ python manage.py runserver
 
 You should be able to access the server on <http://127.0.0.1:8000/>. Ignore the warning about migrations for now.
 
+
+<a id="orgc420ea2"></a>
 
 ### Run everything through Poetry from now on
 
@@ -174,7 +185,7 @@ poetry run python manage.py runserver
 ```
 
 
-<a id="org30769a8"></a>
+<a id="org7e3f245"></a>
 
 ## Creating a Makefile
 
@@ -210,7 +221,7 @@ run-server:
 Other times our commands might be like "make install" or "make clean" or something similar and files might already exist with those names in our directories, so make will try to run those first if there is no .PHONY described.
 
 
-<a id="orga75525d"></a>
+<a id="orgd2eb732"></a>
 
 ## Restructuring the codebase
 
@@ -318,7 +329,7 @@ run-server:
 Now command `make run-server` works just fine.
 
 
-<a id="org8271922"></a>
+<a id="org235945e"></a>
 
 ## Settings management
 
@@ -368,7 +379,7 @@ make run-server
 ```
 
 
-<a id="org98a4bfa"></a>
+<a id="org44342ca"></a>
 
 ## Settings management for developers
 
@@ -477,7 +488,7 @@ DEBUG = True
 So now when new developer comes, he knows that he must create local folder and copy this settings.dev.py file to that local folder.
 
 
-<a id="orgb29de1b"></a>
+<a id="org7702e43"></a>
 
 ## Settings management for our application
 
@@ -498,7 +509,7 @@ In `custom.py` add this content:
 add 'custom.py' to <span class="underline"><span class="underline">init</span></span>.py
 
 
-<a id="org79c04f4"></a>
+<a id="org3e333b7"></a>
 
 ## Configure settings of code editor in one place
 
@@ -522,7 +533,7 @@ This configuration tells the text editor and IDE's how to automatically clean up
 VScode needs an extension installed to be able to read these instructions. Pycharm does it automatically. Emacs needs an extension as well.
 
 
-<a id="org1f549cc"></a>
+<a id="org6f9d22a"></a>
 
 ## Flake8
 
@@ -569,7 +580,7 @@ If you want we can put the `poetry run flake8` command to Makefile.
 But we will not do that just yet, since we will use pre-commit tool and run flake8 over it!
 
 
-<a id="org91a94df"></a>
+<a id="org4f0c59e"></a>
 
 ## pre-commit
 
@@ -740,7 +751,7 @@ update: install migrate install-pre-commit ;
 ```
 
 
-<a id="orgba10db0"></a>
+<a id="org644bc7c"></a>
 
 ## logging
 
@@ -880,7 +891,7 @@ Now with each page refresh you should see some messages exactly how we styled. T
 The goal with logging now is to figure out how to use it effectively in my Django project.
 
 
-<a id="orgc0b573e"></a>
+<a id="orged09e4b"></a>
 
 ## Create a welcome app
 
@@ -973,7 +984,7 @@ Then let's go back to base.py settings file and specify our templates location:
 Try to run server, you should be able to see the home page as well as about page.
 
 
-<a id="org250d0a7"></a>
+<a id="orgd0dd496"></a>
 
 ## Static files
 
@@ -1147,7 +1158,7 @@ About:
 That's it, we should have a functional and more beautiful home and about pages.
 
 
-<a id="org42fa8fb"></a>
+<a id="orgb54a058"></a>
 
 ## HTML templates for error messages
 
@@ -1196,7 +1207,7 @@ Instead of that, we will create our own.
 ```
 
 
-<a id="orga597a15"></a>
+<a id="org11381b9"></a>
 
 ## TODO Staticfiles
 
@@ -1210,7 +1221,7 @@ STATIC_ROOT = "core/static/staticfiles-cdn"
 ```
 
 
-<a id="org92d81bc"></a>
+<a id="orgee7ea51"></a>
 
 ## Django-debug-toolbar
 
@@ -1264,7 +1275,7 @@ if settings.DEBUG:
 Now when you go to any page in welcome app - you should be able to see a django-debug-toolbar button.
 
 
-<a id="orga5639eb"></a>
+<a id="orge0c29ac"></a>
 
 ## User authentication
 
@@ -1272,6 +1283,8 @@ Great official docs here - <https://docs.djangoproject.com/en/4.2/topics/auth/de
 
 Apparently a lot of the authentication is already built in.
 
+
+<a id="org8b75d9e"></a>
 
 ### Login and logout
 
@@ -1395,4 +1408,102 @@ Then try to login and try to logout by going to:
 ```bash
 http://127.0.0.1:8000/accounts/login/
 http://127.0.0.1:8000/accounts/logout/
+```
+
+
+<a id="orgaec5bd3"></a>
+
+### Signup
+
+To begin, create a dedicated app called accounts.
+
+```bash
+poetry run python -m core.manage startapp accounts
+```
+
+Then move the newly created accounts folder to core/apps/accounts.
+
+Modify apps.py, "name" field to:
+
+```python
+name = "core.apps.accounts"
+```
+
+Add new app to installed\_apps in base.py:
+
+```python
+"core.apps.accounts",
+```
+
+> Then add a project-level URL for the accounts app **above** our included Django auth app. Django will look top to bottom for URL patterns, so when it sees a URL route within our accounts app that matches one in the built-in auth app, it will choose the new accounts app route first.
+
+So basically, as we saw before in "Login and logout" part, there are already templates and urls already specified in "django.contrib.auth.urls". But sign up url does not exist. We will create just that one in core/project/urls.py
+
+```python
+urlpatterns = [
+    path("admin/", admin.site.urls),
+    path("", include("core.apps.welcome.urls")),
+    path("accounts/", include("accounts.urls")),  # new
+    path("accounts/", include("django.contrib.auth.urls")),
+]
+```
+
+Create a new file called `accounts/urls.py` and add the following code:
+
+```python
+from django.urls import path
+from .views import SignUpView
+
+urlpatterns = [
+    path("signup/", SignUpView.as_view(), name="signup"),
+]
+```
+
+Now for the views.py file in core/apps/accounts:
+
+```python
+from django.contrib.auth.forms import UserCreationForm
+from django.urls import reverse_lazy
+from django.views import generic
+
+
+class SignUpView(generic.CreateView):
+    form_class = UserCreationForm
+    success_url = reverse_lazy("login")
+    template_name = "registration/signup.html"
+```
+
+We're subclassing the generic class-based view [CreateView](https://docs.djangoproject.com/en/4.2/ref/class-based-views/generic-editing/#django.views.generic.edit.CreateView) in our SignUp class. We specify using the built-in UserCreationForm and the not-yet-created template at signup.html. And we use [reverse\_lazy](https://docs.djangoproject.com/en/4.2/ref/urlresolvers/#django.urls.reverse_lazy) to redirect the user to the login page upon successful registration.
+
+Why use reverse\_lazy instead of reverse? The reason is that for all generic class-based views the URLs are not loaded when the file is imported, so we have to use the lazy form of reverse to load them later when they're available.
+
+Final step. Create a new template, `templates/registration/signup.html`, and populate it with this code that looks almost exactly like what we used for login.html.
+
+```html
+{% extends "_base.html" %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+  <h2>Sign up</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Sign Up</button>
+  </form>
+{% endblock %}
+```
+
+And we're done! To confirm it all works, navigate to <http://127.0.0.1:8000/accounts/signup/>.
+
+The extra text with tips on usernames and passwords comes from Django. We can customize that, too, but will do that later.
+
+Sign up for a new account and hit the "Sign up" button. You will be redirected to the login page <http://127.0.0.1:8000/accounts/login/>, where you can log in with your new account.
+
+And then, after a successful login, you'll be redirected to the homepage.
+
+Don't forget to update \_base.html to add the Sign up link:
+
+```html
+<a href="{% url 'signup' %}" class="btn btn-primary ml-2">Sign up</a>
 ```

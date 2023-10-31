@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     "debug_toolbar",
     # local
     "core.apps.welcome",
+    "core.apps.accounts",
 ]
 
 MIDDLEWARE = [
