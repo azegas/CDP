@@ -2013,3 +2013,100 @@ not do it this time):
 
 Users now will also be able to enter their date of birth during
 registration or update their profile.
+**** Crispy forms
+
+Crispy forms will allow us to style the forms nicer.
+
+Docs - https://django-crispy-forms.readthedocs.io/en/latest/index.html
+
+Great video explaining crispy forms - https://www.youtube.com/watch?v=MZwKoi0wu2Q&ab_channel=BugBytes
+
+Install two needed packages:
+
+#+begin_src bash
+  poetry add django-crispy-forms
+  poetry add crispy-bootstrap5
+#+end_src
+
+add new apps to base.py settings file:
+
+#+begin_src python
+    "crispy_forms",
+    "crispy_bootstrap5",
+#+end_src
+
+at the bottom of this file also add:
+
+#+begin_src python
+  # django-crispy-forms
+  # https://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
+  CRISPY_TEMPLATE_PACK = "bootstrap5"
+#+end_src
+
+then in login.html, password_reset_confirm.html,
+password_reset_form.html, signup.html add ~{% load crispy_forms_tags %}~
+at the top of the file, under _base.html extension. Also change each
+form field with ~{{ form|crispy }}~.
+
+An example for login.html page:
+
+#+begin_src html
+  {% extends "_base.html" %}
+  {% load crispy_forms_tags %}
+
+  {% block content %}
+
+  {% if form.errors %}
+  <p>Your username and password didn't match. Please try again.</p>
+  {% endif %}
+
+  <h2>Log In</h2>
+  <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit">Log In</button>
+    <p><a href="{% url 'password_reset' %}">Reset Password</a></p>
+  </form>
+
+  {% endblock %}
+#+end_src
+
+Now when you refresh any of the page that contains a form - it should
+look more nice :)
+
+We have previously added a new custom user model field -
+date_of_birth. Now when the form renders it displays a simple text
+type field. We can make it to a datefield simply by adding:
+
+#+begin_src python
+  from django.contrib.auth.forms import UserChangeForm, UserCreationForm
+
+  from .models import CustomUser
+  from django import forms        # NEW
+
+
+  class CustomUserCreationForm(UserCreationForm):
+
+      class Meta:
+          model = CustomUser
+          fields = ("username", "email", "date_of_birth")
+
+      # NEW
+      date_of_birth = forms.DateField(
+          widget=forms.DateInput(attrs={'type': 'date'}),
+      )
+
+
+  class CustomUserChangeForm(UserChangeForm):
+
+      class Meta:
+          model = CustomUser
+          fields = ("username", "email", "date_of_birth")
+
+      # NEW
+      date_of_birth = forms.DateField(
+          widget=forms.DateInput(attrs={'type': 'date'}),
+      )
+#+end_src
+
+Now our date_of_birth field will render nicely with a date picker.

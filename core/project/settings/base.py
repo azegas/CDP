@@ -17,6 +17,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # third-party
     "debug_toolbar",
+    "crispy_forms",
+    "crispy_bootstrap5",
     # local
     "core.apps.welcome",
     "core.apps.accounts",
@@ -119,10 +121,18 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # https://docs.djangoproject.com/en/dev/ref/settings/#internal-ips
 INTERNAL_IPS = ["127.0.0.1"]
 
+# https://docs.djangoproject.com/en/dev/topics/auth/customizing/#substituting-a-custom-user-model
 AUTH_USER_MODEL = "accounts.CustomUser"
 
+# https://docs.djangoproject.com/en/dev/ref/settings/#login-redirect-url
 LOGIN_REDIRECT_URL = "home"
+# https://docs.djangoproject.com/en/dev/ref/settings/#logout-redirect-url
 LOGOUT_REDIRECT_URL = "home"
 
+# https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = "sent_emails"
+
+# django-crispy-forms
+# https://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
+CRISPY_TEMPLATE_PACK = "bootstrap5"

@@ -1,46 +1,46 @@
-- [CDP - Core Django Project](#org5b5fd02)
-- [How this file is created](#org34ea7d2)
-- [Resources used](#org83db4d1)
-- [Steps taken to create this Django Core Project](#org243366a)
-  - [Create a Github repository](#orgf3d4a34)
-  - [Create a Django project](#org0e2e61a)
-  - [Create .gitignore file](#org929ee18)
-  - [Create a python virtual environment](#orgf9f058b)
-  - [Poetry setup](#orgd070403)
-    - [Install poetry](#org61db318)
-    - [Try running the server with poetry command](#orgde374db)
-    - [Run everything through Poetry from now on](#org9d1087b)
-  - [Creating a Makefile](#orgbe87dee)
-  - [Restructuring the codebase](#org445d494)
-  - [Settings management](#org709e343)
-  - [Settings management for developers](#org8561bc8)
-  - [Settings management for our application](#org36560f1)
-  - [Configure settings of code editor in one place](#org0450883)
-  - [Flake8](#org4a05e60)
-  - [pre-commit](#org8d236a7)
-  - [logging](#orgcbc4cc4)
-  - [Create a welcome app](#org07cbe8a)
-  - [Static files](#org0299de8)
-  - [HTML templates for error messages](#orgea95752)
-  - [Staticfiles](#orgb5dd075)
-  - [Django-debug-toolbar](#orga87bfe5)
-  - [User authentication](#org5530c20)
-    - [Login and logout](#orga97fa1d)
-    - [Signup](#org76c13be)
-    - [Password reset](#orge4a341a)
-    - [Creating a custom user model](#org2cefd7d)
-    - [Creating custom user model fields](#org4a1e01a)
+- [CDP - Core Django Project](#org23c3f02)
+- [How this file is created](#org1e74dff)
+- [Resources used](#orge91239d)
+- [Steps taken to create this Django Core Project](#org77414cf)
+  - [Create a Github repository](#orga30135c)
+  - [Create a Django project](#org2c35259)
+  - [Create .gitignore file](#orge4ab205)
+  - [Create a python virtual environment](#org75fe2d1)
+  - [Poetry setup](#org02d64dd)
+    - [Install poetry](#orgb98e0cd)
+    - [Try running the server with poetry command](#org99704ca)
+    - [Run everything through Poetry from now on](#org35ddbc3)
+  - [Creating a Makefile](#org3751f6f)
+  - [Restructuring the codebase](#org672677b)
+  - [Settings management](#org99a9c97)
+  - [Settings management for developers](#org7203ae1)
+  - [Settings management for our application](#org07a1b7c)
+  - [Configure settings of code editor in one place](#org303c5d1)
+  - [Flake8](#org48a3b01)
+  - [pre-commit](#org9b8b1b9)
+  - [logging](#org2f13cb6)
+  - [Create a welcome app](#org32085fd)
+  - [Static files](#org60b0068)
+  - [HTML templates for error messages](#org12c421f)
+  - [Staticfiles](#org962a6b6)
+  - [Django-debug-toolbar](#org946d769)
+  - [User authentication](#orgd5211d1)
+    - [Login and logout](#orgf6d26a5)
+    - [Signup](#orgb02293e)
+    - [Password reset](#org1311ba3)
+    - [Creating a custom user model](#orgb50df87)
+    - [Creating custom user model fields](#org7aae768)
 
 
 
-<a id="org5b5fd02"></a>
+<a id="org23c3f02"></a>
 
 # CDP - Core Django Project
 
 With each new project that I build I keep finding better ways to start a new project. Here I will keep a CORE things that each of my future Django app will have to have.
 
 
-<a id="org34ea7d2"></a>
+<a id="org1e74dff"></a>
 
 # How this file is created
 
@@ -49,28 +49,28 @@ With each new project that I build I keep finding better ways to start a new pro
 I use .org file since I am used to Emacs keybindings and it's much quicker for me to do the formatting and text transformations and etc. It also generates a table of content for me, which is nice in such large document.
 
 
-<a id="org83db4d1"></a>
+<a id="orge91239d"></a>
 
 # Resources used
 
 -   Pro Django tutorials by thenewboston
 
 
-<a id="org243366a"></a>
+<a id="org77414cf"></a>
 
 # Steps taken to create this Django Core Project
 
 Steps taken to create this repo are described here.
 
 
-<a id="orgf3d4a34"></a>
+<a id="orga30135c"></a>
 
 ## Create a Github repository
 
 Create a Github repo with the name of your project. Clone it to your machine. Open a text editor inside of it.
 
 
-<a id="org0e2e61a"></a>
+<a id="org2c35259"></a>
 
 ## Create a Django project
 
@@ -81,14 +81,14 @@ Time to create a django project. Run the following command - `django-admin start
 Push to github.
 
 
-<a id="org929ee18"></a>
+<a id="orge4ab205"></a>
 
 ## Create .gitignore file
 
 Add content to it from your most recent Django project.
 
 
-<a id="orgf9f058b"></a>
+<a id="org75fe2d1"></a>
 
 ## Create a python virtual environment
 
@@ -122,14 +122,14 @@ pip list
 ```
 
 
-<a id="orgd070403"></a>
+<a id="org02d64dd"></a>
 
 ## Poetry setup
 
 <https://python-poetry.org/> - poetry is a modern tool for package management in Python that simplifies the process of creating, managing, and publishing Python packages. Helps to make sure each developer's environment is exactly the same, without a smallest changes in installed packages.
 
 
-<a id="org61db318"></a>
+<a id="orgb98e0cd"></a>
 
 ### Install poetry
 
@@ -162,7 +162,7 @@ In the future if we want to install new packages we will use `poetry add` comman
 NOTE: by default poetry will try to create it's own virtual environment, but since we have created our's already, nothing additional will be created.
 
 
-<a id="orgde374db"></a>
+<a id="org99704ca"></a>
 
 ### Try running the server with poetry command
 
@@ -175,7 +175,7 @@ python manage.py runserver
 You should be able to access the server on <http://127.0.0.1:8000/>. Ignore the warning about migrations for now.
 
 
-<a id="org9d1087b"></a>
+<a id="org35ddbc3"></a>
 
 ### Run everything through Poetry from now on
 
@@ -188,7 +188,7 @@ poetry run python manage.py runserver
 ```
 
 
-<a id="orgbe87dee"></a>
+<a id="org3751f6f"></a>
 
 ## Creating a Makefile
 
@@ -224,7 +224,7 @@ run-server:
 Other times our commands might be like "make install" or "make clean" or something similar and files might already exist with those names in our directories, so make will try to run those first if there is no .PHONY described.
 
 
-<a id="org445d494"></a>
+<a id="org672677b"></a>
 
 ## Restructuring the codebase
 
@@ -332,7 +332,7 @@ run-server:
 Now command `make run-server` works just fine.
 
 
-<a id="org709e343"></a>
+<a id="org99a9c97"></a>
 
 ## Settings management
 
@@ -382,7 +382,7 @@ make run-server
 ```
 
 
-<a id="org8561bc8"></a>
+<a id="org7203ae1"></a>
 
 ## Settings management for developers
 
@@ -491,7 +491,7 @@ DEBUG = True
 So now when new developer comes, he knows that he must create local folder and copy this settings.dev.py file to that local folder.
 
 
-<a id="org36560f1"></a>
+<a id="org07a1b7c"></a>
 
 ## Settings management for our application
 
@@ -512,7 +512,7 @@ In `custom.py` add this content:
 add 'custom.py' to <span class="underline"><span class="underline">init</span></span>.py
 
 
-<a id="org0450883"></a>
+<a id="org303c5d1"></a>
 
 ## Configure settings of code editor in one place
 
@@ -536,7 +536,7 @@ This configuration tells the text editor and IDE's how to automatically clean up
 VScode needs an extension installed to be able to read these instructions. Pycharm does it automatically. Emacs needs an extension as well.
 
 
-<a id="org4a05e60"></a>
+<a id="org48a3b01"></a>
 
 ## Flake8
 
@@ -583,7 +583,7 @@ If you want we can put the `poetry run flake8` command to Makefile.
 But we will not do that just yet, since we will use pre-commit tool and run flake8 over it!
 
 
-<a id="org8d236a7"></a>
+<a id="org9b8b1b9"></a>
 
 ## pre-commit
 
@@ -754,7 +754,7 @@ update: install migrate install-pre-commit ;
 ```
 
 
-<a id="orgcbc4cc4"></a>
+<a id="org2f13cb6"></a>
 
 ## logging
 
@@ -894,7 +894,7 @@ Now with each page refresh you should see some messages exactly how we styled. T
 The goal with logging now is to figure out how to use it effectively in my Django project.
 
 
-<a id="org07cbe8a"></a>
+<a id="org32085fd"></a>
 
 ## Create a welcome app
 
@@ -987,7 +987,7 @@ Then let's go back to base.py settings file and specify our templates location:
 Try to run server, you should be able to see the home page as well as about page.
 
 
-<a id="org0299de8"></a>
+<a id="org60b0068"></a>
 
 ## Static files
 
@@ -1161,7 +1161,7 @@ About:
 That's it, we should have a functional and more beautiful home and about pages.
 
 
-<a id="orgea95752"></a>
+<a id="org12c421f"></a>
 
 ## HTML templates for error messages
 
@@ -1210,7 +1210,7 @@ Instead of that, we will create our own.
 ```
 
 
-<a id="orgb5dd075"></a>
+<a id="org962a6b6"></a>
 
 ## TODO Staticfiles
 
@@ -1224,7 +1224,7 @@ STATIC_ROOT = "core/static/staticfiles-cdn"
 ```
 
 
-<a id="orga87bfe5"></a>
+<a id="org946d769"></a>
 
 ## Django-debug-toolbar
 
@@ -1278,7 +1278,7 @@ if settings.DEBUG:
 Now when you go to any page in welcome app - you should be able to see a django-debug-toolbar button.
 
 
-<a id="org5530c20"></a>
+<a id="orgd5211d1"></a>
 
 ## User authentication
 
@@ -1287,7 +1287,7 @@ Great official docs here - <https://docs.djangoproject.com/en/4.2/topics/auth/de
 Apparently a lot of the authentication is already built in.
 
 
-<a id="orga97fa1d"></a>
+<a id="orgf6d26a5"></a>
 
 ### Login and logout
 
@@ -1414,7 +1414,7 @@ http://127.0.0.1:8000/accounts/logout/
 ```
 
 
-<a id="org76c13be"></a>
+<a id="orgb02293e"></a>
 
 ### Signup
 
@@ -1512,7 +1512,7 @@ Don't forget to update \_base.html to add the Sign up link:
 ```
 
 
-<a id="orge4a341a"></a>
+<a id="org1311ba3"></a>
 
 ### Password reset
 
@@ -1691,7 +1691,7 @@ It builds upon previous work in the Login & Logout and Signup steps.
     Ignore the sent\_emails folder by adding `sent_emails/` to .gitignore file.
 
 
-<a id="org2cefd7d"></a>
+<a id="orgb50df87"></a>
 
 ### Creating a custom user model
 
@@ -1796,7 +1796,7 @@ Make superuser
 You now should be able to do all the steps mentioned above in previous sections under "user authentication", the only thing that is different now is that we use our own user model that can be customizable in the future. Check all login/logout/register/change password functions, all should work. **\***
 
 
-<a id="org4a1e01a"></a>
+<a id="org7aae768"></a>
 
 ### Creating custom user model fields
 
@@ -1898,3 +1898,95 @@ To add a date of birth field to our custom user model in Django, we need to foll
     ```
 
     Users now will also be able to enter their date of birth during registration or update their profile.
+
+-   Crispy forms
+
+    Crispy forms will allow us to style the forms nicer.
+
+    Docs - <https://django-crispy-forms.readthedocs.io/en/latest/index.html>
+
+    Great video explaining crispy forms - <https://www.youtube.com/watch?v=MZwKoi0wu2Q&ab_channel=BugBytes>
+
+    Install two needed packages:
+
+    ```bash
+    poetry add django-crispy-forms
+    poetry add crispy-bootstrap5
+    ```
+
+    add new apps to base.py settings file:
+
+    ```python
+    "crispy_forms",
+    "crispy_bootstrap5",
+    ```
+
+    at the bottom of this file also add:
+
+    ```python
+    # django-crispy-forms
+    # https://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
+    CRISPY_TEMPLATE_PACK = "bootstrap5"
+    ```
+
+    then in login.html, password\_reset\_confirm.html, password\_reset\_form.html, signup.html add `{% load crispy_forms_tags %}` at the top of the file, under \_base.html extension. Also change each form field with `{{ form|crispy }}`.
+
+    An example for login.html page:
+
+    ```html
+    {% extends "_base.html" %}
+    {% load crispy_forms_tags %}
+
+    {% block content %}
+
+    {% if form.errors %}
+    <p>Your username and password didn't match. Please try again.</p>
+    {% endif %}
+
+    <h2>Log In</h2>
+    <form method="post" action="{% url 'login' %}">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <button type="submit">Log In</button>
+      <p><a href="{% url 'password_reset' %}">Reset Password</a></p>
+    </form>
+
+    {% endblock %}
+    ```
+
+    Now when you refresh any of the page that contains a form - it should look more nice :)
+
+    We have previously added a new custom user model field - date\_of\_birth. Now when the form renders it displays a simple text type field. We can make it to a datefield simply by adding:
+
+    ```python
+    from django.contrib.auth.forms import UserChangeForm, UserCreationForm
+
+    from .models import CustomUser
+    from django import forms        # NEW
+
+
+    class CustomUserCreationForm(UserCreationForm):
+
+        class Meta:
+            model = CustomUser
+            fields = ("username", "email", "date_of_birth")
+
+        # NEW
+        date_of_birth = forms.DateField(
+            widget=forms.DateInput(attrs={'type': 'date'}),
+        )
+
+
+    class CustomUserChangeForm(UserChangeForm):
+
+        class Meta:
+            model = CustomUser
+            fields = ("username", "email", "date_of_birth")
+
+        # NEW
+        date_of_birth = forms.DateField(
+            widget=forms.DateInput(attrs={'type': 'date'}),
+        )
+    ```
+
+    Now our date\_of\_birth field will render nicely with a date picker.
