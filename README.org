@@ -2219,3 +2219,39 @@ To implement this all we have to do is:
   <!-- add this just below the submit button  -->
   <input type="hidden" name="next" value="{{ next }}">
 #+end_src
+*** link to admin panel if_superuser
+
+I want to display the link to admin panel for the users if they are
+superusers. Can do that simply by adding one if statement in _base.html:
+
+#+begin_src html
+
+  <div class="dropdown text-end">
+      {% if user.is_authenticated %}
+      <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          {{ user.email }}
+      </a>
+      <ul class="dropdown-menu text-small">
+          <li><a class="dropdown-item" href="{% url 'dashboard'%}">Dashboard</a></li>
+
+          <!-- NEW START -->
+          {% if user.is_superuser %}
+              <li><a class="dropdown-item" href="/admin">Admin panel</a></li>
+          {% endif  %}
+          <!-- NEW END -->
+
+          <li>
+          <hr class="dropdown-divider">
+          </li>
+          <li><a class="dropdown-item" href="{% url 'logout' %}">Log out</a></li>
+      </ul>
+      {% else %}
+      <form class="form-inline ml-auto">
+          <a href="{% url 'login' %}" class="btn btn-outline-secondary">Log in</a>
+          <a href="{% url 'signup' %}" class="btn btn-primary ml-2">Sign up</a>
+      </form>
+      {% endif %}
+  </div>
+
+#+end_src
