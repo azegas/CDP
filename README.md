@@ -1,3 +1,7 @@
+No longer using it, using https://github.com/azegas/Django_starter instead.
+
+
+
 - [CDP - Core Django Project](#org503dba5)
 - [How this file is created](#orgd354ed7)
 - [Resources used](#orgc8e5e1f)
