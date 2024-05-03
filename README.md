@@ -1,4 +1,4 @@
-No longer using it, using https://github.com/azegas/Django_starter instead.
+# No longer using it, using https://github.com/azegas/Django_starter instead.
 
 
 
